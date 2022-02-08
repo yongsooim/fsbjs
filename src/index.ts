@@ -1,9 +1,13 @@
 import * as ex from 'excalibur'
 import * as dt from '@excaliburjs/dev-tools'
+import * as tiled from '@excaliburjs/plugin-tiled';
+//import myTmx from '../assets/map/tmx/ff.json';
 
 
 import runImageSrc from '../assets/img/char/CDIT100.png'
 import runImageSrc2 from '../assets/img/char/CSAM00.png'
+
+const tiledMapResource = new tiled.TiledMapResource('../assets/map / tmx / ff.json');
 
 
 const game = new ex.Engine({
@@ -83,7 +87,7 @@ actor4.graphics.use(anim3);
 actor5.graphics.use(anim4);
 
 game.start(loader).then(() => {
-
+    tiledMapResource.addTiledMapToScene(game.currentScene);
 })
 
 game.add(actor)
