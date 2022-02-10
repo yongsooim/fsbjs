@@ -118,7 +118,7 @@
         {
          "columns":20,
          "firstgid":1,
-         "image":"/fsbjs/ff_P.png",
+         "image":"/fsbjs/map/png/ff_P.png",
          "imageheight":1056,
          "imagewidth":1280,
          "margin":0,
@@ -131,7 +131,7 @@
         {
          "columns":20,
          "firstgid":441,
-         "image":"/fsbjs/ff_S.png",
+         "image":"/fsbjs/map/png/ff_P.png",
          "imageheight":1056,
          "imagewidth":1280,
          "margin":0,
