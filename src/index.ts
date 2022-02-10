@@ -1,21 +1,24 @@
 import * as ex from 'excalibur'
 import * as dt from '@excaliburjs/dev-tools'
-import * as tiled from '@excaliburjs/plugin-tiled';
-//import myTmx from '../assets/map/tmx/ff.json';
-
+import  {TiledMapResource} from '@excaliburjs/plugin-tiled';
 
 import runImageSrc from '../assets/img/char/CDIT100.png'
 import runImageSrc2 from '../assets/img/char/CSAM00.png'
+import myTmx from '../assets/map/tmj/ff.tmj';
 
-const tiledMapResource = new tiled.TiledMapResource('../assets/map / tmx / ff.json');
+import { Color } from 'excalibur';
 
+console.log(runImageSrc)
+console.log(myTmx)
 
 const game = new ex.Engine({
     width: 800,
     height: 400,
     // Turn off anti-aliasing for pixel art graphics
     antialiasing: false,
-    maxFps: 60
+    maxFps: 60,
+    backgroundColor: Color.Black,
+    suppressConsoleBootMessage: true
 })
 
 const devtool = new dt.DevTool(game);
@@ -23,12 +26,10 @@ const devtool = new dt.DevTool(game);
 
 const image = new ex.ImageSource(runImageSrc)
 const image2 = new ex.ImageSource(runImageSrc2)
-
-const loader = new ex.Loader([
-    /* add Loadables here */
-    image,
-    image2,
-])
+const map = new TiledMapResource(myTmx, { startingLayerZIndex: -2 });
+const loader = new ex.Loader([map]);
+loader.backgroundColor = '#000000'
+loader.suppressPlayButton = true
 
 
 const runSheet = ex.SpriteSheet.fromImageSource({
@@ -87,12 +88,6 @@ actor4.graphics.use(anim3);
 actor5.graphics.use(anim4);
 
 game.start(loader).then(() => {
-    tiledMapResource.addTiledMapToScene(game.currentScene);
+    console.log(map)
+    map.addTiledMapToScene(game.currentScene)
 })
-
-game.add(actor)
-game.add(actor2)
-game.add(actor3)
-game.add(actor4)
-game.add(actor5)
-
