@@ -1,5 +1,5 @@
 import * as ex from 'excalibur'
-import * as dt from '@excaliburjs/dev-tools'
+import { DevTool } from '@excaliburjs/dev-tools'
 import { TiledMapResource } from '@excaliburjs/plugin-tiled';
 
 import runImageSrc from '../static/graphics/actor/cdit/CDIT100.png'
@@ -21,7 +21,10 @@ const game = new ex.Engine({
     suppressConsoleBootMessage: true
 })
 
-const devtool = new dt.DevTool(game);
+const devtool = new DevTool(game);
+document.getElementsByClassName("excalibur-tweakpane-custom")[0].setAttribute("style", "bottom:10px")
+document.getElementsByClassName("excalibur-tweakpane-custom")[0].removeAttribute("bottom")
+
 
 const image = new ex.ImageSource(runImageSrc)
 const image2 = new ex.ImageSource(runImageSrc2)
@@ -92,6 +95,18 @@ actor5.graphics.use(anim4);
 game.start(loader).then(() => {
     console.log(map)
     map.addTiledMapToScene(game.currentScene)
+    game.currentScene.camera.zoom = 0.5;
+    game.currentScene.camera.pos.y = 800;
+    game.currentScene.camera.pos.x = 860;
+    game.input.pointers.on('wheel', function (evt) {
+        if (evt.deltaY > 0) {
+            if (game.currentScene.camera.zoom > 0.2) {
+                game.currentScene.camera.zoom -= 0.1;
+            }
+        } else {
+            game.currentScene.camera.zoom += 0.1;
+        }
+    })
 
 })
 
