@@ -13,5 +13,6 @@
                                     // only from the root of
                                     // your workspace 
         }
-    }
+    },
+    "liveServer.settings.port": 5501
 }

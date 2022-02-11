@@ -1,4 +1,5 @@
 import * as ex from 'excalibur'
+import { Player, image2 } from './actor/player'
 import { DevTool } from '@excaliburjs/dev-tools'
 import { TiledMapResource } from '@excaliburjs/plugin-tiled';
 
@@ -8,17 +9,15 @@ import myTmx from '../static/map/tmj/ff.tmj';
 
 import { Color } from 'excalibur';
 
-console.log(runImageSrc)
-console.log(myTmx)
-
 const game = new ex.Engine({
-    width: 800,
-    height: 600,
+    width: window.outerWidth,
+    height: window.outerHeight,
     // Turn off anti-aliasing for pixel art graphics
     antialiasing: false,
     maxFps: 60,
     backgroundColor: Color.Black,
-    suppressConsoleBootMessage: true
+    suppressConsoleBootMessage: true,
+    displayMode: ex.DisplayMode.FitScreen
 })
 
 const devtool = new DevTool(game);
@@ -27,8 +26,7 @@ document.getElementsByClassName("excalibur-tweakpane-custom")[0].removeAttribute
 
 
 const image = new ex.ImageSource(runImageSrc)
-const image2 = new ex.ImageSource(runImageSrc2)
-const map = new TiledMapResource(myTmx, { startingLayerZIndex: -2 });
+export const map = new TiledMapResource(myTmx, { startingLayerZIndex: -2 });
 const loader = new ex.Loader([
     map,
     image,
@@ -47,24 +45,13 @@ const runSheet = ex.SpriteSheet.fromImageSource({
     }
 });
 
-const runSheet2 = ex.SpriteSheet.fromImageSource({
-    image: image2,
-    grid: {
-        rows: 4,
-        columns: 6,
-        spriteWidth: 64,
-        spriteHeight: 96
-    }
-});
 
-const leftfoot = ex.Animation.fromSpriteSheet(runSheet, [6, 7, 8, 7, 6, 9, 10, 9], 66, ex.AnimationStrategy.Loop);
 const anim = ex.Animation.fromSpriteSheet(runSheet, [6, 7, 8, 7, 9, 10, 9], 66, ex.AnimationStrategy.Loop);
 const anim2 = ex.Animation.fromSpriteSheet(runSheet, [6, 7, 8, 7, 6, 9, 10, 9], 66, ex.AnimationStrategy.Loop);
 const anim3 = ex.Animation.fromSpriteSheet(runSheet, [7, 8, 7, 9, 10, 9], 66, ex.AnimationStrategy.Loop);
-const anim4 = ex.Animation.fromSpriteSheet(runSheet2, [6, 7, 8, 7, 6, 9, 10, 9], 66, ex.AnimationStrategy.Loop);
 
-const actor = new ex.Actor({
-    pos: ex.vec(game.halfDrawWidth, game.halfDrawHeight)
+const actor = new Player({
+    pos: ex.vec(640, 960)
 });
 
 const actor2 = new ex.Actor({
@@ -86,29 +73,60 @@ const actor5 = new ex.Actor({
     pos: ex.vec(400, 100)
 });
 
-actor.graphics.use(leftfoot);
 actor2.graphics.use(anim);
 actor3.graphics.use(anim2);
 actor4.graphics.use(anim3);
-actor5.graphics.use(anim4);
 
 game.start(loader).then(() => {
     console.log(map)
     map.addTiledMapToScene(game.currentScene)
-    game.currentScene.camera.zoom = 0.5;
-    game.currentScene.camera.pos.y = 800;
-    game.currentScene.camera.pos.x = 860;
+    actor.z = 1;
+    cameraSet()
+
+})
+
+
+var zoomSmoother
+var targetZoom
+
+function cameraSet() {
+    game.currentScene.camera.zoom = 2
     game.input.pointers.on('wheel', function (evt) {
         if (evt.deltaY > 0) {
-            if (game.currentScene.camera.zoom > 0.2) {
-                game.currentScene.camera.zoom -= 0.1;
+            if (game.currentScene.camera.zoom > 0.5) {
+                game.currentScene.camera.zoom *= 0.9;
             }
         } else {
-            game.currentScene.camera.zoom += 0.1;
+            if (game.currentScene.camera.zoom < 4) {
+                game.currentScene.camera.zoom *= 1.1;
+            }
         }
     })
 
-})
+    game.currentScene.camera.strategy.elasticToActor(
+        actor,
+        0.8,
+        0.9
+    )
+
+    let boundingBox = new ex.BoundingBox(
+        0,
+        0,
+        map.data.height * 96,
+        map.data.width * 64
+    )
+    game.currentScene.camera.strategy.limitCameraBounds(boundingBox)
+
+
+}
+
+function keyboardSet() {
+
+}
+
+function actorSet() {
+
+}
 
 game.add(actor)
 game.add(actor2)

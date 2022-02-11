@@ -54,7 +54,8 @@
          "visible":true,
          "width":40,
          "x":0,
-         "y":0
+         "y":0,
+         "z":0
         }, 
         {
          "data":[
@@ -106,7 +107,8 @@
          "visible":true,
          "width":40,
          "x":0,
-         "y":0
+         "y":0,
+         "z":255
         }],
  "nextlayerid":3,
  "nextobjectid":1,
