@@ -67,7 +67,7 @@ export class Player extends ex.Actor {
             }
 
             console.log(engine.input.keyboard.isHeld(ex.Input.Keys.W))
-            if (this.pos.x % 64 == 0 && this.pos.y % 96 == 0
+            if (this.pos.x % 64 == 0 && this.pos.y % 48 == 0
 
                 && !engine.input.keyboard.isHeld(ex.Input.Keys.W)
                 && !engine.input.keyboard.isHeld(ex.Input.Keys.A)
