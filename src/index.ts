@@ -1,15 +1,14 @@
 import * as ex from 'excalibur'
 import { Player, image2 } from './actor/player'
 import { DevTool } from '@excaliburjs/dev-tools'
-import { TiledMapResource } from '@excaliburjs/plugin-tiled';
+import { FsbMapResource } from './types/fsbTypes';
 
-import runImageSrc from '/static/graphics/actor/cdit/CDIT100.png'
-import runImageSrc2 from '/static/graphics/actor/csam/CSAM00.png'
-import myTmx from '/static/map/tmj/ff.tmj';
 import {resources} from './resource/resource'
 
 
 import { Color } from 'excalibur';
+import { assetRoot } from './types/const'
+
 
 const game = new ex.Engine({
     width: window.outerWidth,
@@ -24,15 +23,14 @@ const game = new ex.Engine({
 
 
 
-
-
 const devtool = new DevTool(game);
 document.getElementsByClassName("excalibur-tweakpane-custom")[0].setAttribute("style", "bottom:10px")
 document.getElementsByClassName("excalibur-tweakpane-custom")[0].removeAttribute("bottom")
 
 
-const image = new ex.ImageSource(runImageSrc)
-export const map = new TiledMapResource(myTmx, { startingLayerZIndex: -2 });
+const image = new ex.ImageSource(assetRoot + 'graphics/actor/cdit/CDIT100.png')
+export const map = new FsbMapResource(assetRoot + 'map/tmj/ff.tmj');
+
 const loader = new ex.Loader([
     map,
     image,
@@ -85,6 +83,13 @@ const actor4 = new ex.Actor({
 const actor5 = new ex.Actor({
     pos: ex.vec(400, 100)
 });
+
+
+
+
+
+
+
 
 actor2.graphics.use(anim);
 actor3.graphics.use(anim2);

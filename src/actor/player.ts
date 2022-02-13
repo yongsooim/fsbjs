@@ -2,8 +2,9 @@ import * as ex from 'excalibur'
 import * as fsb from '../types/fsbTypes';
 import runImageSrc2 from '/static/graphics/actor/csam/CSAM00.png'
 import { map } from '../index'
+import { assetRoot } from '../types/const';
 
-export const image2 = new ex.ImageSource(runImageSrc2)
+export const image2 = new ex.ImageSource(assetRoot + 'graphics/actor/csam/CSAM00.png')
 
 const runSheet2 = ex.SpriteSheet.fromImageSource({
     image: image2,

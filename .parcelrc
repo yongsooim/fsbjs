@@ -5,7 +5,8 @@
     "*.tsj": ["@parcel/transformer-raw"],
     "*.png": ["@parcel/transformer-raw"],
     "*.wav": ["@parcel/transformer-raw"],
-    "*.ogg": ["@parcel/transformer-raw"]
-  },
-  "reporters":  ["...", "parcel-reporter-static-files-copy"]  
+    "*.ogg": ["@parcel/transformer-raw"],
+    "url:*": ["...", "@parcel/transformer-inline-string"]
+
+  }
 }

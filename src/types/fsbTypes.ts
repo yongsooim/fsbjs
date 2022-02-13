@@ -1,3 +1,5 @@
+import { TiledMapResource } from "@excaliburjs/plugin-tiled";
+
 
 export enum Direction {
     UP = "UP",
@@ -14,4 +16,14 @@ export class Coordinate {
         this.x = _x
         this.y = _y
     }
+}
+
+export class FsbMapResource extends TiledMapResource{
+
+    constructor(public path: string){
+        super(path)
+        this.convertPath = (originPath: string, relativePath: string) => {
+               return relativePath;
+        }
+   }
 }

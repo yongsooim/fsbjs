@@ -11,25 +11,12 @@
   "license": "MIT",
   "devDependencies": {
     "del-cli": "^4.0.1",
-    "http-server": "^14.1.0",
     "parcel": "2.2.1",
-    "parcel-reporter-static-files-copy": "^1.3.4",
-    "parcel-resolver-ignore": "^2.0.0",
-    "serve": "^13.0.2",
     "typescript": "^4.5.5"
   },
   "dependencies": {
     "@excaliburjs/dev-tools": "^0.25.3",
     "@excaliburjs/plugin-tiled": "^0.25.3",
     "excalibur": "^0.25.3"
-  },
-  "parcelIgnore": [
-    "/*.png",
-    "/*.ogg",
-    "/*.tmj",
-    "/*.tms"
-  ],
-  "staticFiles": {
-    "staticOutPath": "static"
   }
 }
