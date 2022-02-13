@@ -1,6 +1,6 @@
 import * as ex from 'excalibur'
 import * as fsb from '../types/fsbTypes';
-import runImageSrc2 from '../../static/graphics/actor/csam/CSAM00.png'
+import runImageSrc2 from '/static/graphics/actor/csam/CSAM00.png'
 import { map } from '../index'
 
 export const image2 = new ex.ImageSource(runImageSrc2)

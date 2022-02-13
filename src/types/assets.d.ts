@@ -5,3 +5,4 @@ declare module '*.wav';
 declare module '*.tmj';
 declare module '*.tmx';
 declare module '*.json';
+declare module '*.ogg';

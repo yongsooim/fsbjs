@@ -3,9 +3,11 @@ import { Player, image2 } from './actor/player'
 import { DevTool } from '@excaliburjs/dev-tools'
 import { TiledMapResource } from '@excaliburjs/plugin-tiled';
 
-import runImageSrc from '../static/graphics/actor/cdit/CDIT100.png'
-import runImageSrc2 from '../static/graphics/actor/csam/CSAM00.png'
-import myTmx from '../static/map/tmj/ff.tmj';
+import runImageSrc from '/static/graphics/actor/cdit/CDIT100.png'
+import runImageSrc2 from '/static/graphics/actor/csam/CSAM00.png'
+import myTmx from '/static/map/tmj/ff.tmj';
+import {resources} from './resource/resource'
+
 
 import { Color } from 'excalibur';
 
@@ -17,8 +19,12 @@ const game = new ex.Engine({
     maxFps: 60,
     backgroundColor: Color.Black,
     suppressConsoleBootMessage: true,
-    displayMode: ex.DisplayMode.FitScreen
+    displayMode: ex.DisplayMode.FitScreen,
 })
+
+
+
+
 
 const devtool = new DevTool(game);
 document.getElementsByClassName("excalibur-tweakpane-custom")[0].setAttribute("style", "bottom:10px")
@@ -30,9 +36,16 @@ export const map = new TiledMapResource(myTmx, { startingLayerZIndex: -2 });
 const loader = new ex.Loader([
     map,
     image,
-    image2
+    image2,
+    resources.IntroImage,
+    resources.PusanOgg
 ]);
 loader.backgroundColor = '#000000'
+
+loader.logo =  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAALVBMVEUAAADMAAD/AAD/ZjP//8z//5mZmWZmZjMICAjMzJlmZgD/zADMmQAzMzP///8DKeQuAAAAAWJLR0QOb70wTwAAAAd0SU1FB+YCDQAOLsY2+cMAAAEhSURBVCjPVVIxUsMwEJQzJmkdDQ9AZwZ66wMp7CK9VbiDFHKVGYYm9gsQITWDfpCCF5APMNCEB+QvnHSSAjejkXZ1Wp1uxVgMDgAFm0eYAUgJgouEJfi4OmNRuLQinJeVKPxGSCglkJr4k7BwqyDhFPLWrYrziUa1qaRJWcGlUqpORSHRKBcLFjWuFUUbn9Grf0x2Y0bCtfXEdDD7kbAmvN0evsaE8zfzsvv4NmPETTfsDp/GPNv+6AisoBve9+bJ9idHXDixbkC8ul0/IEHXdcO4ArFhiVDLVwjtonqW9r4MRF47aO/m+ELqhsXQ+sjLKvRvqrWenX5ARoLjmK0fsWvBAj9vohGMzMkgGcEmZKF3jiQEx+0qYfQ/w48g0jf4BWezWSBoSsEXAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTAyLTEzVDAwOjE0OjQ2KzAwOjAw1+mSSAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wMi0xM1QwMDoxNDo0NiswMDowMKa0KvQAAAAASUVORK5CYII=';
+loader.logoWidth = 32;
+loader.logoHeight = 32;
+loader.playButtonText = '클릭하여 시작하기'
 
 
 const runSheet = ex.SpriteSheet.fromImageSource({
@@ -78,6 +91,11 @@ actor3.graphics.use(anim2);
 actor4.graphics.use(anim3);
 
 game.start(loader).then(() => {
+
+
+    resources.PusanOgg.play()
+
+
     console.log(map)
     map.addTiledMapToScene(game.currentScene)
     actor.z = 1;
@@ -105,8 +123,8 @@ function cameraSet() {
 
     game.currentScene.camera.strategy.elasticToActor(
         actor,
-        0.8,
-        0.9
+        0.9,
+        0.8
     )
 
     let boundingBox = new ex.BoundingBox(
