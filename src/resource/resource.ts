@@ -1,6 +1,6 @@
 import { ImageSource, Sound } from "excalibur";
 import { FsbMapResource } from "../types/fsbTypes";
-import { assetRoot as assetRootPath } from "../types/const";
+import { assetRootPath } from "../types/const";
 
 
 export let resources = {

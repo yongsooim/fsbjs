@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "clean": "npx del-cli dist & npx del-cli .parcel-cache",
-    "start": "npx del-cli dist & npx del-cli .parcel-cache &parcel ./src/index.html --open",
+    "start": "npx del-cli dist &parcel ./src/index.html --open",
     "build": "npx del-cli dist & npx del-cli .parcel-cache & parcel build ./src/index.html"
   },
   "author": "yongsoo im",

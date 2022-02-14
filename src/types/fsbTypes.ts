@@ -8,13 +8,13 @@ export enum Direction {
     DOWN = "DOWN"
 }
 
-export class Coordinate {
+export class Coordinate { // tile position (1 x 1 -> 64px x 48px)
     public x = 0;
     public y = 0;
 
-    constructor(_x: number, _y: number) {
-        this.x = _x
-        this.y = _y
+    constructor(x: number, y: number) {
+        this.x = x
+        this.y = y
     }
 }
 

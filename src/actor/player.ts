@@ -1,8 +1,8 @@
 import * as ex from 'excalibur'
 import * as fsb from '../types/fsbTypes';
-import { assetRoot } from '../types/const';
+import { assetRootPath } from '../types/const';
 
-export const image2 = new ex.ImageSource(assetRoot + 'graphics/actor/csam/CSAM00.png')
+export const image2 = new ex.ImageSource(assetRootPath + 'graphics/actor/csam/CSAM00.png')
 
 const runSheet2 = ex.SpriteSheet.fromImageSource({
     image: image2,
@@ -13,12 +13,6 @@ const runSheet2 = ex.SpriteSheet.fromImageSource({
         spriteHeight: 96
     }
 });
-
-
-const anim4 = ex.Animation.fromSpriteSheet(runSheet2, [6, 7, 8, 7, 6, 9, 10, 9], 66, ex.AnimationStrategy.Loop);
-
-
-
 export class Player extends ex.Actor {
 
     public isMoving: boolean;
@@ -27,6 +21,9 @@ export class Player extends ex.Actor {
 
     constructor(config?: ex.ActorArgs) {
         super(config)
+
+        this.isMoving = false
+        this.position = new fsb.Coordinate(0, 0)
         this.direction = fsb.Direction.DOWN;
 
         this.graphics.add('walkup', ex.Animation.fromSpriteSheet(runSheet2, [0, 1, 2, 1, 0, 3, 4, 3], 33, ex.AnimationStrategy.Loop))
