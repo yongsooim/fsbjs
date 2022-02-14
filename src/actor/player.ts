@@ -1,6 +1,5 @@
 import * as ex from 'excalibur'
 import * as fsb from '../types/fsbTypes';
-import { map } from '../index'
 import { assetRoot } from '../types/const';
 
 export const image2 = new ex.ImageSource(assetRoot + 'graphics/actor/csam/CSAM00.png')
