@@ -23,8 +23,8 @@ let introSprite = resources.IntroImage.toSprite()
 const introExitSelectedAnim = new ex.Animation({
     frames: [
         { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 100 },
-        { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 100 },
-        { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 100 }
+        { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 223, y: 0, width: 112, height: 51 } }), duration: 100 },
+        { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 334, y: 0, width: 112, height: 51 } }), duration: 100 }
     ],
     strategy: ex.AnimationStrategy.Loop
 })
@@ -32,8 +32,8 @@ const introExitSelectedAnim = new ex.Animation({
 const introStartSelectedAnim = new ex.Animation({
     frames: [
         { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 100 },
-        { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 300, y: 51, width: 150, height: 51 } }), duration: 100 },
-        { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 450, y: 51, width: 150, height: 51 } }), duration: 100 }
+        { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 100 },
+        { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 100 },
     ],
     strategy: ex.AnimationStrategy.Loop
 })
@@ -49,15 +49,20 @@ const introLoadSelectedAnim = new ex.Animation({
 
 introActor.graphics.layers.create({ name: 'background', order: 0 })
 introActor.graphics.layers.create({ name: 'selector', order: 1})
+introActor.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
 
 
 console.log(introActor.graphics.layers)
 
 introActor.graphics.layers.get('background').show(introSprite)
 
+let fadeinRect = new ex.Rectangle({width:window.outerWidth, height:window.outerHeight, color: ex.Color.White})
+introActor.graphics.layers.get('fadein').show(fadeinRect)
 
 introActor.onInitialize = (game) => {
-    resources.PusanOgg.play()
+
+    console.log(introActor.graphics.graphics)
+
     game.input.keyboard.on("press", (evt)=>{
         console.log(evt)
         if(evt.value == "Enter") {
@@ -65,6 +70,8 @@ introActor.onInitialize = (game) => {
             resources.PusanOgg.stop()
             introActor.kill()
 
+            resources.vill2.loop = true
+            resources.vill2.play()
             resources.Map.addTiledMapToScene(game.currentScene)
             game.add(actor)
             actor.z = 5;
@@ -75,8 +82,17 @@ introActor.onInitialize = (game) => {
 } 
 
 
-
+let count = 0
 introActor.update = (game, delta) => {
+
+    if(fadeinRect.opacity){
+        fadeinRect.opacity *= 0.9
+        if(fadeinRect.opacity < 0.1){
+            fadeinRect.opacity = 0
+        }
+        console.log(count++)
+    }
+
     if (game.input.keyboard.wasPressed(ex.Input.Keys.Down)) {
         resources.e156.play()
         switch(introActor.selected){
@@ -119,7 +135,7 @@ introActor.update = (game, delta) => {
 
         case (selected.start) : 
             introActor.graphics.layers.get('selector').hide()
-            introActor.graphics.layers.get('selector').offset = ex.vec(184, 148)
+            introActor.graphics.layers.get('selector').offset = ex.vec(183, 148)
             introActor.graphics.layers.get('selector').show(introStartSelectedAnim)
             break;
 

@@ -36,6 +36,8 @@ export const actor = new Player({
 
 game.start(loader).then(() => {
 
+    resources.PusanOgg.loop = true
+    resources.PusanOgg.play()
 
     game.add(introActor)
 
