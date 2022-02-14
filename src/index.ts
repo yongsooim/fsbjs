@@ -20,7 +20,7 @@ export const game = new ex.Engine({
 game.screen.antialiasing = true
 
 
-const devtool = new DevTool(game);
+//const devtool = new DevTool(game);
 
 const loader = new ex.Loader(Object.keys(resources).map(key => resources[key]));
 loader.backgroundColor = '#000000'
