@@ -1,11 +1,11 @@
 import * as ex from 'excalibur'
 import * as fsb from '../types/fsbTypes';
+import {resources} from '../resource/resourceManage'
 import { assetRootPath } from '../types/const';
 
-export const image2 = new ex.ImageSource(assetRootPath + 'graphics/actor/csam/CSAM00.png')
 
 const runSheet2 = ex.SpriteSheet.fromImageSource({
-    image: image2,
+    image: resources.Image2,
     grid: {
         rows: 4,
         columns: 6,
@@ -35,9 +35,8 @@ export class Player extends ex.Actor {
         this.graphics.add('stopdown', ex.Animation.fromSpriteSheet(runSheet2, [6], 33, ex.AnimationStrategy.Loop))
         this.graphics.add('stopright', ex.Animation.fromSpriteSheet(runSheet2, [18], 33, ex.AnimationStrategy.Loop))
         this.graphics.add('stopleft', ex.Animation.fromSpriteSheet(runSheet2, [12], 33, ex.AnimationStrategy.Loop))
+
         this.graphics.use('stopdown');
-
-
     }
     public update(engine: ex.Engine, delta: number) {
 
@@ -62,8 +61,7 @@ export class Player extends ex.Actor {
 
             }
 
-            console.log(engine.input.keyboard.isHeld(ex.Input.Keys.W))
-            if (this.pos.x % 64 == 0 && this.pos.y % 48 == 0
+            if ((this.pos.x + 32) % 64 == 0 && this.pos.y % 48 == 0
 
                 && !engine.input.keyboard.isHeld(ex.Input.Keys.W)
                 && !engine.input.keyboard.isHeld(ex.Input.Keys.A)
@@ -98,7 +96,6 @@ export class Player extends ex.Actor {
 
                         break
                 }
-
             }
         } else {
 

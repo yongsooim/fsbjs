@@ -3,20 +3,22 @@ import { Player } from './actor/player'
 import { DevTool } from '@excaliburjs/dev-tools'
 import { FsbMapResource } from './types/fsbTypes';
 
-import {resources} from './resource/resource'
+import {resources} from './resource/resourceManage'
 import { Color } from 'excalibur';
+import { introActor } from './scene/001_opening';
 
-
-const game = new ex.Engine({
+export const game = new ex.Engine({
     width: window.outerWidth,
     height: window.outerHeight,
-    // Turn off anti-aliasing for pixel art graphics
     antialiasing: false,
     maxFps: 60,
     backgroundColor: Color.Black,
     suppressConsoleBootMessage: true,
     displayMode: ex.DisplayMode.FitScreen,
 })
+
+game.screen.antialiasing = true
+
 
 const devtool = new DevTool(game);
 
@@ -28,38 +30,24 @@ loader.logoWidth = 32;
 loader.logoHeight = 32;
 loader.playButtonText = '눌러서 시작'
 
-const actor = new Player({
-    pos: ex.vec(640, 960)
+export const actor = new Player({
+    pos: ex.vec(640 + 32, 960)
 })
 
 game.start(loader).then(() => {
 
-    let introActor = new ex.Actor()
-    
-    let introSprite = resources.IntroImage.toSprite()
-    
-    introActor.pos = ex.vec(game.halfDrawWidth, game.halfDrawHeight)
-    introActor.graphics.show(introSprite)
-    
-    resources.PusanOgg.play()
 
     game.add(introActor)
 
-    game.input.keyboard.on("press", (evt) => {
+    introActor.pos = ex.vec(game.halfDrawWidth, game.halfDrawHeight)
+    
+  
+ 
 
-        
-        resources.Map.addTiledMapToScene(game.currentScene)
-        actor.z = 1;
-        game.add(actor)
-        cameraSet()
-
-        game.input.keyboard.on("press", (evt) => {})
-
-    });
 })
 
 
-function cameraSet() {
+export function cameraSet() {
     game.currentScene.camera.zoom = 2
     game.input.pointers.on('wheel', function (evt) {
         if (evt.deltaY > 0) {
