@@ -23,7 +23,8 @@ export class FsbMapResource extends TiledMapResource{
     constructor(public path: string){
         super(path)
         this.convertPath = (originPath: string, relativePath: string) => {
-               return relativePath;
+               return relativePath; // use always absolute path
         }
    }
 }
+

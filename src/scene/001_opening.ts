@@ -23,7 +23,7 @@ let introSprite = resources.IntroImage.toSprite()
 const introExitSelectedAnim = new ex.Animation({
     frames: [
         { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 100 },
-        { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 223, y: 0, width: 112, height: 51 } }), duration: 100 },
+        { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 100 },
         { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 334, y: 0, width: 112, height: 51 } }), duration: 100 }
     ],
     strategy: ex.AnimationStrategy.Loop
@@ -51,7 +51,6 @@ introActor.graphics.layers.create({ name: 'background', order: 0 })
 introActor.graphics.layers.create({ name: 'selector', order: 1})
 introActor.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
 
-
 console.log(introActor.graphics.layers)
 
 introActor.graphics.layers.get('background').show(introSprite)
@@ -61,21 +60,43 @@ introActor.graphics.layers.get('fadein').show(fadeinRect)
 
 introActor.onInitialize = (game) => {
 
-    console.log(introActor.graphics.graphics)
-
     game.input.keyboard.on("press", (evt)=>{
-        console.log(evt)
         if(evt.value == "Enter") {
-            resources.e154.play()
-            resources.PusanOgg.stop()
-            introActor.kill()
+            switch(introActor.selected){
+                case (selected.exit) : 
+                    introActor.graphics.layers.get('selector').hide()
+                    introActor.graphics.layers.get('selector').offset = ex.vec(186, 193)
+                    introActor.graphics.layers.get('selector').show(new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
+                    break;
+        
+                case (selected.start) : 
+                    introActor.graphics.layers.get('selector').hide()
+                    introActor.graphics.layers.get('selector').offset = ex.vec(183, 148)
+                    introActor.graphics.layers.get('selector').show(new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
+                    break;
+        
+                case (selected.load) : 
+                    introActor.graphics.layers.get('selector').hide()
+                    introActor.graphics.layers.get('selector').offset = ex.vec(179, 101)
+                    introActor.graphics.layers.get('selector').show(new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
+                    break;
+            }
 
-            resources.vill2.loop = true
-            resources.vill2.play()
-            resources.Map.addTiledMapToScene(game.currentScene)
-            game.add(actor)
-            actor.z = 5;
-            cameraSet()
+            resources.e154.play()
+            
+            setTimeout(()=>{
+                resources.PusanOgg.stop()
+                introActor.kill()
+    
+                resources.vill2.loop = true
+                resources.vill2.play()
+                resources.Map.addTiledMapToScene(game.currentScene)
+                game.add(actor)
+                actor.z = 5;
+                cameraSet()
+    
+
+            }, 500)
         }
 
     })
