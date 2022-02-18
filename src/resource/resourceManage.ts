@@ -8,7 +8,7 @@ export let resources = {
     Image2       : new ImageSource   (assetRootPath + "graphics/ase_ps/CSAM00.png"),
 
     /** 다섯손가락 마을 테스트용 */
-    Map          : new FsbMapResource(assetRootPath + 'mapset/tmj/ff.tmj'                ),  
+    Map          : new FsbMapResource(assetRootPath + 'mapset/tmj/0022_Tfi0___.tmj'                ),  
 
     /** 푸산 테마, 메인 메뉴 브금 */
     PusanOgg     : new Sound         (assetRootPath + "ogg/bgm/pusan.ogg"             ),  
