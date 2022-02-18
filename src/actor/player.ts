@@ -40,42 +40,40 @@ export class Player extends ex.Actor {
     }
     public update(engine: ex.Engine, delta: number) {
 
-
-        if (this.isMoving) {
-            switch (this.direction) {
-                case fsb.Direction.UP:
-                    this.pos.y = this.pos.y - 8;
-                    break
-
-                case fsb.Direction.LEFT:
-                    this.pos.x = this.pos.x - 8;
-                    break
-
-                case fsb.Direction.RIGHT:
-                    this.pos.x = this.pos.x + 8;
-                    break
-
-                case fsb.Direction.DOWN:
-                    this.pos.y = this.pos.y + 8;
-                    break
-
-            }
-
-            if ((this.pos.x + 32) % 64 == 0 && this.pos.y % 48 == 0
-
-                && !engine.input.keyboard.isHeld(ex.Input.Keys.W)
-                && !engine.input.keyboard.isHeld(ex.Input.Keys.A)
-                && !engine.input.keyboard.isHeld(ex.Input.Keys.S)
-                && !engine.input.keyboard.isHeld(ex.Input.Keys.D)
-                && !engine.input.keyboard.isHeld(ex.Input.Keys.Up)
-                && !engine.input.keyboard.isHeld(ex.Input.Keys.Down)
-                && !engine.input.keyboard.isHeld(ex.Input.Keys.Left)
-                && !engine.input.keyboard.isHeld(ex.Input.Keys.Right)
-            ) {
+        if ((this.pos.x + 32) % 64 == 0 && this.pos.y % 48 == 0){
+            if (engine.input.keyboard.isHeld(ex.Input.Keys.W) ||
+                engine.input.keyboard.isHeld(ex.Input.Keys.Up)) {
+                this.isMoving = true;
+                this.graphics.use('walkup');
+                this.direction = fsb.Direction.UP
+                this.pos.y = this.pos.y - 8;
 
 
-                this.isMoving = false
+            } else if (engine.input.keyboard.isHeld(ex.Input.Keys.A) ||
+                engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
+                this.isMoving = true;
+                this.graphics.use('walkleft');
+                this.direction = fsb.Direction.LEFT
+                this.pos.x = this.pos.x - 8;
 
+
+
+            } else if (engine.input.keyboard.isHeld(ex.Input.Keys.S) ||
+                engine.input.keyboard.isHeld(ex.Input.Keys.Down)) {
+                this.isMoving = true;
+                this.graphics.use('walkdown');
+                this.direction = fsb.Direction.DOWN
+                this.pos.y = this.pos.y + 8;
+
+
+            } else if (engine.input.keyboard.isHeld(ex.Input.Keys.D) ||
+                engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
+                this.isMoving = true;
+                this.graphics.use('walkright');
+                this.direction = fsb.Direction.RIGHT
+                this.pos.x = this.pos.x + 8;
+
+            } else {
                 switch (this.direction) {
                     case fsb.Direction.UP:
                         this.graphics.use('stopup');
@@ -96,37 +94,33 @@ export class Player extends ex.Actor {
 
                         break
                 }
+
             }
         } else {
 
-            if (engine.input.keyboard.isHeld(ex.Input.Keys.W) ||
-                engine.input.keyboard.isHeld(ex.Input.Keys.Up)) {
-                this.isMoving = true;
-                this.graphics.use('walkup');
-                this.direction = fsb.Direction.UP
-
-            } else if (engine.input.keyboard.isHeld(ex.Input.Keys.A) ||
-                engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
-                this.isMoving = true;
-                this.graphics.use('walkleft');
-                this.direction = fsb.Direction.LEFT
-
-
-            } else if (engine.input.keyboard.isHeld(ex.Input.Keys.S) ||
-                engine.input.keyboard.isHeld(ex.Input.Keys.Down)) {
-                this.isMoving = true;
-                this.graphics.use('walkdown');
-                this.direction = fsb.Direction.DOWN
-
-
-            } else if (engine.input.keyboard.isHeld(ex.Input.Keys.D) ||
-                engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
-                this.isMoving = true;
-                this.graphics.use('walkright');
-                this.direction = fsb.Direction.RIGHT
+            if (this.isMoving) {
+                switch (this.direction) {
+                    case fsb.Direction.UP:
+                        this.pos.y = this.pos.y - 8;
+                        break
+    
+                    case fsb.Direction.LEFT:
+                        this.pos.x = this.pos.x - 8;
+                        break
+    
+                    case fsb.Direction.RIGHT:
+                        this.pos.x = this.pos.x + 8;
+                        break
+    
+                    case fsb.Direction.DOWN:
+                        this.pos.y = this.pos.y + 8;
+                        break
+                }
+    
 
 
-            }
+        }
+
         }
     }
 

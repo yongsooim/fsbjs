@@ -2,7 +2,6 @@ import { resources } from '../resource/resourceManage'
 import * as ex from 'excalibur'
 import {game} from '../index'
 import {scenes} from './sceneManage'
-import {actor, cameraSet} from '../index'
 
 export const introScene = new ex.Scene()
 
@@ -18,7 +17,6 @@ class IntroActor extends ex.Actor{
 }
 
 export let introActor = new IntroActor()
-let introSprite = resources.IntroImage.toSprite()
 
 const introExitSelectedAnim = new ex.Animation({
     frames: [
@@ -47,18 +45,22 @@ const introLoadSelectedAnim = new ex.Animation({
     strategy: ex.AnimationStrategy.Loop
 })
 
-
-introActor.graphics.layers.create({ name: 'background', order: 0 })
-introActor.graphics.layers.create({ name: 'selector', order: 1})
-introActor.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
-
-introActor.graphics.layers.get('background').show(introSprite)
-
-let fadeinRect = new ex.Rectangle({width:window.outerWidth, height:window.outerHeight, color: ex.Color.White})
-introActor.graphics.layers.get('fadein').show(fadeinRect)
+const fadeinRect = new ex.Rectangle({width:window.outerWidth, height:window.outerHeight, color: ex.Color.White})
 
 introActor.onInitialize = (game) => {
+    resources.PusanOgg.loop = true
+    resources.PusanOgg.play()    
 
+    let introSprite = resources.IntroImage.toSprite()
+
+    introActor.graphics.layers.create({ name: 'background', order: 0 })
+    introActor.graphics.layers.create({ name: 'selector', order: 1})
+    introActor.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
+    
+    introActor.graphics.layers.get('background').show(introSprite)
+    
+    introActor.graphics.layers.get('fadein').show(fadeinRect)
+    
     game.input.keyboard.on("press", (evt)=>{
         if(evt.value == "Enter") {
             switch(introActor.selected){
@@ -89,10 +91,6 @@ introActor.onInitialize = (game) => {
 
             resources.vill2.loop = true
             resources.vill2.play()
-            resources.Map.addTiledMapToScene(game.currentScene)
-            game.add(actor)
-            actor.z = 5;
-            cameraSet()
 
         }
 

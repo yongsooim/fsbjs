@@ -21,7 +21,7 @@ export class Coordinate { // tile position (1 x 1 -> 64px x 48px)
 export class FsbMapResource extends TiledMapResource{
 
     constructor(public path: string){
-        super(path)
+        super(path, { startingLayerZIndex: -2 })
         this.convertPath = (originPath: string, relativePath: string) => {
             // customized for static file server
             const relativeSplit = relativePath.split('/')

@@ -1,7 +1,7 @@
 import { ImageSource, Sound } from "excalibur";
 import { FsbMapResource } from "../types/fsbTypes";
 import { assetRootPath } from "../types/const";
-import {mapList} from '../index'
+
 
 
 
@@ -9,10 +9,6 @@ export let resources = {
     IntroImage   : new ImageSource   (assetRootPath + "graphics/pcxset/ST00.png"         ),
     IntroSelector: new ImageSource   (assetRootPath + "graphics/pcxset/ST01.png"         ),
     Image2       : new ImageSource   (assetRootPath + "graphics/ase_ps/CSAM00.png"),
-
-    /** 다섯손가락 마을 테스트용 */
-    Map          : new FsbMapResource(assetRootPath + 'mapset/tmj/0022_Tfi0___.tmj'                ),  
-    Map2          : new FsbMapResource(assetRootPath + 'mapset/tmj/0061_Tzg0___.tmj'                ),  
 
     /** 푸산 테마, 메인 메뉴 브금 */
     PusanOgg     : new Sound         (assetRootPath + "ogg/bgm/pusan.ogg"             ),  
@@ -26,10 +22,4 @@ export let resources = {
 
     /** 메뉴 커서 옮길 때 나는 소리 */
     e156         : new Sound         (assetRootPath + 'ogg/wav_eft/e156.ogg'               ),  
-
 };
-
-export let maps ={
-
-    
-}
