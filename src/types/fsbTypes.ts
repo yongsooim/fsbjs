@@ -24,11 +24,9 @@ export class FsbMapResource extends TiledMapResource{
         super(path)
         this.convertPath = (originPath: string, relativePath: string) => {
             // customized for static file server
-
             const relativeSplit = relativePath.split('/')
             const fileName = relativeSplit[relativeSplit.length - 1]
             let returnPath: string
-
             if(fileName.includes('.png')){
                 returnPath = assetRootPath + 'mapset/png/' + fileName.split('.')[0].toUpperCase() + '.png'
             } else if (fileName.includes('.tsj')){
@@ -36,7 +34,6 @@ export class FsbMapResource extends TiledMapResource{
             } else {
                 //error
             }
-            console.log(returnPath)
             return returnPath;
         }
    }

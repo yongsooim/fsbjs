@@ -47,11 +47,10 @@ const introLoadSelectedAnim = new ex.Animation({
     strategy: ex.AnimationStrategy.Loop
 })
 
+
 introActor.graphics.layers.create({ name: 'background', order: 0 })
 introActor.graphics.layers.create({ name: 'selector', order: 1})
 introActor.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
-
-console.log(introActor.graphics.layers)
 
 introActor.graphics.layers.get('background').show(introSprite)
 
@@ -82,21 +81,19 @@ introActor.onInitialize = (game) => {
                     break;
             }
 
+            game.input.keyboard.off("press")
             resources.e154.play()
             
-            setTimeout(()=>{
-                resources.PusanOgg.stop()
-                introActor.kill()
-    
-                resources.vill2.loop = true
-                resources.vill2.play()
-                resources.Map.addTiledMapToScene(game.currentScene)
-                game.add(actor)
-                actor.z = 5;
-                cameraSet()
-    
+            resources.PusanOgg.stop()
+            introActor.kill()
 
-            }, 500)
+            resources.vill2.loop = true
+            resources.vill2.play()
+            resources.Map.addTiledMapToScene(game.currentScene)
+            game.add(actor)
+            actor.z = 5;
+            cameraSet()
+
         }
 
     })
@@ -111,7 +108,6 @@ introActor.update = (game, delta) => {
         if(fadeinRect.opacity < 0.1){
             fadeinRect.opacity = 0
         }
-        console.log(count++)
     }
 
     if (game.input.keyboard.wasPressed(ex.Input.Keys.Down)) {
