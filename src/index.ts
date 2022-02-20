@@ -25,6 +25,12 @@ const devtool = new DevTool(game);
 const loader = new ex.Loader(Object.keys(resources).map(key => resources[key]));
 export let map = new FsbMapResource(assetRootPath + 'mapset/tmj/' + mapList[22])
 loader.addResource(map)
+loader.backgroundColor = '#000000'
+
+loader.logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAALVBMVEUAAADMAAD/AAD/ZjP//8z//5mZmWZmZjMICAjMzJlmZgD/zADMmQAzMzP///8DKeQuAAAAAWJLR0QOb70wTwAAAAd0SU1FB+YCDQAOLsY2+cMAAAEhSURBVCjPVVIxUsMwEJQzJmkdDQ9AZwZ66wMp7CK9VbiDFHKVGYYm9gsQITWDfpCCF5APMNCEB+QvnHSSAjejkXZ1Wp1uxVgMDgAFm0eYAUgJgouEJfi4OmNRuLQinJeVKPxGSCglkJr4k7BwqyDhFPLWrYrziUa1qaRJWcGlUqpORSHRKBcLFjWuFUUbn9Grf0x2Y0bCtfXEdDD7kbAmvN0evsaE8zfzsvv4NmPETTfsDp/GPNv+6AisoBve9+bJ9idHXDixbkC8ul0/IEHXdcO4ArFhiVDLVwjtonqW9r4MRF47aO/m+ELqhsXQ+sjLKvRvqrWenX5ARoLjmK0fsWvBAj9vohGMzMkgGcEmZKF3jiQEx+0qYfQ/w48g0jf4BWezWSBoSsEXAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTAyLTEzVDAwOjE0OjQ2KzAwOjAw1+mSSAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wMi0xM1QwMDoxNDo0NiswMDowMKa0KvQAAAAASUVORK5CYII=';
+loader.logoWidth = 32;
+loader.logoHeight = 32;
+loader.playButtonText = '시작'
 
 const startIntro = () => {
 
@@ -55,6 +61,8 @@ const reset = () => {
  const start = (mapFile: string) => {
 
     const loader = new ex.Loader(Object.keys(resources).map(key => resources[key]));
+    loader.suppressPlayButton = true
+
     console.log(mapFile)
     let map = new FsbMapResource(mapFile)
     loader.addResource(map)
