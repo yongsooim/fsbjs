@@ -16,7 +16,7 @@ export const game = new ex.Engine({
     backgroundColor: Color.Black,
     suppressConsoleBootMessage: true,
     displayMode: ex.DisplayMode.FitScreen,
-    suppressPlayButton: true
+    suppressPlayButton: false
 })
 game.screen.antialiasing = true
 
@@ -100,6 +100,8 @@ var mapClicked = function() {
     game.currentScene.tileMaps.forEach(t => {
         game.currentScene.remove(t);
      });
+
+    loader.suppressPlayButton = true
 
     reset();
     start(assetRootPath + 'mapset/tmj/' + mapList[parseInt(this.innerText.slice(0,4))]);
