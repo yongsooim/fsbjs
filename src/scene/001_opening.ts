@@ -2,8 +2,9 @@ import { resources } from '../resource/resourceManage'
 import * as ex from 'excalibur'
 import {game} from '../index'
 import {scenes} from './sceneManage'
-
+import {map} from '../index'
 export const introScene = new ex.Scene()
+import { Player } from '../actor/player'
 
 declare enum selected {
     start,
@@ -17,6 +18,7 @@ class IntroActor extends ex.Actor{
 }
 
 export let introActor = new IntroActor()
+let introSprite = resources.IntroImage.toSprite()
 
 const introExitSelectedAnim = new ex.Animation({
     frames: [
@@ -45,22 +47,19 @@ const introLoadSelectedAnim = new ex.Animation({
     strategy: ex.AnimationStrategy.Loop
 })
 
-const fadeinRect = new ex.Rectangle({width:window.outerWidth, height:window.outerHeight, color: ex.Color.White})
+introActor.graphics.layers.create({ name: 'background', order: 0 })
+introActor.graphics.layers.create({ name: 'selector', order: 1})
+introActor.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
+
+console.log(introActor.graphics.layers)
+
+introActor.graphics.layers.get('background').show(introSprite)
+
+let fadeinRect = new ex.Rectangle({width:window.outerWidth, height:window.outerHeight, color: ex.Color.White})
+introActor.graphics.layers.get('fadein').show(fadeinRect)
 
 introActor.onInitialize = (game) => {
-    resources.PusanOgg.loop = true
-    resources.PusanOgg.play()    
-
-    let introSprite = resources.IntroImage.toSprite()
-
-    introActor.graphics.layers.create({ name: 'background', order: 0 })
-    introActor.graphics.layers.create({ name: 'selector', order: 1})
-    introActor.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
-    
-    introActor.graphics.layers.get('background').show(introSprite)
-    
-    introActor.graphics.layers.get('fadein').show(fadeinRect)
-    
+    resources.PusanOgg.play()
     game.input.keyboard.on("press", (evt)=>{
         if(evt.value == "Enter") {
             switch(introActor.selected){
@@ -83,7 +82,6 @@ introActor.onInitialize = (game) => {
                     break;
             }
 
-            game.input.keyboard.off("press")
             resources.e154.play()
             
             resources.PusanOgg.stop()
@@ -91,7 +89,33 @@ introActor.onInitialize = (game) => {
 
             resources.vill2.loop = true
             resources.vill2.play()
+            map.addTiledMapToScene(game.currentScene)
+            game.input.keyboard.off('press')
+            let player = new Player({x:32 + 64, y:96})
 
+            game.add(player)
+
+            game.currentScene.camera.zoom = 1
+            game.input.pointers.on('wheel', function (evt) {
+                if (evt.deltaY > 0) {
+                    if (game.currentScene.camera.zoom > 0.4) {
+                        game.currentScene.camera.zoom *= 0.9;
+                    }
+                } else {
+                    if (game.currentScene.camera.zoom < 4) {
+                        game.currentScene.camera.zoom *= 1.1;
+                    }
+                }
+            })
+            
+            let boundingBox = new ex.BoundingBox(
+                0,
+                0,
+                game.currentScene.tileMaps[0].cols * 64,
+                game.currentScene.tileMaps[0].rows * 48,
+            )
+                game.currentScene.camera.strategy.elasticToActor(player, 0.9, 0.8)
+            game.currentScene.camera.strategy.limitCameraBounds(boundingBox)
         }
 
     })
@@ -106,6 +130,7 @@ introActor.update = (game, delta) => {
         if(fadeinRect.opacity < 0.1){
             fadeinRect.opacity = 0
         }
+        console.log(count++)
     }
 
     if (game.input.keyboard.wasPressed(ex.Input.Keys.Down)) {

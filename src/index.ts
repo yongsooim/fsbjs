@@ -16,10 +16,30 @@ export const game = new ex.Engine({
     backgroundColor: Color.Black,
     suppressConsoleBootMessage: true,
     displayMode: ex.DisplayMode.FitScreen,
-    suppressPlayButton: false
+    suppressPlayButton: true
 })
+game.screen.antialiasing = true
 
 const devtool = new DevTool(game);
+
+const loader = new ex.Loader(Object.keys(resources).map(key => resources[key]));
+export let map = new FsbMapResource(assetRootPath + 'mapset/tmj/' + mapList[22])
+loader.addResource(map)
+
+const startIntro = () => {
+
+
+
+
+    game.start(loader).then(() => {
+
+        game.add(introActor)
+        introActor.pos = ex.vec(game.halfDrawWidth, game.halfDrawHeight)
+    
+
+    })
+}
+
 
 
 const reset = () => {
@@ -42,19 +62,12 @@ const reset = () => {
     game.add(player)
     game.start(loader).then(() => {
 
-        map.getTileMapLayers()[0].z = 1
-        map.getTileMapLayers()[1].z = 200
         console.log(map.getTileMapLayers()[0])
         console.log(map.getTileMapLayers()[1])
         map.addTiledMapToScene(game.currentScene)
 
-        console.log(map)
 
-        console.log(map)
-    
-        game.currentScene.tileMaps[0]
-
-        game.currentScene.camera.zoom = 2
+        game.currentScene.camera.zoom = 1
         game.input.pointers.on('wheel', function (evt) {
             if (evt.deltaY > 0) {
                 if (game.currentScene.camera.zoom > 0.4) {
@@ -70,10 +83,11 @@ const reset = () => {
         let boundingBox = new ex.BoundingBox(
             0,
             0,
-            game.currentScene.tileMaps[0].rows * 48,
             game.currentScene.tileMaps[0].cols * 64,
+            game.currentScene.tileMaps[0].rows * 48,
         )
-        game.currentScene.camera.strategy.elasticToActor(player, 0.9, 0.8)
+//        game.currentScene.camera.strategy.elasticToActor(player, 0.9, 0.8)
+game.currentScene.camera.strategy.lockToActor(player)
         game.currentScene.camera.strategy.limitCameraBounds(boundingBox)
     })   
 }
@@ -81,7 +95,8 @@ const reset = () => {
 
 
 var mapClicked = function() {
-    resources.vill2.stop()
+    //resources.vill2.stop()
+    resources.PusanOgg.stop()
     game.currentScene.tileMaps.forEach(t => {
         game.currentScene.remove(t);
      });
@@ -102,4 +117,4 @@ window.addEventListener("keydown", function(e) {
     }
 }, false);
 
-start(assetRootPath + 'mapset/tmj/' + mapList[22]);
+startIntro()
