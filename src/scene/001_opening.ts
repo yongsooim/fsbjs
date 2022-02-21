@@ -92,7 +92,7 @@ introActor.onInitialize = (game) => {
                 resources.vill2.play()
                 resources.Map.addTiledMapToScene(game.currentScene)
                 game.add(actor)
-                actor.z = 5;
+                actor.z = -0.5;
                 cameraSet()
     
 
