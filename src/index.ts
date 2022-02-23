@@ -1,11 +1,11 @@
 import * as ex from 'excalibur'
-import { Player } from './actor/player'
+import { Player } from './character/player'
 import { DevTool } from '@excaliburjs/dev-tools'
 import { FsbMapResource } from './types/fsbTypes';
 
 import {resources} from './resource/resourceManage'
 import { Color } from 'excalibur';
-import { introActor } from './scene/001_opening';
+import { introActor } from './scene/sequence/001_opening';
 
 export const game = new ex.Engine({
     width: window.outerWidth,

@@ -1,6 +1,16 @@
 import { TiledMapResource } from "@excaliburjs/plugin-tiled";
 import {assetRootPath} from "./const"
 
+
+export enum playerCharacter {
+    miro = "미로공주", 
+    sam = "삼장법사", 
+    sao = "사오정", 
+    dit = "복면남자",
+    
+
+}
+
 export enum Direction {
     UP = "UP",
     LEFT = "LEFT",

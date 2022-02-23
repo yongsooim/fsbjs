@@ -1,8 +1,8 @@
-import { resources } from '../resource/resourceManage'
+import { resources } from '../../resource/resourceManage'
 import * as ex from 'excalibur'
-import {game} from '../index'
-import {scenes} from './sceneManage'
-import {actor, cameraSet} from '../index'
+import {game} from '../../index'
+import {scenes} from '../sceneManage'
+import {actor, cameraSet} from '../../index'
 
 export const introScene = new ex.Scene()
 
