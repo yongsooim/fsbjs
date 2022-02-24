@@ -24,3 +24,36 @@ export let resources = {
     e156         : new Sound         (assetRootPath + 'ogg/wav_eft/e156.ogg'               ),  
 
 };
+
+
+export const resourcePackConstructor = (resourcePackId) => {
+
+    switch (resourcePackId) {
+        case 0:
+            /** 
+             * 전역에서 필요한 리소스 
+             */
+            return {
+                    /** 마을 BGM (다섯손가락 마을) */
+                    vill2        : new Sound         (assetRootPath + 'ogg/bgm/vill2.ogg'             ),  
+                
+                    /** 메뉴 항목 선택할 때 나는 소리 */
+                    e154         : new Sound         (assetRootPath + 'ogg/wav_eft/e154.ogg'               ), 
+            }
+            break
+
+        default:
+            console.error('resource pack Id ' + resourcePackId + ' not found');
+            break
+    }
+}
+
+
+
+
+/** 
+ * Scene0 에서 필요한 리소스 
+ */
+export const scene0Resources = {
+
+}
