@@ -5,4 +5,9 @@ body { position:absolute;
   left:0px;
   right:0px;
   bottom: 0px;
+  background-color: black;
+}
+
+canvas {
+  border: 1px solid #202020;
 }

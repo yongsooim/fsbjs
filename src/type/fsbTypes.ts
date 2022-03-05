@@ -46,7 +46,6 @@ export class FsbMapResource extends TiledMapResource{
             } else {
                 //error
             }
-            console.log(returnPath)
             return returnPath;
         }
    }

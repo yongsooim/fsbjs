@@ -1,7 +1,7 @@
 import * as ex from 'excalibur'
-import * as fsb from '../types/fsbTypes';
+import * as fsb from '../type/fsbTypes';
 import {resources} from '../resource/resourceManage'
-import { assetRootPath } from '../types/const';
+import { assetRootPath } from '../type/const';
 
 
 const runSheet2 = ex.SpriteSheet.fromImageSource({
