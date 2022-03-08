@@ -8,6 +8,7 @@ import {mapList} from './resource/mapList'
 import {resources} from './resource/resourceManage'
 import { Color } from 'excalibur';
 import { introActor } from './scene/001_opening';
+import {loaderLogoBase64} from './types/const'
 
 export const game = new ex.Engine({
     canvasElementId: 'game',
@@ -27,22 +28,15 @@ export let map = new FsbMapResource(assetRootPath + 'mapset/tmj/' + mapList[22])
 loader.addResource(map)
 loader.backgroundColor = '#000000'
 
-loader.logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAALVBMVEUAAADMAAD/AAD/ZjP//8z//5mZmWZmZjMICAjMzJlmZgD/zADMmQAzMzP///8DKeQuAAAAAWJLR0QOb70wTwAAAAd0SU1FB+YCDQAOLsY2+cMAAAEhSURBVCjPVVIxUsMwEJQzJmkdDQ9AZwZ66wMp7CK9VbiDFHKVGYYm9gsQITWDfpCCF5APMNCEB+QvnHSSAjejkXZ1Wp1uxVgMDgAFm0eYAUgJgouEJfi4OmNRuLQinJeVKPxGSCglkJr4k7BwqyDhFPLWrYrziUa1qaRJWcGlUqpORSHRKBcLFjWuFUUbn9Grf0x2Y0bCtfXEdDD7kbAmvN0evsaE8zfzsvv4NmPETTfsDp/GPNv+6AisoBve9+bJ9idHXDixbkC8ul0/IEHXdcO4ArFhiVDLVwjtonqW9r4MRF47aO/m+ELqhsXQ+sjLKvRvqrWenX5ARoLjmK0fsWvBAj9vohGMzMkgGcEmZKF3jiQEx+0qYfQ/w48g0jf4BWezWSBoSsEXAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTAyLTEzVDAwOjE0OjQ2KzAwOjAw1+mSSAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wMi0xM1QwMDoxNDo0NiswMDowMKa0KvQAAAAASUVORK5CYII=';
-loader.logoWidth = 32;
-loader.logoHeight = 32;
+loader.logo = loaderLogoBase64
+loader.logoWidth = 64;
+loader.logoHeight = 64;
 loader.playButtonText = '시작'
 
 const startIntro = () => {
-
-
-
-
     game.start(loader).then(() => {
-
         game.add(introActor)
         introActor.pos = ex.vec(game.halfDrawWidth, game.halfDrawHeight)
-    
-
     })
 }
 
@@ -65,9 +59,13 @@ const reset = () => {
 
     console.log(mapFile)
     let map = new FsbMapResource(mapFile)
-    loader.addResource(map)
+
+    map.load().then(_=>{
+            map.addTiledMapToScene(game.currentScene)
+        }, _=> console.log('map not found')
+    )
+
     let player = new Player({x:32 + 64, y:96})
-    game.add(player)
     game.start(loader).then(() => {
 
         console.log(map.getTileMapLayers()[0])
@@ -94,12 +92,10 @@ const reset = () => {
             game.currentScene.tileMaps[0].cols * 64,
             game.currentScene.tileMaps[0].rows * 48,
         )
-//        game.currentScene.camera.strategy.elasticToActor(player, 0.9, 0.8)
-game.currentScene.camera.strategy.lockToActor(player)
+        game.currentScene.camera.strategy.lockToActor(player)
         game.currentScene.camera.strategy.limitCameraBounds(boundingBox)
     })   
 }
-
 
 
 var mapClicked = function() {
