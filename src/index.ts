@@ -6,7 +6,7 @@ import { FsbMapResource } from './type/fsbTypes';
 import {resources} from './resource/resourceManage'
 import { Color } from 'excalibur';
 import { loaderLogoBase64 } from './type/const';
-import {mainMenuScene} from './scene/game/mainMenu'
+import {s000_mainMenuScene} from './scene/game/s000_mainMenu'
 
 
 export const game = new ex.Engine({
@@ -35,8 +35,12 @@ loader.playButtonText = '시작'
 
 game.start(loader).then(() => {
 
-    game.add('intro', mainMenuScene)
+    game.add('intro', s000_mainMenuScene)
     game.goToScene('intro')
 
 })
 
+game.onPreUpdate = (game, delta) =>{
+
+    game.screen.se
+}
