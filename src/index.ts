@@ -42,5 +42,4 @@ game.start(loader).then(() => {
 
 game.onPreUpdate = (game, delta) =>{
 
-    game.screen.se
 }

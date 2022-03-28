@@ -1,6 +1,7 @@
 import * as ex from 'excalibur'
 import { game } from '../../index'
 import { resources } from '../../resource/resourceManage'
+import { s001_opening } from '../cutscene/s001_opening'
 
 export let s000_mainMenuScene = new ex.Scene()
 
@@ -65,6 +66,8 @@ introActor.onInitialize = (game) => {
                 resources.e154.play()
                 resources.PusanOgg.stop()
                 game.removeScene(s000_mainMenuScene)
+                game.addScene('s001', s001_opening)
+                game.goToScene('s001')
             }
         }
     })
