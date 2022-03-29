@@ -1,12 +1,12 @@
-import { ImageSource, Sprite, SourceView, SpriteSheet } from 'excalibur';
+import { ImageSource, Sprite, SourceView, SpriteSheet } from 'excalibur'
 
 /**
  * Create a SpriteSheet from an [[ImageSource]] made up with variable size sprites
  * @param imageSource Source image to use for each sprite
- * @param sourceViews An array of each sprites' source view 
+ * @param sourceViews An array of each sprites' source view
  */
-export function fromFlexImageSource(imageSource: ImageSource, sourceViews: SourceView[]): SpriteSheet {
-  const sprites: Sprite[] = [];
+export function fromFlexImageSource (imageSource: ImageSource, sourceViews: SourceView[]): SpriteSheet {
+  const sprites: Sprite[] = []
 
   for (let i = 0; i < sourceViews.length; i++) {
     sprites[i] = new Sprite({
@@ -16,7 +16,5 @@ export function fromFlexImageSource(imageSource: ImageSource, sourceViews: Sourc
     })
   }
 
-  return new SpriteSheet({
-    sprites: sprites
-  });
+  return new SpriteSheet({ sprites: sprites })
 }

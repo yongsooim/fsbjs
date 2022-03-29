@@ -3,7 +3,7 @@ import * as fsb from '../type/fsbTypes'
 import { resources } from '../resource/resourceManage'
 
 const runSheet2 = ex.SpriteSheet.fromImageSource({
-  image: resources.Image2,
+  image: resources.csam00,
   grid: {
     rows: 4,
     columns: 6,

@@ -1,17 +1,17 @@
-import { resourcesSoundEffect } from './fsbSoundEffect'
-import { resourcesSoundEvent  } from './fsbSoundEvent'
-import { resourcePcxSet       } from './fsbPcxSet'
-import { resourceAseFm        } from './fsbAseFm'
-import { resourceAsePs        } from './fsbAsePs'
-import { resourcesMap         } from './fsbMap'
-import { resourcesBgm         } from './fsbBgm'
+import { resourceSoundEffect } from './fsbSoundEffect'
+import { resourceSoundEvent } from './fsbSoundEvent'
+import { resourcePcxSet } from './fsbPcxSet'
+import { resourceAseFm } from './fsbAseFm'
+import { resourceAsePs } from './fsbAsePs'
+import { resourcesMap } from './fsbMap'
+import { resourceBgm } from './fsbBgm'
 
 export const resources = {
-  ...resourcesSoundEffect ,
-  ...resourcesSoundEvent  ,
-  ...resourcePcxSet       ,
-  ...resourceAseFm        ,
-  ...resourceAsePs        ,
-  ...resourcesMap        ,
-  ...resourcesBgm
+  ...resourceSoundEffect,
+  ...resourceSoundEvent,
+  ...resourcePcxSet,
+  ...resourceAseFm,
+  ...resourceAsePs,
+  ...resourcesMap,
+  ...resourceBgm
 }

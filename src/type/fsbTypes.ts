@@ -24,4 +24,3 @@ export class Coordinate { // tile position (1 x 1 -> 64px x 48px)
       this.y = y
     }
 }
-

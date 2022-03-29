@@ -15,7 +15,7 @@ enum hoveredMenu {
 class IntroActor extends ex.Actor {
   hovered: hoveredMenu
   stopAnimate: boolean
-  static introBackgroundImage = resources.IntroImage.toSprite()
+  static introBackgroundImage = resources.st00.toSprite()
   fadeinRect: ex.Rectangle
 
   update = (game, delta) => {
@@ -92,7 +92,7 @@ introActor.onInitialize = (game) => {
   introActor.hovered = hoveredMenu.load
   introActor.stopAnimate = false
 
-  resources.PusanOgg.play()
+  resources.bmgPusan.play()
   game.input.keyboard.on('press', (evt) => {
     if (evt.value === 'Enter') {
       if (!introActor.stopAnimate) {
@@ -103,21 +103,21 @@ introActor.onInitialize = (game) => {
         switch (introActor.hovered) {
         case (hoveredMenu.exit):
           introActor.graphics.layers.get('selector').offset = ex.vec(186, 193)
-          introActor.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
+          introActor.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
           break
 
         case (hoveredMenu.start):
           introActor.graphics.layers.get('selector').offset = ex.vec(183, 148)
-          introActor.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
+          introActor.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
           break
 
         case (hoveredMenu.load):
           introActor.graphics.layers.get('selector').offset = ex.vec(182, 101)
-          introActor.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
+          introActor.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
           break
         }
         resources.e154.play()
-        resources.PusanOgg.stop()
+        resources.bmgPusan.stop()
         game.removeScene(s000_MainMenu)
         game.addScene('s001', s001_opening)
         game.goToScene('s001')
@@ -128,26 +128,26 @@ introActor.onInitialize = (game) => {
 
 const loadSelectedAnimation = new ex.Animation({
   frames: [
-    { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 130, y: 102, width: 128, height: 51 } }), duration: 100 },
-    { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 260, y: 102, width: 128, height: 51 } }), duration: 100 },
-    { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 390, y: 102, width: 128, height: 51 } }), duration: 100 }
+    { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 130, y: 102, width: 128, height: 51 } }), duration: 100 },
+    { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 260, y: 102, width: 128, height: 51 } }), duration: 100 },
+    { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 390, y: 102, width: 128, height: 51 } }), duration: 100 }
   ],
   strategy: ex.AnimationStrategy.Loop
 })
 const startSelectedAnimation = new ex.Animation({
   frames: [
-    { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 100 },
-    { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 100 },
-    { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 100 }
+    { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 100 },
+    { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 100 },
+    { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 100 }
   ],
   strategy: ex.AnimationStrategy.Loop
 })
 
 const exitSelectedAnimation = new ex.Animation({
   frames: [
-    { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 100 },
-    { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 100 },
-    { graphic: new ex.Sprite({ image: resources.IntroSelector, sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 100 }
+    { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 100 },
+    { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 100 },
+    { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 100 }
   ],
   strategy: ex.AnimationStrategy.Loop
 })

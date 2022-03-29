@@ -4,9 +4,9 @@ import { resources } from '../../resource/resourceManage'
 export const s001_opening = new ex.Scene()
 
 s001_opening.onInitialize = (game) => {
-  resources.SonataOgg.play()
+  resources.bgmSonata.play()
   resources.e112.play()
-  resources.OpeningMap.addTiledMapToScene(game.currentScene)
+  resources.m0469_tcl0.addTiledMapToScene(game.currentScene)
 
   game.currentScene.camera.pos = ex.vec(60, 600)
 }

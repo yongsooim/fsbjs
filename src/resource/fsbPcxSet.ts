@@ -1,7 +1,9 @@
 import { ImageSource } from 'excalibur'
 import { assetRootPath } from '../type/const'
 
-export let resourcePcxSet = {
-    IntroImage: new ImageSource(assetRootPath + 'graphics/pcxset/ST00.png'),
-    IntroSelector: new ImageSource(assetRootPath + 'graphics/pcxset/ST01.png')
+export const resourcePcxSet = {
+  /** intro image */
+  st00: new ImageSource(assetRootPath + 'graphics/pcxset/st00.png'),
+  /** intro selector */
+  st01: new ImageSource(assetRootPath + 'graphics/pcxset/st01.png')
 }
