@@ -12,7 +12,7 @@ export class FsbMapResource extends TiledMapResource {
       let returnPath: string
 
       if (fileName.includes('.png')) {
-        returnPath = assetRootPath + 'mapset/png/' + fileName.split('.')[0].toUpperCase() + '.png'
+        returnPath = assetRootPath + 'mapset/png/' + fileName.split('.')[0] + '.png'
       } else if (fileName.includes('.tsj')) {
         returnPath = assetRootPath + 'mapset/tsj/' + fileName
       } else {
