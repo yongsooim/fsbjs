@@ -1,8 +1,8 @@
 import * as ex from 'excalibur'
-import { game } from '..';
+import { game } from '..'
 
-export let scenes = [
-    new ex.Scene(),
-    new ex.Scene()
+export const scenes = [
+  new ex.Scene(),
+  new ex.Scene()
 
-];
+]

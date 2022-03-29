@@ -5,13 +5,22 @@
   "scripts": {
     "clean": "npx del-cli dist & npx del-cli .parcel-cache",
     "start": "npx del-cli dist &parcel ./src/index.html --open",
-    "build": "npx del-cli dist & npx del-cli .parcel-cache & parcel build ./src/index.html"
+    "build": "npx del-cli dist & npx del-cli .parcel-cache & parcel build ./src/index.html",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "npm run lint -- --fix"    
   },
   "author": "yongsoo im",
   "license": "MIT",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
     "buffer": "^6.0.3",
     "del-cli": "^4.0.1",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
     "parcel": "2.2.1",
     "parcel-resolver-ignore": "^2.0.0"
   },
