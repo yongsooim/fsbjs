@@ -1,5 +1,5 @@
 import { TiledMapResource } from '@excaliburjs/plugin-tiled'
-import { assetRootPath } from '../../type/const'
+import { assetRootPath } from '../../fsbEngine/type/const'
 
 export class FsbMapResource extends TiledMapResource {
   constructor (public path: string) {

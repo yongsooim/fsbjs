@@ -1,6 +1,5 @@
 import { ImageSource } from 'excalibur'
-import { assetRootPath } from '../type/const'
+import { assetRootPath } from '../fsbEngine/type/const'
 
-export const resourceAsePs = {
-  csam00: new ImageSource(assetRootPath + 'graphics/ase_ps/csam00.png')
+export const asePs = {
 }

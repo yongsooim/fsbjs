@@ -1,7 +1,7 @@
 import { Sound } from 'excalibur'
-import { assetRootPath } from '../type/const'
+import { assetRootPath } from '../fsbEngine/type/const'
 
-export const resourceSoundEffect = {
+export const soundEffect = {
   /** 메뉴 항목 선택할 때 나는 소리 */
   e154: new Sound(assetRootPath + 'ogg/wav_eft/e154.ogg'),
 

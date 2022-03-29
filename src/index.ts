@@ -3,7 +3,7 @@ import { DevTool } from '@excaliburjs/dev-tools'
 
 import { resources } from './resource/resourceManage'
 import { Color } from 'excalibur'
-import { loaderLogoBase64 } from './type/const'
+import { loaderLogoBase64 } from './fsbEngine/type/const'
 import { s000_MainMenu } from './scene/game/s000_mainMenu'
 
 export const game = new ex.Engine({
@@ -19,9 +19,10 @@ export const game = new ex.Engine({
 game.screen.antialiasing = true
 
 const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
-devtool.update(devtool) // for avoiding lint
+devtool.update(devtool) // for avoiding lint error
 
 const loader = new ex.Loader(Object.keys(resources).map(key => resources[key]))
+//const loader = new ex.Loader()
 
 loader.backgroundColor = '#000000'
 loader.logo = loaderLogoBase64

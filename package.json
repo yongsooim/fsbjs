@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "clean": "npx del-cli dist & npx del-cli .parcel-cache",
-    "start": "npx del-cli dist &parcel ./src/index.html --open",
-    "build": "npx del-cli dist & npx del-cli .parcel-cache & parcel build ./src/index.html",
+    "start": "parcel ./src/index.html --open",
+    "build": "npm run clean & parcel build ./src/index.html",
     "lint": "eslint src --ext .ts",
     "lint:fix": "npm run lint -- --fix"    
   },

@@ -1,7 +1,11 @@
-// 전역 플래그 상태
+// 전역 플래그
 
 export const globalFlags = {
-  // 페어리 가루 획득
-  getFairyPowder: false
+  /** 페어리 가루 획득  */
+  gotFairyPowder: false,
+
+  // 다이나마이트 획득
+  gotDynamite: false,
+  remainDynamites: 0
 
 }

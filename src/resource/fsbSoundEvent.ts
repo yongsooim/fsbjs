@@ -1,6 +1,6 @@
 import { Sound } from 'excalibur'
-import { assetRootPath } from '../type/const'
+import { assetRootPath } from '../fsbEngine/type/const'
 
-export const resourceSoundEvent = {
+export const soundEvent = {
   ask: new Sound(assetRootPath + 'ogg/se_event/ask.ogg')
 }
