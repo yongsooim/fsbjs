@@ -6,9 +6,10 @@ import { Color } from 'excalibur'
 import { loaderLogoBase64 } from './fsbEngine/type/const'
 import { s000_MainMenu } from './scene/game/s000_mainMenu'
 
+
 export const game = new ex.Engine({
-  width: window.outerWidth,
-  height: window.outerHeight,
+  width: 1280,
+  height: 960,
   antialiasing: false,
   maxFps: 60,
   backgroundColor: Color.Black,
@@ -21,8 +22,15 @@ game.screen.antialiasing = true
 const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 devtool.update(devtool) // for avoiding lint error
 
-const loader = new ex.Loader(Object.keys(resources).map(key => resources[key]))
-//const loader = new ex.Loader()
+const loader = new ex.Loader(
+  [
+    resources.st00,
+    resources.st01,
+    resources.e156,
+    resources.e154,
+    resources.pusan,
+  ]
+)
 
 loader.backgroundColor = '#000000'
 loader.logo = loaderLogoBase64
@@ -36,6 +44,3 @@ game.start(loader).then(() => {
   game.goToScene('intro')
 })
 
-game.onPreUpdate = (game, delta) => {
-
-}

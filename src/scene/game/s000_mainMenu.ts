@@ -5,24 +5,21 @@ import { s001_opening } from '../cutscene/s001_opening'
 
 export const s000_MainMenu = new ex.Scene()
 
-
-s000_MainMenu.onInitialize = async (game) => {
-
-  await Promise.all([
-  resources.st00.load(),
-  resources.st01.load(),
-  resources.e156.load(),
-  resources.e154.load(),
-  resources.pusan.load()])
-
+s000_MainMenu.onInitialize = (game) => {
 
   s000_MainMenu.add(introActor)
-  console.log('done')
+
+  s000_MainMenu.camera.strategy.lockToActor(introActor)
+  s000_MainMenu.camera.zoom =1.5
+  
 }
 
-
-
 class IntroActor extends ex.Actor {
+
+  constructor(){
+    super()
+    this.fadeinRect = new ex.Rectangle({ width: window.outerWidth, height: window.outerHeight, color: ex.Color.White })
+  }
   _hovered: number //   load = 0, start = 1, exit = 2
 
   enterPressed?= false
@@ -50,10 +47,9 @@ class IntroActor extends ex.Actor {
     introActor.graphics.layers.create({ name: 'selector', order: 1 })
     introActor.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
   
-    introActor.fadeinRect = new ex.Rectangle({ width: window.outerWidth, height: window.outerHeight, color: ex.Color.White })
-  
+ 
     introActor.graphics.layers.get('background').show(IntroActor.introBackgroundImage)
-    //introActor.graphics.layers.get('fadein').show(introActor.fadeinRect)
+    introActor.graphics.layers.get('fadein').show(introActor.fadeinRect)
   
     introActor.hovered = introActor.Load
     introActor.stopAnimate = false
@@ -70,7 +66,7 @@ class IntroActor extends ex.Actor {
     introActor.pos = ex.vec(game.drawWidth / 2, game.drawHeight / 2)
 
      if (introActor.fadeinRect.opacity !== 0) {
-      introActor.fadeinRect.opacity *= 0.9
+      introActor.fadeinRect.opacity *= 0.95
       if (introActor.fadeinRect.opacity < 0.1) {
         introActor.fadeinRect.opacity = 0
       }
@@ -126,34 +122,35 @@ class IntroActor extends ex.Actor {
       resources.pusan.stop()
 
       game.addScene('s001', s001_opening)
-      game.removeScene(s000_MainMenu)
       game.goToScene('s001')
+      game.removeScene(s000_MainMenu)
+
     }
   }
 
   loadSelectedAnimation = new ex.Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 130, y: 102, width: 128, height: 51 } }), duration: 100 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 260, y: 102, width: 128, height: 51 } }), duration: 100 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 390, y: 102, width: 128, height: 51 } }), duration: 100 }
+      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 130, y: 102, width: 128, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 260, y: 102, width: 128, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 390, y: 102, width: 128, height: 51 } }), duration: 99 }
     ],
     strategy: ex.AnimationStrategy.Loop
   })
 
   startSelectedAnimation = new ex.Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 100 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 100 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 100 }
+      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 99 }
     ],
     strategy: ex.AnimationStrategy.Loop
   })
 
   exitSelectedAnimation = new ex.Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 100 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 100 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 100 }
+      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 99 }
     ],
     strategy: ex.AnimationStrategy.Loop
   })
@@ -163,4 +160,4 @@ class IntroActor extends ex.Actor {
   Exit = 2
 
 }
-const introActor = new IntroActor({ x: window.innerWidth / 2, y: window.innerHeight / 2 })
+const introActor = new IntroActor()
