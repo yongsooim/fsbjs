@@ -59,6 +59,5 @@ export const resources = {
 
   /** 마을 BGM (다섯손가락 마을) */
   vill2: new Sound(assetRootPath + 'ogg/bgm/vill2.ogg'),
-
   
 }

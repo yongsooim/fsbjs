@@ -1,35 +1,40 @@
 import * as ex from 'excalibur'
 import { Engine } from 'excalibur'
 import { resources } from '../../resource/resourceManage'
+import { fadeActor } from '../global/fadeActor'
 import { s001_opening } from '../cutscene/s001_opening'
+import { s999_test } from '../global/s999_test'
 
 export const s000_MainMenu = new ex.Scene()
 
+let mainMenuActor : MainMenu | null = null
+
 s000_MainMenu.onInitialize = (game) => {
+  mainMenuActor = new MainMenu()
+  s000_MainMenu.add(mainMenuActor)
 
-  s000_MainMenu.add(introActor)
+  s000_MainMenu.camera.strategy.lockToActor(mainMenuActor)
+  s000_MainMenu.camera.zoom = 1.5
 
-  s000_MainMenu.camera.strategy.lockToActor(introActor)
-  s000_MainMenu.camera.zoom =1.5
-  
+  fadeActor.fadeInWhite(s000_MainMenu)
 }
 
-class IntroActor extends ex.Actor {
+class MainMenu extends ex.Actor {
 
   constructor(){
     super()
-    this.fadeinRect = new ex.Rectangle({ width: window.outerWidth, height: window.outerHeight, color: ex.Color.White })
   }
+  Load = 0
+  Start = 1
+  Exit = 2
   _hovered: number //   load = 0, start = 1, exit = 2
-
   enterPressed?= false
+  stopAnimate: boolean
+  static introBackgroundImage = resources.st00.toSprite()
 
   set hovered(num) {
-    if (num === -1) {
-      num = 2
-    } else if (num === 3) {
-      num = 0
-    }
+    if (num === -1) num = 2
+    else if (num === 3) num = 0
     this._hovered = num
   }
 
@@ -37,94 +42,83 @@ class IntroActor extends ex.Actor {
     return this._hovered
   }
 
-  stopAnimate: boolean
-  static introBackgroundImage = resources.st00.toSprite()
-  fadeinRect: ex.Rectangle
-
 
   onInitialize = (game) => {
-    introActor.graphics.layers.create({ name: 'background', order: 0 })
-    introActor.graphics.layers.create({ name: 'selector', order: 1 })
-    introActor.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
+    this.graphics.layers.create({ name: 'background', order: 0 })
+    this.graphics.layers.create({ name: 'selector', order: 1 })
+    this.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
+    this.graphics.layers.get('background').show(MainMenu.introBackgroundImage)
   
- 
-    introActor.graphics.layers.get('background').show(IntroActor.introBackgroundImage)
-    introActor.graphics.layers.get('fadein').show(introActor.fadeinRect)
-  
-    introActor.hovered = introActor.Load
-    introActor.stopAnimate = false
+    this.hovered = this.Load
+    this.stopAnimate = false
   
     resources.pusan.play()
     game.input.keyboard.on('press', (evt) => {
       if (evt.value === 'Enter') {
-        introActor.enterPressed = true
+        this.enterPressed = true
       }
     })
   }
 
   update = (game: Engine, delta: number) => {
-    introActor.pos = ex.vec(game.drawWidth / 2, game.drawHeight / 2)
+    this.pos = ex.vec(game.drawWidth / 2, game.drawHeight / 2)
 
-     if (introActor.fadeinRect.opacity !== 0) {
-      introActor.fadeinRect.opacity *= 0.95
-      if (introActor.fadeinRect.opacity < 0.1) {
-        introActor.fadeinRect.opacity = 0
-      }
-    } 
-
-    if (!introActor.stopAnimate) {
+    if (!this.stopAnimate) {
       if (game.input.keyboard.wasPressed(ex.Input.Keys.Up)) {
         resources.e156.play()
-        introActor.hovered--
+        this.hovered--
       } else if (game.input.keyboard.wasPressed(ex.Input.Keys.Down)) {
         resources.e156.play()
-        introActor.hovered++
+        this.hovered++
       }
 
-      switch (introActor.hovered) {
+      switch (this.hovered) {
         case (this.Load):
-          introActor.graphics.layers.get('selector').offset = ex.vec(183, 101)
-          introActor.graphics.layers.get('selector').use(this.loadSelectedAnimation)
+          this.graphics.layers.get('selector').offset = ex.vec(183, 101)
+          this.graphics.layers.get('selector').use(this.loadSelectedAnimation)
           break
         case (this.Start):
-          introActor.graphics.layers.get('selector').offset = ex.vec(183, 149)
-          introActor.graphics.layers.get('selector').use(this.startSelectedAnimation)
+          this.graphics.layers.get('selector').offset = ex.vec(183, 149)
+          this.graphics.layers.get('selector').use(this.startSelectedAnimation)
           break
         case (this.Exit):
-          introActor.graphics.layers.get('selector').offset = ex.vec(186, 193)
-          introActor.graphics.layers.get('selector').use(this.exitSelectedAnimation)
+          this.graphics.layers.get('selector').offset = ex.vec(186, 193)
+          this.graphics.layers.get('selector').use(this.exitSelectedAnimation)
           break
       }
     }
 
-    if (!introActor.stopAnimate && this.enterPressed) {
-      introActor.stopAnimate = true
+    if (!this.stopAnimate && this.enterPressed) {
+      this.stopAnimate = true
 
-      introActor.graphics.layers.get('selector').hide()
+      this.graphics.layers.get('selector').hide()
 
-      switch (introActor.hovered) {
+      switch (this.hovered) {
         case (this.Exit):
-          introActor.graphics.layers.get('selector').offset = ex.vec(186, 193)
-          introActor.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
+          this.graphics.layers.get('selector').offset = ex.vec(186, 193)
+          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
           break
 
         case (this.Start):
-          introActor.graphics.layers.get('selector').offset = ex.vec(183, 148)
-          introActor.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
+          this.graphics.layers.get('selector').offset = ex.vec(183, 148)
+          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
           break
 
         case (this.Load):
-          introActor.graphics.layers.get('selector').offset = ex.vec(182, 101)
-          introActor.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
+          this.graphics.layers.get('selector').offset = ex.vec(182, 101)
+          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
           break
       }
       resources.e154.play()
       resources.pusan.stop()
 
-      game.addScene('s001', s001_opening)
-      game.goToScene('s001')
-      game.removeScene(s000_MainMenu)
+      //game.addScene('s001', s001_opening)
+      //game.goToScene('s001')
 
+      game.addScene('s999', s999_test)
+      game.goToScene('s999')
+
+      game.removeScene(s000_MainMenu)
     }
   }
 
@@ -154,10 +148,4 @@ class IntroActor extends ex.Actor {
     ],
     strategy: ex.AnimationStrategy.Loop
   })
-
-  Load = 0
-  Start = 1
-  Exit = 2
-
 }
-const introActor = new IntroActor()
