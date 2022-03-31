@@ -6,7 +6,6 @@ import { Color } from 'excalibur'
 import { loaderLogoBase64 } from './fsbEngine/type/const'
 import { s000_MainMenu } from './scene/game/s000_mainMenu'
 
-
 export const game = new ex.Engine({
   width: 1280,
   height: 960,
@@ -28,7 +27,7 @@ const loader = new ex.Loader(
     resource.pcx('st01'),
     resource.fx('e156'),
     resource.fx('e154'),
-    resource.bgm('pusan'),
+    resource.bgm('pusan')
   ]
 )
 
@@ -43,4 +42,3 @@ game.start(loader).then(() => {
   game.add('intro', s000_MainMenu)
   game.goToScene('intro')
 })
-

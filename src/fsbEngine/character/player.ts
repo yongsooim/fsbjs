@@ -18,7 +18,7 @@ export class Player extends ex.Actor {
   public direction: Direction;
 
   constructor (config?: ex.ActorArgs) {
-    super({...config, anchor:ex.vec(0,0)})
+    super({ ...config, anchor: ex.vec(0, 0) })
 
     this.isMoving = false
     this.position = new FsbCoordinate(0, 0)

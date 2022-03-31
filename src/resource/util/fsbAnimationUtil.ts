@@ -9,7 +9,7 @@ export function fromFlexImageSource (imageSource: ImageSource, sourceViews: Sour
   const sprites: Sprite[] = []
 
   for (let i = 0; i < sourceViews.length; i++) {
-    sprites.push( new Sprite( {
+    sprites.push(new Sprite({
       image: imageSource,
       sourceView: sourceViews[i],
       destSize: { height: sourceViews[i].height, width: sourceViews[i].width }

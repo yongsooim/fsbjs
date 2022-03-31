@@ -7,23 +7,7 @@ import { s999_test } from '../global/s999_test'
 
 export const s000_MainMenu = new ex.Scene()
 
-let mainMenuActor : MainMenu | null = null
-
-s000_MainMenu.onInitialize = (game) => {
-  mainMenuActor = new MainMenu()
-  s000_MainMenu.add(mainMenuActor)
-
-  s000_MainMenu.camera.strategy.lockToActor(mainMenuActor)
-  s000_MainMenu.camera.zoom = 1.5
-
-  fadeActor.fadeIn(game)
-}
-
 class MainMenu extends ex.Actor {
-
-  constructor(){
-    super()
-  }
   Load = 0
   Start = 1
   Exit = 2
@@ -32,26 +16,25 @@ class MainMenu extends ex.Actor {
   stopAnimate: boolean
   static introBackgroundImage = resource.pcx('st00').toSprite()
 
-  set hovered(num) {
+  set hovered (num) {
     if (num === -1) num = 2
     else if (num === 3) num = 0
     this._hovered = num
   }
 
-  get hovered() {
+  get hovered () {
     return this._hovered
   }
-
 
   onInitialize = (game) => {
     this.graphics.layers.create({ name: 'background', order: 0 })
     this.graphics.layers.create({ name: 'selector', order: 1 })
     this.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
     this.graphics.layers.get('background').show(MainMenu.introBackgroundImage)
-  
+
     this.hovered = this.Load
     this.stopAnimate = false
-  
+
     resource.bgm('pusan').play()
     game.input.keyboard.on('press', (evt) => {
       if (evt.value === 'Enter') {
@@ -73,18 +56,18 @@ class MainMenu extends ex.Actor {
       }
 
       switch (this.hovered) {
-        case (this.Load):
-          this.graphics.layers.get('selector').offset = ex.vec(183, 101)
-          this.graphics.layers.get('selector').use(this.loadSelectedAnimation)
-          break
-        case (this.Start):
-          this.graphics.layers.get('selector').offset = ex.vec(183, 149)
-          this.graphics.layers.get('selector').use(this.startSelectedAnimation)
-          break
-        case (this.Exit):
-          this.graphics.layers.get('selector').offset = ex.vec(186, 193)
-          this.graphics.layers.get('selector').use(this.exitSelectedAnimation)
-          break
+      case (this.Load):
+        this.graphics.layers.get('selector').offset = ex.vec(183, 101)
+        this.graphics.layers.get('selector').use(this.loadSelectedAnimation)
+        break
+      case (this.Start):
+        this.graphics.layers.get('selector').offset = ex.vec(183, 149)
+        this.graphics.layers.get('selector').use(this.startSelectedAnimation)
+        break
+      case (this.Exit):
+        this.graphics.layers.get('selector').offset = ex.vec(186, 193)
+        this.graphics.layers.get('selector').use(this.exitSelectedAnimation)
+        break
       }
     }
 
@@ -94,29 +77,29 @@ class MainMenu extends ex.Actor {
       this.graphics.layers.get('selector').hide()
 
       switch (this.hovered) {
-        case (this.Exit):
-          this.graphics.layers.get('selector').offset = ex.vec(186, 193)
-          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
-          break
+      case (this.Exit):
+        this.graphics.layers.get('selector').offset = ex.vec(186, 193)
+        this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
+        break
 
-        case (this.Start):
-          this.graphics.layers.get('selector').offset = ex.vec(183, 148)
-          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
-          break
+      case (this.Start):
+        this.graphics.layers.get('selector').offset = ex.vec(183, 148)
+        this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
+        break
 
-        case (this.Load):
-          this.graphics.layers.get('selector').offset = ex.vec(182, 101)
-          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
-          break
+      case (this.Load):
+        this.graphics.layers.get('selector').offset = ex.vec(182, 101)
+        this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
+        break
       }
       resource.fx('e154').play()
       resource.bgm('pusan').stop()
 
-      game.addScene('s001', s001_opening)
-      game.goToScene('s001')
+      // game.addScene('s001', s001_opening)
+      // game.goToScene('s001')
 
-      //game.addScene('s999', s999_test)
-      //game.goToScene('s999')
+      game.addScene('s999', s999_test)
+      game.goToScene('s999')
 
       game.removeScene(s000_MainMenu)
     }
@@ -148,4 +131,16 @@ class MainMenu extends ex.Actor {
     ],
     strategy: ex.AnimationStrategy.Loop
   })
+}
+
+let mainMenuActor : MainMenu | null = null
+
+s000_MainMenu.onInitialize = (game) => {
+  mainMenuActor = new MainMenu()
+  s000_MainMenu.add(mainMenuActor)
+
+  s000_MainMenu.camera.strategy.lockToActor(mainMenuActor)
+  s000_MainMenu.camera.zoom = 1.5
+
+  fadeActor.fadeIn(game, ex.Color.White, 1000)
 }
