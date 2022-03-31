@@ -8,18 +8,18 @@ export let s999_test = new ex.Scene()
 s999_test.onInitialize = async (game) => {
 
   await Promise.all([
-    resource.asePs.csam00.load(),
-    resource.map.m0022_tfi0.load(),
-    resource.bgm.vill2.load()
+    resource.asePs('csam00').load(),
+    resource.map('0022_tfi0___').load(),
+    resource.bgm('vill2').load()
   ])
 
-  resource.bgm.vill2.loop = true
-  resource.bgm.vill2.play()
+  resource.bgm('vill2').loop = true
+  resource.bgm('vill2').play()
 
-  let spriteSheet = ex.SpriteSheet.fromImageSource({ image: resource.asePs.csam00, grid: { rows: 6, columns: 4, spriteWidth: 32, spriteHeight: 32 } })
+  let spriteSheet = ex.SpriteSheet.fromImageSource({ image: resource.asePs('csam00'), grid: { rows: 6, columns: 4, spriteWidth: 32, spriteHeight: 32 } })
   let csamActor = new Actor()
   csamActor.graphics.use(spriteSheet.getSprite(0, 0))
 
   s999_test.add(csamActor)
-  resource.map.m0022_tfi0.addTiledMapToScene(game.currentScene)
+  resource.map('0022_tfi0___').addTiledMapToScene(game.currentScene)
 }

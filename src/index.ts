@@ -24,11 +24,11 @@ devtool.update(devtool) // for avoiding lint error
 
 const loader = new ex.Loader(
   [
-    resource.pcxSet.st00,
-    resource.pcxSet.st01,
-    resource.fx.e156,
-    resource.fx.e154,
-    resource.bgm.pusan,
+    resource.pcx('st00'),
+    resource.pcx('st01'),
+    resource.fx('e156'),
+    resource.fx('e154'),
+    resource.bgm('pusan'),
   ]
 )
 

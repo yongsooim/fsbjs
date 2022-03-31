@@ -3,7 +3,7 @@ import { FsbCoordinate, Direction } from '../type/fsbTypes'
 import { resource } from '../../resource/resourceManage'
 
 const runSheet2 = ex.SpriteSheet.fromImageSource({
-  image: resource.asePs.csam00,
+  image: resource.asePs('csam00'),
   grid: {
     rows: 4,
     columns: 6,
