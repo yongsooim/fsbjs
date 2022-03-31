@@ -95,11 +95,11 @@ class MainMenu extends ex.Actor {
       resource.fx('e154').play()
       resource.bgm('pusan').stop()
 
-      // game.addScene('s001', s001_opening)
-      // game.goToScene('s001')
+       game.addScene('s001', s001_opening)
+       game.goToScene('s001')
 
-      game.addScene('s999', s999_test)
-      game.goToScene('s999')
+      //game.addScene('s999', s999_test)
+      //game.goToScene('s999')
 
       game.removeScene(s000_MainMenu)
     }
@@ -107,27 +107,27 @@ class MainMenu extends ex.Actor {
 
   loadSelectedAnimation = new ex.Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 130, y: 102, width: 128, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 260, y: 102, width: 128, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 390, y: 102, width: 128, height: 51 } }), duration: 99 }
+      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 130, y: 102, width: 128, height: 51 } }), duration: 80 },
+      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 260, y: 102, width: 128, height: 51 } }), duration: 80 },
+      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 390, y: 102, width: 128, height: 51 } }), duration: 80 }
     ],
     strategy: ex.AnimationStrategy.Loop
   })
 
   startSelectedAnimation = new ex.Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 99 }
+      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 80 },
+      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 80 },
+      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 80 }
     ],
     strategy: ex.AnimationStrategy.Loop
   })
 
   exitSelectedAnimation = new ex.Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 99 }
+      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 80 },
+      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 80 },
+      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 80 }
     ],
     strategy: ex.AnimationStrategy.Loop
   })
@@ -142,5 +142,5 @@ s000_MainMenu.onInitialize = (game) => {
   s000_MainMenu.camera.strategy.lockToActor(mainMenuActor)
   s000_MainMenu.camera.zoom = 1.5
 
-  fadeActor.fadeIn(game, ex.Color.White, 1000)
+  fadeActor.fadeIn(game, ex.Color.White, 800)
 }

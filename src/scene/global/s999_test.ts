@@ -15,12 +15,12 @@ s999_test.onInitialize = async (game) => {
   resource.bgm('vill2').loop = true
   resource.bgm('vill2').play()
 
+  resource.map('0022_tfi0___').addTiledMapToScene(game.currentScene)
   const spriteSheet = ex.SpriteSheet.fromImageSource({ image: resource.asePs('csam00'), grid: { rows: 4, columns: 6, spriteWidth: 32, spriteHeight: 48 } })
   const csamActor = new Actor()
-  csamActor.graphics.use(spriteSheet.getSprite(0, 0))
-  csamActor.actions.moveBy(ex.vec(320, 480), 128)
 
   s999_test.add(csamActor)
-  resource.map('0022_tfi0___').addTiledMapToScene(game.currentScene)
   s999_test.camera.strategy.lockToActor(csamActor)
+  csamActor.graphics.use(spriteSheet.getSprite(0, 0))
+  csamActor.actions.moveBy(ex.vec(320, 480), 128)
 }
