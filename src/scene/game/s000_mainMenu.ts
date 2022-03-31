@@ -1,6 +1,6 @@
 import * as ex from 'excalibur'
 import { Engine } from 'excalibur'
-import { resources } from '../../resource/resourceManage'
+import { resource, resourceClass } from '../../resource/resourceManage'
 import { fadeActor } from '../global/fadeActor'
 import { s001_opening } from '../cutscene/s001_opening'
 import { s999_test } from '../global/s999_test'
@@ -16,7 +16,7 @@ s000_MainMenu.onInitialize = (game) => {
   s000_MainMenu.camera.strategy.lockToActor(mainMenuActor)
   s000_MainMenu.camera.zoom = 1.5
 
-  fadeActor.fadeInWhite(s000_MainMenu)
+  fadeActor.fadeIn(game)
 }
 
 class MainMenu extends ex.Actor {
@@ -30,7 +30,8 @@ class MainMenu extends ex.Actor {
   _hovered: number //   load = 0, start = 1, exit = 2
   enterPressed?= false
   stopAnimate: boolean
-  static introBackgroundImage = resources.st00.toSprite()
+  static introBackgroundImage = resource.pcxSet.st00.toSprite()
+  //static introBackgroundImage = resourceClass.pcx('st00').toSprite()
 
   set hovered(num) {
     if (num === -1) num = 2
@@ -52,7 +53,7 @@ class MainMenu extends ex.Actor {
     this.hovered = this.Load
     this.stopAnimate = false
   
-    resources.pusan.play()
+    resource.bgm.pusan.play()
     game.input.keyboard.on('press', (evt) => {
       if (evt.value === 'Enter') {
         this.enterPressed = true
@@ -65,10 +66,10 @@ class MainMenu extends ex.Actor {
 
     if (!this.stopAnimate) {
       if (game.input.keyboard.wasPressed(ex.Input.Keys.Up)) {
-        resources.e156.play()
+        resource.fx.e156.play()
         this.hovered--
       } else if (game.input.keyboard.wasPressed(ex.Input.Keys.Down)) {
-        resources.e156.play()
+        resource.fx.e156.play()
         this.hovered++
       }
 
@@ -96,27 +97,27 @@ class MainMenu extends ex.Actor {
       switch (this.hovered) {
         case (this.Exit):
           this.graphics.layers.get('selector').offset = ex.vec(186, 193)
-          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
+          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
           break
 
         case (this.Start):
           this.graphics.layers.get('selector').offset = ex.vec(183, 148)
-          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
+          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
           break
 
         case (this.Load):
           this.graphics.layers.get('selector').offset = ex.vec(182, 101)
-          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resources.st01, sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
+          this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
           break
       }
-      resources.e154.play()
-      resources.pusan.stop()
+      resource.fx.e154.play()
+      resource.bgm.pusan.stop()
 
-      //game.addScene('s001', s001_opening)
-      //game.goToScene('s001')
+      game.addScene('s001', s001_opening)
+      game.goToScene('s001')
 
-      game.addScene('s999', s999_test)
-      game.goToScene('s999')
+      //game.addScene('s999', s999_test)
+      //game.goToScene('s999')
 
       game.removeScene(s000_MainMenu)
     }
@@ -124,27 +125,27 @@ class MainMenu extends ex.Actor {
 
   loadSelectedAnimation = new ex.Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 130, y: 102, width: 128, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 260, y: 102, width: 128, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 390, y: 102, width: 128, height: 51 } }), duration: 99 }
+      { graphic: new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 130, y: 102, width: 128, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 260, y: 102, width: 128, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 390, y: 102, width: 128, height: 51 } }), duration: 99 }
     ],
     strategy: ex.AnimationStrategy.Loop
   })
 
   startSelectedAnimation = new ex.Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 99 }
+      { graphic: new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 99 }
     ],
     strategy: ex.AnimationStrategy.Loop
   })
 
   exitSelectedAnimation = new ex.Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 99 },
-      { graphic: new ex.Sprite({ image: resources.st01, sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 99 }
+      { graphic: new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 99 },
+      { graphic: new ex.Sprite({ image: resource.pcxSet.st01, sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 99 }
     ],
     strategy: ex.AnimationStrategy.Loop
   })

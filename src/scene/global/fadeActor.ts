@@ -6,11 +6,18 @@ class FadeActor extends Actor {
     super({z:100})
   }
 
-  fadeInWhite(currentScene : ex.Scene){
-    this.graphics.use(new Rectangle({ width: window.outerWidth, height: window.outerHeight, color: ex.Color.White }))
+  /**
+   * Initial color opacity goes to 0 in duration time
+   */
+  fadeIn(game : ex.Engine, initialColor = ex.Color.Black, duration = 1000){
+    this.graphics.use(new Rectangle({ width: window.outerWidth, height: window.outerHeight, color: initialColor }))
     this.graphics.opacity = 1
-    currentScene.add(this)
-    this.actions.fade(0, 1000).toPromise().then(()=>{currentScene.remove(this)})
+    game.currentScene.add(this)
+    this.actions.fade(0, duration).toPromise().then(()=>{game.currentScene.remove(this)}) 
+  }
+
+  onPostUpdate(game:ex.Engine){
+    this.pos = game.currentScene.camera.pos
   }
 }
 

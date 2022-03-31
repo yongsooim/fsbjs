@@ -1,7 +1,7 @@
 import * as ex from 'excalibur'
 import { DevTool } from '@excaliburjs/dev-tools'
 
-import { resources } from './resource/resourceManage'
+import { resource } from './resource/resourceManage'
 import { Color } from 'excalibur'
 import { loaderLogoBase64 } from './fsbEngine/type/const'
 import { s000_MainMenu } from './scene/game/s000_mainMenu'
@@ -24,11 +24,11 @@ devtool.update(devtool) // for avoiding lint error
 
 const loader = new ex.Loader(
   [
-    resources.st00,
-    resources.st01,
-    resources.e156,
-    resources.e154,
-    resources.pusan,
+    resource.pcxSet.st00,
+    resource.pcxSet.st01,
+    resource.fx.e156,
+    resource.fx.e154,
+    resource.bgm.pusan,
   ]
 )
 

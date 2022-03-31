@@ -9,6 +9,7 @@ export const bgm = {
   sonata: new Sound(assetRootPath + 'ogg/bgm/sonata.ogg'),
 
   /** 마을 BGM (다섯손가락 마을) */
-  vill2: new Sound(assetRootPath + 'ogg/bgm/vill2.ogg')
+  vill2: new Sound(assetRootPath + 'ogg/bgm/vill2.ogg'),
+  
 
 }
