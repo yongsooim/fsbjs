@@ -33,13 +33,13 @@ class ResourceManager {
   }
 
   /* Get variable size sprite sheet */
-  aseFm (fileName:string) : ImageSource {
-    if (!(fileName in this._aseFm)) { this._aseFm[fileName] = new ImageSource(assetRootPath + 'graphics/aseFm/' + fileName + '.png') }
+  fm (fileName:string) : ImageSource {
+    if (!(fileName in this._aseFm)) { this._aseFm[fileName] = new ImageSource(assetRootPath + 'graphics/ase_fm/' + fileName + '.png') }
     return this._aseFm[fileName]
   }
 
   /* Get fixed size sprite sheet */
-  asePs (fileName:string) : ImageSource {
+  ps (fileName:string) : ImageSource {
     if (!(fileName in this._asePs)) { this._asePs[fileName] = new ImageSource(assetRootPath + 'graphics/ase_ps/' + fileName + '.png') }
     return this._asePs[fileName]
   }

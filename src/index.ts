@@ -19,7 +19,6 @@ export const game = new ex.Engine({
 game.screen.antialiasing = true
 
 const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
-devtool.update(devtool) // for avoiding lint error
 
 const loader = new ex.Loader(
   [
