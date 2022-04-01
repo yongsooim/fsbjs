@@ -95,11 +95,11 @@ class MainMenu extends ex.Actor {
       resource.fx('e154').play()
       resource.bgm('pusan').stop()
 
-       game.addScene('s001', s001_opening)
-       game.goToScene('s001')
+      game.addScene('s001', s001_opening)
+      game.goToScene('s001')
 
-      //game.addScene('s999', s999_test)
-      //game.goToScene('s999')
+      // game.addScene('s999', s999_test)
+      // game.goToScene('s999')
 
       game.removeScene(s000_MainMenu)
     }

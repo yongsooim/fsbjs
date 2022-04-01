@@ -17,8 +17,8 @@ export enum Direction {
 
 // tile position (1 x 1 -> 64px x 48px)
 export class FsbCoordinate {
-    public fsbX:number;
-    public fsbY:number;
+    public fsbX: number;
+    public fsbY: number;
 
     constructor (fsbX: number, fsbY: number) {
       this.fsbX = fsbX

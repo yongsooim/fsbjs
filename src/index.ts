@@ -5,6 +5,7 @@ import { resource } from './resource/resourceManage'
 import { Color } from 'excalibur'
 import { loaderLogoBase64 } from './fsbEngine/type/const'
 import { s000_MainMenu } from './scene/game/s000_mainMenu'
+import { s999_test } from './scene/global/s999_test'
 
 export const game = new ex.Engine({
   width: 1280,
@@ -17,6 +18,7 @@ export const game = new ex.Engine({
 })
 
 game.screen.antialiasing = true
+game.screen.applyResolutionAndViewport()
 
 const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 
@@ -30,14 +32,20 @@ const loader = new ex.Loader(
   ]
 )
 
+loader.startButtonFactory = () => {
+    let startButton = document.createElement('button', );
+    startButton.textContent = 'The button';
+    startButton.className = 'startButton'
+    return startButton;
+};
+
 loader.backgroundColor = '#000000'
 loader.logo = loaderLogoBase64
 loader.logoHeight = 64
 loader.logoWidth = 64
 
-loader.playButtonText = '시작'
-
 game.start(loader).then(() => {
-  game.add('intro', s000_MainMenu)
+  //game.add('intro', s000_MainMenu)
+  game.add('intro', s999_test)
   game.goToScene('intro')
 })
