@@ -1,7 +1,7 @@
 import * as ex from 'excalibur'
 import { Actor, Engine, LockCameraToActorStrategy } from 'excalibur'
 import { resource } from '../../resource/resourceManage'
-import { player } from '../../fsbEngine/character/Player'
+import { player } from '../../fsbEngine/character/player'
 
 export const s999_test = new ex.Scene()
 

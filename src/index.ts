@@ -32,20 +32,14 @@ const loader = new ex.Loader(
   ]
 )
 
-loader.startButtonFactory = () => {
-    let startButton = document.createElement('button', );
-    startButton.textContent = 'The button';
-    startButton.className = 'startButton'
-    return startButton;
-};
-
 loader.backgroundColor = '#000000'
 loader.logo = loaderLogoBase64
 loader.logoHeight = 64
 loader.logoWidth = 64
+loader.playButtonText = '시작'
 
 game.start(loader).then(() => {
   //game.add('intro', s000_MainMenu)
-  game.add('intro', s999_test)
+  game.add('intro', s000_MainMenu)
   game.goToScene('intro')
 })

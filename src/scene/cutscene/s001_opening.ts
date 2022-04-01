@@ -29,16 +29,20 @@ s001_opening.onInitialize = async (game) => {
     { x: 229, y: 135, width: 101, height: 115 },
   ])
 
-  const sonataSynthAnimation = ex.Animation.fromSpriteSheet(sonataSynthSpriteSheet, [0, 1, 2, 3], 50)
+  const sonataSynthAnimation = ex.Animation.fromSpriteSheet(sonataSynthSpriteSheet, [0, 1, 2, 3], 100)
 
   sonataSynth.graphics.use(sonataSynthAnimation)
   sonataSynth.actions.repeatForever(repeatCtx => {
-    repeatCtx.moveBy(0, 30, 50),
-      repeatCtx.moveBy(0, -30, 50)
+    repeatCtx.moveBy(0, 10, 10)
+    repeatCtx.moveBy(0, 20, 20)
+    repeatCtx.moveBy(0, 10, 10)
+    repeatCtx.moveBy(0, -10, 10)
+    repeatCtx.moveBy(0, -20, 20)
+    repeatCtx.moveBy(0, -10, 10)
   })
   sonataSynth.pos = ex.vec(550, 1600)
 
-  son.graphics.use(new ex.Sprite({ image: resource.ps('cson000'), sourceView: { x: 0, y: 96, width: 48, height: 96 } }))
+  son.graphics.use(new ex.Sprite({ image: resource.ps('cson000'), sourceView: { x: 10, y: 96, width: 48, height: 96 } }))
   son.pos = ex.vec(388, 1850)
   son.z = 2
 
