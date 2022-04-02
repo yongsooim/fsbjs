@@ -26,10 +26,9 @@ class MainMenu extends ex.Actor {
     return this._hovered
   }
 
-  onInitialize = (game) => {
+  onInitialize = (game: ex.Engine) => {
     this.graphics.layers.create({ name: 'background', order: 0 })
     this.graphics.layers.create({ name: 'selector', order: 1 })
-    this.graphics.layers.create({ name: 'fadein', order: 2 }) // white box for fade in
     this.graphics.layers.get('background').show(MainMenu.introBackgroundImage)
 
     this.hovered = this.Load
@@ -92,16 +91,46 @@ class MainMenu extends ex.Actor {
         this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
         break
       }
+
+      
       resource.fx('e154').play()
       resource.bgm('pusan').stop()
 
+      fadeActor.fadeOut(game, ex.Color.Black, 1000)
+
       game.addScene('s001', s001_opening)
-      game.goToScene('s001')
+      //game.addScene('s999', s999_test)
+      //game.goToScene('s999')
+      
+      resource.bgm('sonata').load(),
+      resource.fx('e112').load(),
+      resource.map('0469_tcl0___').load(),
+      resource.fm('csona_e0').load(),
+      resource.ps('cson000').load(),
+      resource.se('sp_wind_first').load(),
+      resource.se('sp_thunder03').load(),
+      resource.ps('cson000').load(),
+      resource.ps('cson000').load(),
+      resource.pcx('whdlgbox').load()
+  
+      setTimeout(async () => {
 
-       //game.addScene('s999', s999_test)
-       //game.goToScene('s999')
+        let localLoader = []
+        if(!resource.bgm('sonata').isLoaded())       localLoader.push(resource.bgm('sonata'))
+        if(!resource.fx('e112').isLoaded())          localLoader.push(resource.fx('e112'))
+        if(!resource.map('0469_tcl0___').isLoaded()) localLoader.push(resource.map('0469_tcl0___'))
+        if(!resource.fm('csona_e0').isLoaded())      localLoader.push(resource.fm('csona_e0'))
+        if(!resource.ps('cson000').isLoaded())       localLoader.push(resource.ps('cson000'))
+        if(!resource.se('sp_wind_first').isLoaded()) localLoader.push(resource.se('sp_wind_first'))
+        if(!resource.se('sp_thunder03').isLoaded())  localLoader.push(resource.se('sp_thunder03'))
+        if(!resource.pcx('whdlgbox').isLoaded())  localLoader.push(resource.pcx('whdlgbox'))
 
-      game.removeScene(s000_MainMenu)
+        await Promise.all(localLoader.map(v=>v.load()))
+      
+        game.goToScene('s001')
+
+        game.removeScene(s000_MainMenu)
+      }, 1000)
     }
   }
 
@@ -143,4 +172,5 @@ s000_MainMenu.onInitialize = (game) => {
   s000_MainMenu.camera.zoom = 1.5
 
   fadeActor.fadeIn(game, ex.Color.White, 800)
+  
 }

@@ -1,4 +1,5 @@
 import { assetRootPath } from './const'
+import * as ex from 'excalibur'
 
 export enum PlayerCharacter {
     Miro = '미로공주',
@@ -14,6 +15,14 @@ export enum Direction {
     Right = 'Right',
     Down = 'Down'
 }
+
+/** Convecrt Direction to Vector */
+export const d2v = [] as ex.Vector[]
+d2v[Direction.Up] = ex.Vector.Up
+d2v[Direction.Down] = ex.Vector.Down
+d2v[Direction.Left] = ex.Vector.Left
+d2v[Direction.Right] = ex.Vector.Right
+
 
 // tile position (1 x 1 -> 64px x 48px)
 export class FsbCoordinate {

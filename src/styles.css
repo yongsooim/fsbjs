@@ -16,3 +16,36 @@ canvas {
   background-color: black;
   color: black;
 }
+
+button#fsbPlay {
+  display: inline-block;
+  position: relative;
+  z-index: 999;
+  border-radius: 6px;
+  border: none;
+  /*border: 3px solid;
+    border-color: white;
+    box-shadow: 0 0 10px #ccc;*/
+  padding: 30px 80px 30px 80px;
+  margin: 0;
+  text-decoration: none;
+  background: #333333;
+  color: #aaaaaa;
+  font-family: sans-serif;
+  font-size: 2rem;
+  white-space: nowrap;
+  line-height: 1;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+
+
+  -webkit-animation: excalibur-button-fadein 200ms; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: excalibur-button-fadein 200ms; /* Firefox < 16 */
+  -ms-animation: excalibur-button-fadein 200ms; /* Internet Explorer */
+  -o-animation: excalibur-button-fadein 200ms; /* Opera < 12.1 */
+  animation: excalibur-button-fadein 200ms;
+}
