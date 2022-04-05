@@ -1,17 +1,19 @@
 import * as ex from "excalibur";
-import { FsbCoordinate, Direction, d2v } from "../type/fsbTypes";
+import { FsbCoordinate, Direction, d2v, PlayerCharacter } from "../type/fsbTypes";
 import { resource } from "../../resource/resourceManage";
 
-const samWalkSheet = ex.SpriteSheet.fromImageSource({
-  image: resource.ps("csam00"),
-  grid: {
-    rows: 4,
-    columns: 6,
-    spriteWidth: 64,
-    spriteHeight: 96,
-  },
-});
-
+const playerWalkSheet = Object.values(PlayerCharacter).map(value => { 
+  return ex.SpriteSheet.fromImageSource({
+    image: resource.ps("c" + value + "00"),
+    grid: {
+      rows: 4,
+      columns: 6,
+      spriteWidth: 64,
+      spriteHeight: 96,
+    },
+    })}
+  );
+  
 const shadow = ex.SpriteSheet.fromImageSource({
   image: resource.pcx("shadow"),
   grid: {
@@ -23,12 +25,28 @@ const shadow = ex.SpriteSheet.fromImageSource({
 });
 
 class Player extends ex.Actor {
-  public isMoving = false;
-  public speed = 450;
-  public moveTarget: ex.Vector;
-  public direction = Direction.Down;
-  public oldDirection = Direction.Down;
-  public sheets = [] as ex.SpriteSheet[];
+  public isMoving = false
+  public speed = 450 // pixels per second. 
+  public moveTarget: ex.Vector
+  public direction = Direction.Down
+  public oldDirection = Direction.Down
+  public party  = [
+    PlayerCharacter.dit,
+    PlayerCharacter.jah,
+    PlayerCharacter.son,
+    PlayerCharacter.jupa,
+    PlayerCharacter.miro,
+    PlayerCharacter.pao,
+    PlayerCharacter.pusa,
+    PlayerCharacter.sam,
+    PlayerCharacter.sao,
+    PlayerCharacter.sona,
+  ]
+  public showingCharacterIndex = 0
+  
+  get showingCharacter(){
+    return this.party[this.showingCharacterIndex]
+  }
   public transitionQueue = [] as ex.Sprite[]  // 방향 전환할때 대각선 방향 스프라이트 보여주기 위한 큐
   public focusActor = new ex.Actor()
 
@@ -36,7 +54,7 @@ class Player extends ex.Actor {
     return d2v[this.direction]
   }
 
-  /** return pixel per tile */
+  /** return pixel per tile for direction */
   get d2unit(){
     if(this.direction == Direction.Up || this.direction == Direction.Down){
       return 64
@@ -46,22 +64,33 @@ class Player extends ex.Actor {
   }
 
   constructor(config?: ex.ActorArgs) {
-    
-    resource.ps("csam00").load();
-    resource.pcx("shadow").load();
-    
+  
+    resource.load([
+      resource.ps("cson000"),
+      resource.ps("cdit000"),
+      resource.ps("cjah000"),
+      resource.ps("csam00"),
+      resource.ps("csona00"),
+      resource.ps("cmiro00"),
+      resource.ps("cjupa00"),
+      resource.ps("cpusa00"),
+      resource.ps("csao00"),
+      resource.ps("cpao00"),
+      resource.pcx("shadow")
+    ])
     super({ ...config, anchor: ex.vec(0, 0), z: 2 });
 
+    // graphics name : walk|stop + Up|Down|Right|Left
 
-    this.graphics.add("walkUp", ex.Animation.fromSpriteSheet(samWalkSheet,[1, 2, 1, 0, 3, 4, 3, 0],33,ex.AnimationStrategy.Loop));
-    this.graphics.add("walkDown", ex.Animation.fromSpriteSheet(samWalkSheet,[7, 8, 7, 6, 9, 10, 9, 6 ],33,ex.AnimationStrategy.Loop));
-    this.graphics.add("walkRight", ex.Animation.fromSpriteSheet(samWalkSheet,[19, 20, 19, 18, 21, 22, 21, 18],33,ex.AnimationStrategy.Loop));
-    this.graphics.add("walkLeft", ex.Animation.fromSpriteSheet(samWalkSheet,[13, 14, 13, 12, 15, 16, 15, 12],33,ex.AnimationStrategy.Loop));
+    this.graphics.add("walkUp", ex.Animation.fromSpriteSheet(playerWalkSheet[this.showingCharacterIndex],[1, 2, 1, 0, 3, 4, 3, 0],33,ex.AnimationStrategy.Loop));
+    this.graphics.add("walkDown", ex.Animation.fromSpriteSheet(playerWalkSheet[this.showingCharacterIndex],[7, 8, 7, 6, 9, 10, 9, 6 ],33,ex.AnimationStrategy.Loop));
+    this.graphics.add("walkRight", ex.Animation.fromSpriteSheet(playerWalkSheet[this.showingCharacterIndex],[19, 20, 19, 18, 21, 22, 21, 18],33,ex.AnimationStrategy.Loop));
+    this.graphics.add("walkLeft", ex.Animation.fromSpriteSheet(playerWalkSheet[this.showingCharacterIndex],[13, 14, 13, 12, 15, 16, 15, 12],33,ex.AnimationStrategy.Loop));
 
-    this.graphics.add("stopUp", samWalkSheet.getSprite(0, 0));
-    this.graphics.add("stopDown", samWalkSheet.getSprite(0, 1));
-    this.graphics.add("stopRight", samWalkSheet.getSprite(0, 3));
-    this.graphics.add("stopLeft", samWalkSheet.getSprite(0, 2));
+    this.graphics.add("stopUp", playerWalkSheet[this.showingCharacterIndex].getSprite(0, 0));
+    this.graphics.add("stopDown", playerWalkSheet[this.showingCharacterIndex].getSprite(0, 1));
+    this.graphics.add("stopRight", playerWalkSheet[this.showingCharacterIndex].getSprite(0, 3));
+    this.graphics.add("stopLeft", playerWalkSheet[this.showingCharacterIndex].getSprite(0, 2));
 
     this.graphics.use("stopDown");
 
@@ -73,14 +102,40 @@ class Player extends ex.Actor {
   }
   
 
-  public update(game: ex.Engine, delta: number) {
-    
+  update(game: ex.Engine, delta: number) {
+    super.update(game, delta)
+
+    if(game.input.keyboard.wasPressed(ex.Input.Keys.C)){
+      // showing character change
+
+      this.showingCharacterIndex++
+      if(this.showingCharacterIndex >= this.party.length){
+        this.showingCharacterIndex = 0
+      }
+
+      this.graphics.add("walkUp", ex.Animation.fromSpriteSheet(playerWalkSheet[this.showingCharacter],[1, 2, 1, 0, 3, 4, 3, 0],33,ex.AnimationStrategy.Loop));
+      this.graphics.add("walkDown", ex.Animation.fromSpriteSheet(playerWalkSheet[this.showingCharacter],[7, 8, 7, 6, 9, 10, 9, 6 ],33,ex.AnimationStrategy.Loop));
+      this.graphics.add("walkRight", ex.Animation.fromSpriteSheet(playerWalkSheet[this.showingCharacter],[19, 20, 19, 18, 21, 22, 21, 18],33,ex.AnimationStrategy.Loop));
+      this.graphics.add("walkLeft", ex.Animation.fromSpriteSheet(playerWalkSheet[this.showingCharacter],[13, 14, 13, 12, 15, 16, 15, 12],33,ex.AnimationStrategy.Loop));
+  
+      this.graphics.add("stopUp", playerWalkSheet[this.showingCharacter].getSprite(0, 0));
+      this.graphics.add("stopDown", playerWalkSheet[this.showingCharacter].getSprite(0, 1));
+      this.graphics.add("stopRight", playerWalkSheet[this.showingCharacter].getSprite(0, 3));
+      this.graphics.add("stopLeft", playerWalkSheet[this.showingCharacter].getSprite(0, 2));
+  
+      if(this.isMoving){
+        this.graphics.use("walk" + this.direction)
+      } else {
+        this.graphics.use("stop" + this.direction)
+      }
+    }
+
     this.focusActor.pos = this.pos.add(ex.vec(32, 0))
 
     if(this.isMoving){
       if(this.direction == Direction.Up){
         if(game.input.keyboard.isHeld(ex.Input.Keys.Up)){
-          if(this.moveTarget.y > this.pos.y - this.speed * delta / 1000){
+          if(this.moveTarget.y > this.pos.y - this.speed * delta / 1000){  // exceeds move target
             this.moveTarget.y -= 48
           }
           this.pos.y -= this.speed * delta / 1000
@@ -94,7 +149,6 @@ class Player extends ex.Actor {
           }
         }
       } else if(this.direction == Direction.Down){
-
         if(game.input.keyboard.isHeld(ex.Input.Keys.Down)){
           if(this.moveTarget.y < this.pos.y + this.speed * delta / 1000){
             this.moveTarget.y += 48
@@ -109,7 +163,6 @@ class Player extends ex.Actor {
             this.pos.y += this.speed * delta / 1000
           }
         }
-
       } else if(this.direction == Direction.Left){
 
         if(game.input.keyboard.isHeld(ex.Input.Keys.Left)){
@@ -126,8 +179,6 @@ class Player extends ex.Actor {
             this.pos.x -= this.speed * delta / 1000
           }
         }
-
-
       } else if(this.direction == Direction.Right){
 
         if(game.input.keyboard.isHeld(ex.Input.Keys.Right)){
@@ -144,29 +195,27 @@ class Player extends ex.Actor {
             this.pos.x += this.speed * delta / 1000
           }
         }
-
       }
-
     } else { // isMoving false
 
       let needBlockCheck = false
 
-      if(game.input.keyboard.isHeld(ex.Input.Keys.Up)){
+      if(game.input.keyboard.wasPressed(ex.Input.Keys.Up)){
         this.moveTarget = this.pos.add(ex.vec(0, -48))
         this.direction = Direction.Up
         this.isMoving = true
         this.graphics.use('walkUp')
-      } else if (game.input.keyboard.isHeld(ex.Input.Keys.Down)){
+      } else if (game.input.keyboard.wasPressed(ex.Input.Keys.Down)){
         this.moveTarget = this.pos.add(ex.vec(0, 48))
         this.direction = Direction.Down
         this.isMoving = true
         this.graphics.use('walkDown')
-      } else if (game.input.keyboard.isHeld(ex.Input.Keys.Left)){
+      } else if (game.input.keyboard.wasPressed(ex.Input.Keys.Left)){
         this.moveTarget = this.pos.add(ex.vec(-64, 0))
         this.direction = Direction.Left
         this.isMoving = true
         this.graphics.use('walkLeft')
-      } else if (game.input.keyboard.isHeld(ex.Input.Keys.Right)){                
+      } else if (game.input.keyboard.wasPressed(ex.Input.Keys.Right)){                
         this.moveTarget = this.pos.add(ex.vec(64, 0))
         this.direction = Direction.Right
         this.isMoving = true
@@ -191,14 +240,6 @@ class Player extends ex.Actor {
         }
       }
     }
-  }
-
-  showShadow(){
-
-  }
-
-  hideShadow(){
-
   }
 }
 

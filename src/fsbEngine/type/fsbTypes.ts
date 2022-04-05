@@ -1,12 +1,17 @@
 import { assetRootPath } from './const'
 import * as ex from 'excalibur'
 
-export enum PlayerCharacter {
-    Miro = '미로공주',
-    Sam = '삼장법사',
-    Sao = '사오정',
-    Dit = '복면남자',
-
+export const PlayerCharacter = { 
+  miro : 'miro',
+  sam : 'sam',
+  sona : 'sona',
+  jupa : 'jupa',
+  sao : 'sao',
+  pusa : 'pusa',
+  pao : 'pao',
+  son : 'son0',
+  dit : 'dit0',
+  jah : 'jah0',
 }
 
 export enum Direction {
@@ -17,12 +22,24 @@ export enum Direction {
 }
 
 /** Convecrt Direction to Vector */
-export const d2v = [] as ex.Vector[]
-d2v[Direction.Up] = ex.Vector.Up
-d2v[Direction.Down] = ex.Vector.Down
-d2v[Direction.Left] = ex.Vector.Left
-d2v[Direction.Right] = ex.Vector.Right
+export const d2v = {
+  Up : ex.Vector.Up,
+  Left : ex.Vector.Left,
+  Right : ex.Vector.Right,
+  Down : ex.Vector.Down
+}
 
+export function v2d(v : ex.Vector) {
+  if(v.equals(ex.Vector.Up)){
+    return Direction.Up
+  } else if (v.equals(ex.Vector.Left)){
+    return Direction.Left
+  } else if (v.equals(ex.Vector.Right)){
+    return Direction.Right
+  } else if (v.equals(ex.Vector.Down)){
+    return Direction.Down
+  }
+}
 
 // tile position (1 x 1 -> 64px x 48px)
 export class FsbCoordinate {

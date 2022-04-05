@@ -7,11 +7,11 @@ import { enableWheelToZoom } from '../../fsbEngine/camera/wheelToZoom'
 export const s999_test = new ex.Scene()
 
 s999_test.onInitialize = async (game) => {
-  await Promise.all([
-    resource.map('0022_tfi0___').load(),
-    resource.bgm('vill2').load()
+  await resource.load([
+    resource.map('0022_tfi0___'),
+    resource.bgm('vill2')
   ])
-
+  
   enableWheelToZoom(game)
 
   //resource.bgm('vill2').loop = true

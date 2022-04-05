@@ -33,7 +33,7 @@ export class fsbMove implements Action {
     }
   }
 
-  public update(_delta: number) {
+  update(_delta: number) {
     if (!this._started) {
       this._started = true;
       this._start = new Vector(this._tx.pos.x, this._tx.pos.y);

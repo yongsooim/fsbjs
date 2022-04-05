@@ -1,6 +1,6 @@
 import { assetRootPath } from '../fsbEngine/type/const'
 import { FsbMapResource } from './util/fsbMapResourceClass'
-import { ImageSource, Sound } from 'excalibur'
+import { ImageSource, Loader, Sound } from 'excalibur'
 
 /**
  * When get function is called, find the object with file name as index in an internal array.
@@ -72,6 +72,14 @@ class ResourceManager {
     }
     return this._map[fileName]
   }
+
+  async load(resources : (Sound|ImageSource|FsbMapResource)[]){
+    let localLoader = [] as (Sound|ImageSource|FsbMapResource)[]
+    resources.forEach(resource => {
+      if(!resource.isLoaded()) localLoader.push(resource)
+    })
+    return Promise.all(localLoader.map(v=>v.load())) 
+  }  
 }
 
 /** Global singleton resource manager */

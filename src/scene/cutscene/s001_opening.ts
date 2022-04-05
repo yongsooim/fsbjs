@@ -14,18 +14,16 @@ const son = new ex.Actor()
 
 s001_opening.onInitialize = async (game) => {
 
-          let localLoader = []
-        if(!resource.bgm('sonata').isLoaded())       localLoader.push(resource.bgm('sonata'))
-        if(!resource.fx('e112').isLoaded())          localLoader.push(resource.fx('e112'))
-        if(!resource.map('0469_tcl0___').isLoaded()) localLoader.push(resource.map('0469_tcl0___'))
-        if(!resource.fm('csona_e0').isLoaded())      localLoader.push(resource.fm('csona_e0'))
-        if(!resource.ps('cson000').isLoaded())       localLoader.push(resource.ps('cson000'))
-        if(!resource.se('sp_wind_first').isLoaded()) localLoader.push(resource.se('sp_wind_first'))
-        if(!resource.se('sp_thunder03').isLoaded())  localLoader.push(resource.se('sp_thunder03'))
-        if(!resource.pcx('whdlgbox').isLoaded())  localLoader.push(resource.pcx('whdlgbox'))
-
-        await Promise.all(localLoader.map(v=>v.load()))
-
+  await resource.load([
+    resource.bgm('sonata'),
+    resource.fx('e112'),
+    resource.map('0469_tcl0___'),
+    resource.fm('csona_e0'),
+    resource.ps('cson000'),
+    resource.se('sp_wind_first'),
+    resource.se('sp_thunder03'),
+    resource.pcx('whdlgbox'),
+  ])
 
   enableWheelToZoom(game)
 

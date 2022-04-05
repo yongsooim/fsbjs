@@ -18,8 +18,8 @@ export const game = new ex.Engine({
   displayMode: ex.DisplayMode.FitScreen
 })
 
-game.screen.antialiasing = true
-game.screen.applyResolutionAndViewport()
+//game.screen.antialiasing = true
+//game.screen.applyResolutionAndViewport()
 
 const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 
@@ -54,8 +54,8 @@ loader.startButtonFactory = () => {
 game.start(loader).then(() => {
   
   //game.add('intro', s000_MainMenu)
-  game.add('intro', s001_opening)
-  //game.add('intro', s999_test)
+  //game.add('intro', s001_opening)
+  game.add('intro', s999_test)
 
   game.goToScene('intro')
 })

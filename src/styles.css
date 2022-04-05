@@ -1,4 +1,5 @@
-body { position:absolute;
+body { 
+  position:absolute;
   padding:0;
   width:100%;
   height:100%;
@@ -12,16 +13,11 @@ canvas {
   border: 1px solid #505020;
 }
 
-.startButton{
-  background-color: black;
-  color: black;
-}
-
 button#fsbPlay {
   display: inline-block;
   position: relative;
   z-index: 999;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
   /*border: 3px solid;
     border-color: white;
@@ -37,15 +33,19 @@ button#fsbPlay {
   line-height: 1;
   cursor: pointer;
   text-align: center;
-  transition: background 250ms ease-in-out, transform 150ms ease;
+  transition: background 500ms ease-in-out, transform 500ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
 
+  -webkit-animation: excalibur-button-fadein 500ms; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: excalibur-button-fadein 500ms; /* Firefox < 16 */
+  -ms-animation: excalibur-button-fadein 500ms; /* Internet Explorer */
+  -o-animation: excalibur-button-fadein 500ms; /* Opera < 12.1 */
+  animation: excalibur-button-fadein 500ms;
+}
 
+button#fsbPlay:hover {
+  background : #999999;
+  padding: 30px 80px 30px 80px;
 
-  -webkit-animation: excalibur-button-fadein 200ms; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: excalibur-button-fadein 200ms; /* Firefox < 16 */
-  -ms-animation: excalibur-button-fadein 200ms; /* Internet Explorer */
-  -o-animation: excalibur-button-fadein 200ms; /* Opera < 12.1 */
-  animation: excalibur-button-fadein 200ms;
 }
