@@ -80,6 +80,11 @@ class ResourceManager {
     })
     return Promise.all(localLoader.map(v=>v.load())) 
   }  
+
+  async loadSync(resources : (Sound|ImageSource|FsbMapResource)[]){
+    await this.load(resources)
+  } 
+
 }
 
 /** Global singleton resource manager */
