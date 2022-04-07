@@ -13,6 +13,20 @@ s999_test.onInitialize = async (game) => {
     
     resource.bgm('pao')
   ])
+
+  await resource.load([
+    resource.ps("cson000"),
+    resource.ps("cdit000"),
+    resource.ps("cjah000"),
+    resource.ps("csam00"),
+    resource.ps("csona00"),
+    resource.ps("cmiro00"),
+    resource.ps("cjupa00"),
+    resource.ps("cpusa00"),
+    resource.ps("csao00"),
+    resource.ps("cpao00"),
+    resource.pcx("shadow")
+  ])
   
   enableWheelToZoom(game)
 

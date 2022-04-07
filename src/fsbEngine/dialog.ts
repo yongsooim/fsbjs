@@ -1,6 +1,7 @@
 // 대화창
 
-import { Actor, Text } from 'excalibur'
+import * as ex from 'excalibur'
+
 
 export enum DialogSpeed {
     pause = 500,
@@ -13,13 +14,30 @@ enum DialogState{
     done
 }
 
-export class DialogBox extends Actor {
-    state : DialogState// 상태
-    target : Text[] // 최종적으로 보여질 텍스트
-    cursor : number // 커서 위치
-    speed = DialogSpeed.normal // 글자 표시 속도
+class e {
+
+}
+
+export class DialogBox extends ex.Actor {
+    state : DialogState
+    target : ex.Text[]
+    cursor : number
+    speed = DialogSpeed.normal 
 
     show (elapsed:number) {
 
+    }
+
+    update(game:ex.Engine, delta:number){
+        super.update(game, delta)
+
+    }
+
+    collapse(){
+
+    }
+
+    expand(){
+        
     }
 }

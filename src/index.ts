@@ -32,6 +32,8 @@ const loader = new ex.Loader(
     resource.fx('e154'),
     resource.bgm('pusan'),
     resource.bgm('pusan'),
+    resource.ps("cmiro00"),
+
   ]
 )
 
@@ -47,13 +49,14 @@ loader.startButtonFactory = () => {
   }
 
   buttonElement.id = 'fsbPlay';
-  buttonElement.textContent = '시작';
+  buttonElement.textContent = 's';
   return buttonElement;
 };
 
 
-game.start(loader).then(() => {
+game.start(loader).then(async () => {
   
+
   //game.add('intro', s000_MainMenu)
   //game.add('intro', s001_opening)
   game.add('intro', s999_test)
