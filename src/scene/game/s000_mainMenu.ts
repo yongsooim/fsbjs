@@ -103,9 +103,9 @@ class MainMenu extends ex.Actor {
       //game.goToScene('s999')
       
       resource.load([
+        resource.map('0469_tcl0___'),
         resource.bgm('sonata'),
         resource.fx('e112'),
-        resource.map('0469_tcl0___'),
         resource.fm('csona_e0'),
         resource.ps('cson000'),
         resource.se('sp_wind_first'),
@@ -117,10 +117,10 @@ class MainMenu extends ex.Actor {
   
       setTimeout(async () => {
 
-        resource.load([
+        await resource.load([
+          resource.map('0469_tcl0___'),
           resource.bgm('sonata'),
           resource.fx('e112'),
-          resource.map('0469_tcl0___'),
           resource.fm('csona_e0'),
           resource.ps('cson000'),
           resource.se('sp_wind_first'),

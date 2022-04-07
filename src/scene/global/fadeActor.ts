@@ -18,7 +18,6 @@ class FadeActor extends Actor {
     this.actions.clearActions()
     this.graphics.layers.get('fadeIn').use(new Rectangle({ width: window.outerWidth, height: window.outerHeight, color: initialColor }))
     this.graphics.opacity = 1
-    this.opacity = 1
     this.actions.fade(0, duration).toPromise().then(() => {
       this.graphics.layers.get('fadeIn').hide()
       game.currentScene.remove(this)

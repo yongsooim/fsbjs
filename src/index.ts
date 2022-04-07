@@ -18,10 +18,11 @@ export const game = new ex.Engine({
   displayMode: ex.DisplayMode.FitScreen
 })
 
-//game.screen.antialiasing = true
-//game.screen.applyResolutionAndViewport()
+game.screen.antialiasing = true
+game.setAntialiasing(false)
+game.screen.applyResolutionAndViewport()
 
-const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
+//const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 
 const loader = new ex.Loader(
   [
