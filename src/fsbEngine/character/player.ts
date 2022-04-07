@@ -257,4 +257,4 @@ class Player extends ex.Actor {
   }
 }
 
-export const player = new Player();
+export const player = new Player({name:'player'});

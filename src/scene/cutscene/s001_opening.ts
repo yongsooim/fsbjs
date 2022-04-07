@@ -4,6 +4,7 @@ import { resource } from '../../resource/resourceManage'
 import { fadeActor } from '../global/fadeActor'
 import { fromFlexImageSource } from '../../resource/util/fsbAnimationUtil'
 import { enableWheelToZoom } from '../../fsbEngine/camera/wheelToZoom'
+import { DevTool } from '@excaliburjs/dev-tools'
 
 
 export const s001_opening = new ex.Scene()
@@ -13,6 +14,8 @@ const sonataSynth = new ex.Actor({x:550, y:1600})
 const son = new ex.Actor()
 
 s001_opening.onInitialize = async (game) => {
+  const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
+  
 
   await resource.load([
     resource.bgm('sonata'),

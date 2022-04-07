@@ -2,23 +2,16 @@ import { assetRootPath } from './const'
 import * as ex from 'excalibur'
 
 export const PlayerCharacter = { 
-  can : 'can',
   miro : 'miro',
   sam : 'sam',
   sona : 'sona',
   jupa : 'jupa',
-  par : 'par',
   sao : 'sao',
   pusa : 'pusa',
   pao : 'pao',
   son : 'son0',
-  dit0 : 'dit0',
-  jah0 : 'jah0',
-  hec : 'hec',
-  macm : 'macm',
-  ninja : 'ninja',
-  sadi : 'sadi',
   dit1 : 'dit1',
+  jah0 : 'jah0',
 }
 
 export enum Direction {

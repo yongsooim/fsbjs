@@ -3,10 +3,13 @@ import { Actor, Engine, LockCameraToActorStrategy } from 'excalibur'
 import { resource } from '../../resource/resourceManage'
 import { player } from '../../fsbEngine/character/player'
 import { enableWheelToZoom } from '../../fsbEngine/camera/wheelToZoom'
+import { DevTool } from '@excaliburjs/dev-tools'
 
 export const s999_test = new ex.Scene()
 
 s999_test.onInitialize = async (game) => {
+  const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
+
   await resource.load([
     //resource.map('0022_tfi0___'),
     resource.map('0130_tdi0___'),

@@ -22,7 +22,7 @@ game.screen.antialiasing = true
 game.setAntialiasing(false)
 game.screen.applyResolutionAndViewport()
 
-const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
+let devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 
 const loader = new ex.Loader(
   [
@@ -33,14 +33,33 @@ const loader = new ex.Loader(
     resource.bgm('pusan'),
     resource.bgm('pusan'),
     resource.ps("cmiro00"),
+    resource.ps("cson000"),
+    resource.ps("cdit000"),
+    resource.ps("cjah000"),
+    resource.ps("csam00"),
+    resource.ps("csona00"),
+    resource.ps("cmiro00"),
+    resource.ps("cjupa00"),
+    resource.ps("cpusa00"),
+    resource.ps("csao00"),
+    resource.ps("cpao00"),
+    resource.pcx("shadow"),
+    resource.map('0130_tdi0___'),
+    
+    resource.bgm('pao')
+
 
   ]
 )
 
 loader.backgroundColor = '#000000'
 loader.logo = loaderLogoBase64
-loader.logoHeight = 64
-loader.logoWidth = 64
+//loader.logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjiJu+4D8ABYEClcC+vtcAAAAASUVORK5CYII='
+//loader.logoPosition = ex.vec(window.outerWidth/3, window.outerHeight/3)
+loader.logoPosition = ex.vec(600, 350)
+loader.loadingBarPosition = ex.vec(480,450)
+loader.logoHeight = 300
+loader.logoWidth = 300
 
 loader.startButtonFactory = () => {
   let buttonElement: HTMLButtonElement = document.getElementById('fsbPlay') as HTMLButtonElement;
@@ -49,17 +68,23 @@ loader.startButtonFactory = () => {
   }
 
   buttonElement.id = 'fsbPlay';
-  buttonElement.textContent = 's';
+  //buttonElement.textContent = 's';
+  buttonElement.textContent = '시작';
   return buttonElement;
 };
 
 
 game.start(loader).then(async () => {
   
+  resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)
 
-  //game.add('intro', s000_MainMenu)
+  game.add('intro', s000_MainMenu)
   //game.add('intro', s001_opening)
-  game.add('intro', s999_test)
+  
+  //game.add('intro', s999_test)
 
+  devtool.engine = null
+  devtool.update = () => {}
+  
   game.goToScene('intro')
 })
