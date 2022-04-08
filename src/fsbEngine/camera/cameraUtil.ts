@@ -5,7 +5,7 @@ export function enableWheelToZoom (game : ex.Engine) {
     console.log(evt)
     if (evt.deltaY > 0) {
       if (game.currentScene.camera.zoom > 0.4) {
-        game.currentScene.camera.zoom *= 0.9
+        game.currentScene.camera.zoom /= 1.1
       }
     } else {
       if (game.currentScene.camera.zoom < 4) {

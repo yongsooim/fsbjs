@@ -3,7 +3,7 @@ import { Text, BoundingBox, EasingFunctions, Rectangle } from 'excalibur'
 import { resource } from '../../resource/resourceManage'
 import { fadeActor } from '../global/fadeActor'
 import { fromFlexImageSource } from '../../resource/util/fsbAnimationUtil'
-import { enableWheelToZoom } from '../../fsbEngine/camera/wheelToZoom'
+import { enableWheelToZoom } from '../../fsbEngine/camera/cameraUtil'
 import { DevTool } from '@excaliburjs/dev-tools'
 
 

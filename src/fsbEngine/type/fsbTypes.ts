@@ -9,7 +9,7 @@ export const PlayerCharacter = {
   sao : 'sao',
   pusa : 'pusa',
   pao : 'pao',
-  son : 'son0',
+  son0 : 'son0',
   dit1 : 'dit1',
   jah0 : 'jah0',
 }

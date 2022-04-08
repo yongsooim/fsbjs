@@ -2,13 +2,13 @@ import * as ex from 'excalibur'
 import { Actor, Engine, LockCameraToActorStrategy } from 'excalibur'
 import { resource } from '../../resource/resourceManage'
 import { player } from '../../fsbEngine/character/player'
-import { enableWheelToZoom } from '../../fsbEngine/camera/wheelToZoom'
+import { enableWheelToZoom } from '../../fsbEngine/camera/cameraUtil'
 import { DevTool } from '@excaliburjs/dev-tools'
 
 export const s999_test = new ex.Scene()
 
 s999_test.onInitialize = async (game) => {
-  const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
+  //const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 
   await resource.load([
     //resource.map('0022_tfi0___'),
@@ -42,7 +42,6 @@ s999_test.onInitialize = async (game) => {
   resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)
   const spriteSheet = ex.SpriteSheet.fromImageSource({ image: resource.ps('csam00'), grid: { rows: 4, columns: 6, spriteWidth: 32, spriteHeight: 48 } })
 
-  
   s999_test.add(player)
   player.pos = ex.vec(1152, 864)
   player.z = -1

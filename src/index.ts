@@ -55,32 +55,30 @@ const loader = new ex.Loader(
 loader.backgroundColor = '#000000'
 loader.logo = loaderLogoBase64
 //loader.logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjiJu+4D8ABYEClcC+vtcAAAAASUVORK5CYII='
-//loader.logoPosition = ex.vec(window.outerWidth/3, window.outerHeight/3)
-loader.logoPosition = ex.vec(600, 350)
-loader.loadingBarPosition = ex.vec(480,450)
-loader.logoHeight = 300
-loader.logoWidth = 300
+loader.logoPosition = ex.vec(game.screen.viewport.width * 45/ 100, game.screen.viewport.height * 2 / 5)
+loader.loadingBarPosition = ex.vec(game.screen.viewport.width / 4, game.screen.viewport.height * 4 / 5)
+loader.logoWidth = game.screen.viewport.width / 2
 
 loader.startButtonFactory = () => {
+  game.screen.applyResolutionAndViewport()
   let buttonElement: HTMLButtonElement = document.getElementById('fsbPlay') as HTMLButtonElement;
   if (!buttonElement) {
     buttonElement = document.createElement('button');
   }
 
   buttonElement.id = 'fsbPlay';
-  //buttonElement.textContent = 's';
-  buttonElement.textContent = '시작';
+  buttonElement.textContent = 'click to start';
+  //buttonElement.textContent = '시작';
   return buttonElement;
 };
 
 
 game.start(loader).then(async () => {
-  
+  console.log(game.screen.viewport.width)
   resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)
 
   game.add('intro', s000_MainMenu)
   //game.add('intro', s001_opening)
-  
   //game.add('intro', s999_test)
 
   devtool.engine = null

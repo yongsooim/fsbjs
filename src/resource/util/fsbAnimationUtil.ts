@@ -33,7 +33,6 @@ export function fromFlexImageSource (imageSource: ImageSource, sourceViews: Sour
   return new SpriteSheet({ sprites: sprites })
 }
 
-
 export function AnimationfromSpriteSheet(
   spriteSheet: SpriteSheet,
   frameIndices: number[],
@@ -45,10 +44,8 @@ export function AnimationfromSpriteSheet(
 
   let _frames = frameIndices.map(v => {return {graphic:spriteSheet.sprites[v], duration : frameDuration}} )
   
-
   return new Animation({
     frames: _frames,
     strategy: strategy
   });
 }
-
