@@ -31,7 +31,7 @@ s999_test.onInitialize = async (game) => {
     resource.pcx("shadow")
   ])
   
-  enableWheelToZoom(game)
+  enableWheelToZoom(game, s999_test)
 
   //resource.bgm('vill2').loop = true
   //resource.bgm('vill2').play()

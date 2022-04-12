@@ -44,12 +44,7 @@ button#fsbPlay {
 button#fsbPlay:hover {
   background : #999999;
   transition: all 1s;
-
-}
-
-div#excalibur-play-root{ 
   top:0px !important; 
-  width:100%;
+  width:500px;
   aspect-ratio: 4/3;
 }
- 

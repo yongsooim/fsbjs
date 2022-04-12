@@ -68,12 +68,11 @@ loader.startButtonFactory = () => {
 
 
 game.start(loader).then(async () => {
-  console.log(game.screen.viewport.width)
   resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)
 
-  game.add('intro', s000_MainMenu)
+  //game.add('intro', s000_MainMenu)
   //game.add('intro', s001_opening)
-  //game.add('intro', s999_test)
+  game.add('intro', s999_test)
 
   devtool.engine = null
   devtool.update = () => {}

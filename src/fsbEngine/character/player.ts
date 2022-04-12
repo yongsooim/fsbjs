@@ -30,8 +30,8 @@ declare enum Step { // 왼발, 오른발 번갈아가게 하기 위함
   Second = "Second"
 }
 class Player extends ex.Actor {
-  //private _tileCoord // Coordinate in tile unit 
   public step = Step.First // left step, right step
+
   public moveTarget: ex.Vector
   public direction = Direction.Down
   public oldDirection = Direction.Down
@@ -54,6 +54,7 @@ class Player extends ex.Actor {
   get isMoving(){
     return this._isMoving
   }
+
 
   private _showingCharacterIndex = 0
   set showingCharacterIndex(index : number){
@@ -103,7 +104,7 @@ class Player extends ex.Actor {
   }
   
   update(game: ex.Engine, delta: number) {
-    console.log(this.walkAnimation["test"])
+
 
     //console.log(this.durationPerWalkFrameVertical)
     super.update(game, delta)
@@ -207,7 +208,7 @@ class Player extends ex.Actor {
         this.moveTarget = this.pos.add(ex.vec(-64, 0))
         this.direction = Direction.Left
         this.isMoving = true
-      } else if (game.input.keyboard.isHeld(ex.Input.Keys.Right)){
+      } else if (game.input.keyboard.isHeld(ex.Input.Keys.Right)){                
         this.moveTarget = this.pos.add(ex.vec(64, 0))
         this.direction = Direction.Right
         this.isMoving = true
