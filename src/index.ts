@@ -31,7 +31,6 @@ const loader = new ex.Loader(
     resource.fx('e156'),
     resource.fx('e154'),
     resource.bgm('pusan'),
-    resource.bgm('pusan'),
     resource.ps("cmiro00"),
     resource.ps("cson000"),
     resource.ps("cdit000"),
@@ -44,17 +43,13 @@ const loader = new ex.Loader(
     resource.ps("csao00"),
     resource.ps("cpao00"),
     resource.pcx("shadow"),
-    resource.map('0130_tdi0___'),
-    
+    resource.map('0130_tdi0___'),    
     resource.bgm('pao')
-
-
   ]
 )
 
 loader.backgroundColor = '#000000'
 loader.logo = loaderLogoBase64
-//loader.logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjiJu+4D8ABYEClcC+vtcAAAAASUVORK5CYII='
 loader.logoPosition = ex.vec(game.screen.viewport.width * 45/ 100, game.screen.viewport.height * 2 / 5)
 loader.loadingBarPosition = ex.vec(game.screen.viewport.width / 4, game.screen.viewport.height * 4 / 5)
 loader.logoWidth = game.screen.viewport.width / 2
@@ -67,8 +62,7 @@ loader.startButtonFactory = () => {
   }
 
   buttonElement.id = 'fsbPlay';
-  buttonElement.textContent = 'click to start';
-  //buttonElement.textContent = '시작';
+  buttonElement.textContent = 's';
   return buttonElement;
 };
 

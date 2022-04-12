@@ -22,14 +22,20 @@ export enum Direction {
 }
 
 /** Convecrt Direction to Vector */
-export const d2v = {
-  Up : ex.Vector.Up,
-  Left : ex.Vector.Left,
-  Right : ex.Vector.Right,
-  Down : ex.Vector.Down
+export function d2v(d: Direction){
+  if (d == Direction.Up){
+    return ex.Vector.Up
+  } else if (d == Direction.Left) {
+    return ex.Vector.Left
+  } else if (d == Direction.Right) {
+    return ex.Vector.Right
+  } else if (d == Direction.Down) {
+    return ex.Vector.Down
+  }
 }
 
-export function v2d(v : ex.Vector) {
+/** Convecrt Vector to Direction */
+export function v2d (v : ex.Vector) {
   if(v.equals(ex.Vector.Up)){
     return Direction.Up
   } else if (v.equals(ex.Vector.Left)){
