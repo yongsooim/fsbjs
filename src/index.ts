@@ -22,7 +22,6 @@ game.screen.antialiasing = true
 game.setAntialiasing(false)
 game.screen.applyResolutionAndViewport()
 
-const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 
 const loader = new Loader(
   [
@@ -44,6 +43,7 @@ const loader = new Loader(
     resource.ps('cpao00'),
     resource.pcx('shadow'),
     resource.map('0130_tdi0___'),
+    resource.map('0476_tbb0___'),
     resource.bgm('pao')
   ]
 )
@@ -67,14 +67,13 @@ loader.startButtonFactory = () => {
 }
 
 game.start(loader).then(async () => {
-  resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)
+//  resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)
+  resource.map('0476_tbb0___').addTiledMapToScene(game.currentScene)
 
   // game.add('intro', s000_MainMenu)
   // game.add('intro', s001_opening)
   game.add('intro', s999_test)
-
-  devtool.engine = null
-  devtool.update = () => { }
+  const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 
   game.goToScene('intro')
 })

@@ -25,7 +25,7 @@ s001_opening.onInitialize = async (game) => {
     resource.pcx('whdlgbox')
   ])
 
-  enableWheelToZoom(game, s001_opening)
+  enableWheelToZoom()
 
   resource.map('0469_tcl0___').addTiledMapToScene(s001_opening)
 

@@ -1,7 +1,7 @@
 import { SpriteSheet, Scene, Actor, Engine, LockCameraToActorStrategy, vec } from 'excalibur'
 import { resource } from '../../resource/resourceManage'
 import { player } from '../../fsbEngine/character/player'
-import { enableWheelToZoom } from '../../fsbEngine/camera/cameraUtil'
+import { enableWheelToZoom, disableWheelToZoom } from '../../fsbEngine/camera/cameraUtil'
 import { DevTool } from '@excaliburjs/dev-tools'
 
 export const s999_test = new Scene()
@@ -11,7 +11,8 @@ s999_test.onInitialize = async (game) => {
 
   await resource.load([
     // resource.map('0022_tfi0___'),
-    resource.map('0130_tdi0___'),
+    //resource.map('0130_tdi0___'),
+    resource.map('0476_tbb0___'),
 
     resource.bgm('pao')
   ])
@@ -30,15 +31,16 @@ s999_test.onInitialize = async (game) => {
     resource.pcx('shadow')
   ])
 
-  enableWheelToZoom(game, s999_test)
-
+  enableWheelToZoom()
+  //disableWheelToZoom(game, s999_test)
   // resource.bgm('vill2').loop = true
   // resource.bgm('vill2').play()
   //  resource.bgm('pao').play()
   resource.bgm('pao').loop = true
 
   // resource.map('0022_tfi0___').addTiledMapToScene(game.currentScene)
-  resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)
+  //resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)
+  resource.map('0476_tbb0___').addTiledMapToScene(game.currentScene)
   const spriteSheet = SpriteSheet.fromImageSource({ image: resource.ps('csam00'), grid: { rows: 4, columns: 6, spriteWidth: 32, spriteHeight: 48 } })
 
   s999_test.add(player)
