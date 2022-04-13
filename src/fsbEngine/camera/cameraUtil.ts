@@ -1,19 +1,17 @@
-import * as ex from 'excalibur'
+import { Engine, Scene, EasingFunctions, Input } from 'excalibur'
 import { game } from '../../index'
 
 let targetZoom = 1
-let targetGame : ex.Engine
-let targetScene : ex.Scene
+let targetGame : Engine
+let targetScene : Scene
+let isZooming = false
 
-
-export function enableWheelToZoom (_game : ex.Engine, _scene : ex.Scene) {
+export function enableWheelToZoom (_game : Engine, _scene : Scene) {
   console.log(_game)
   targetGame = _game
   targetScene = _scene
-  //_game.input.pointers.on('wheel', wheelToZoomHandler)
+  // _game.input.pointers.on('wheel', wheelToZoomHandler)
   _game.input.pointers.on('wheel', (evt) => {
-  console.log(evt)
-
     if (evt.deltaY > 0) {
       if (targetZoom > 0.4) {
         targetZoom /= 1.1
@@ -23,19 +21,22 @@ export function enableWheelToZoom (_game : ex.Engine, _scene : ex.Scene) {
         targetZoom *= 1.1
       }
     }
-    targetScene.camera.zoomOverTime(targetZoom, 98, ex.EasingFunctions.EaseOutQuad)
-    //targetScene.camera.zoom = targetZoom
-  
-  })
 
-  console.log()
+    if (isZooming === false) {
+      targetScene.camera.zoomOverTime(targetZoom, 300, EasingFunctions.EaseOutQuad).then(() => {
+        isZooming = false
+      })
+      isZooming = true
+    }
+    // targetScene.camera.zoom = targetZoom
+  })
 }
 
-export function disableWheelToZoom (_game : ex.Engine) {
+export function disableWheelToZoom (_game : Engine) {
   game.input.pointers.off('wheel', wheelToZoomHandler)
 }
 
-const wheelToZoomHandler = (evt: ex.Input.WheelEvent) => {
+const wheelToZoomHandler = (evt: Input.WheelEvent) => {
   console.log(evt)
   if (evt.deltaY > 0) {
     if (targetZoom > 0.4) {
@@ -46,5 +47,5 @@ const wheelToZoomHandler = (evt: ex.Input.WheelEvent) => {
       targetZoom *= 1.1
     }
   }
-  targetScene.camera.zoomOverTime(targetZoom, 500, ex.EasingFunctions.EaseInOutCubic)
+  targetScene.camera.zoomOverTime(targetZoom, 500, EasingFunctions.EaseInOutCubic)
 }

@@ -2,7 +2,7 @@ import { ImageSource, Sprite, SourceView, SpriteSheet, AnimationStrategy, Animat
 
 /**
  * Create a SpriteSheet from an [[ImageSource]] made up with variable sized sprites
- * 
+ *
  * Example:
  * ```
  * const spriteSheet = SpriteSheet.fromFlexImageSource({
@@ -33,19 +33,19 @@ export function fromFlexImageSource (imageSource: ImageSource, sourceViews: Sour
   return new SpriteSheet({ sprites: sprites })
 }
 
-export function AnimationfromSpriteSheet(
+export function AnimationfromSpriteSheet (
   spriteSheet: SpriteSheet,
   frameIndices: number[],
   frameDuration: number,
   strategy: AnimationStrategy = AnimationStrategy.Loop
 ): Animation {
-  const maxIndex = spriteSheet.sprites.length - 1;
-  const invalidIndices = frameIndices.filter((index) => index < 0 || index > maxIndex);
+  const maxIndex = spriteSheet.sprites.length - 1
+  const invalidIndices = frameIndices.filter((index) => index < 0 || index > maxIndex)
 
-  let _frames = frameIndices.map(v => {return {graphic:spriteSheet.sprites[v], duration : frameDuration}} )
-  
+  const _frames = frameIndices.map(v => { return { graphic: spriteSheet.sprites[v], duration: frameDuration } })
+
   return new Animation({
     frames: _frames,
     strategy: strategy
-  });
+  })
 }

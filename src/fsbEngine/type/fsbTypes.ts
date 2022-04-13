@@ -1,17 +1,17 @@
 import { assetRootPath } from './const'
-import * as ex from 'excalibur'
+import { Vector } from 'excalibur'
 
-export const PlayerCharacter = { 
-  miro : 'miro',
-  sam : 'sam',
-  sona : 'sona',
-  jupa : 'jupa',
-  sao : 'sao',
-  pusa : 'pusa',
-  pao : 'pao',
-  son0 : 'son0',
-  dit1 : 'dit1',
-  jah0 : 'jah0',
+export const PlayerCharacter = {
+  miro: 'miro',
+  sam: 'sam',
+  sona: 'sona',
+  jupa: 'jupa',
+  sao: 'sao',
+  pusa: 'pusa',
+  pao: 'pao',
+  son0: 'son0',
+  dit1: 'dit1',
+  jah0: 'jah0'
 }
 
 export enum Direction {
@@ -22,27 +22,27 @@ export enum Direction {
 }
 
 /** Convecrt Direction to Vector */
-export function d2v(d: Direction){
-  if (d == Direction.Up){
-    return ex.Vector.Up
-  } else if (d == Direction.Left) {
-    return ex.Vector.Left
-  } else if (d == Direction.Right) {
-    return ex.Vector.Right
-  } else if (d == Direction.Down) {
-    return ex.Vector.Down
+export function d2v (d: Direction) {
+  if (d === Direction.Up) {
+    return Vector.Up
+  } else if (d === Direction.Left) {
+    return Vector.Left
+  } else if (d === Direction.Right) {
+    return Vector.Right
+  } else if (d === Direction.Down) {
+    return Vector.Down
   }
 }
 
 /** Convecrt Vector to Direction */
-export function v2d (v : ex.Vector) {
-  if(v.equals(ex.Vector.Up)){
+export function v2d (v : Vector) {
+  if (v.equals(Vector.Up)) {
     return Direction.Up
-  } else if (v.equals(ex.Vector.Left)){
+  } else if (v.equals(Vector.Left)) {
     return Direction.Left
-  } else if (v.equals(ex.Vector.Right)){
+  } else if (v.equals(Vector.Right)) {
     return Direction.Right
-  } else if (v.equals(ex.Vector.Down)){
+  } else if (v.equals(Vector.Down)) {
     return Direction.Down
   }
 }

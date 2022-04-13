@@ -1,17 +1,14 @@
-import * as ex from 'excalibur'
+import { Actor, SpriteSheet } from 'excalibur'
 import { Direction } from '../type/fsbTypes'
 
-// used in 
+// used in
 
 declare enum CharacterAction {
   walk = 'walk',
   run = 'run',
 }
 
-class fsbCharacter extends ex.Actor {
-
-  spriteSheets : ex.SpriteSheet[]
-  faceDirection : Direction
-  
-
+class fsbCharacter extends Actor {
+  spriteSheets: SpriteSheet[]
+  faceDirection: Direction
 }

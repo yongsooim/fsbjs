@@ -1,13 +1,13 @@
 import { TiledMapResource } from '@excaliburjs/plugin-tiled'
 import { assetRootPath } from '../../fsbEngine/type/const'
+import { Resource } from 'excalibur'
 
 export class FsbMapResource extends TiledMapResource {
-  public mapName = 'DefaultMapName'
-  public width : number
-  public height : number
-  public mapMoveS = [] as number[][] // Move property
-  public mapMoveP = [] as number[][] 
-  
+  public mapName : string
+  public width : number // tile unit
+  public height : number // tile unit
+  public move : any
+
   // todo : need to add set pos, set direction according to toMap, fromMap
 
   constructor (public path: string) {
@@ -30,9 +30,14 @@ export class FsbMapResource extends TiledMapResource {
     }
   }
 
-  load(){
-    let retPromise = super.load()
+  load () {
+    const retPromise = super.load()
     // todo : need to add read map info
+
+    //this.move = new Resource((assetRootPath + 'mapset/png/' + this.path.split('/')[this.path.split('/').length - 1].split('.')[0] + '.json'), 'json')
+
+    //const retPromise2 = this.move.load()
+
     return retPromise
   }
 }

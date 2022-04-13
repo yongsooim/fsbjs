@@ -1,16 +1,13 @@
-import * as ex from 'excalibur'
+import { Actor, Engine, Color } from 'excalibur'
 
-
-class BlinkBox extends ex.Actor {
-
-  constructor() {
+class BlinkBox extends Actor {
+  public isShown : boolean
+  constructor () {
     super()
-
+    this.isShown = true
   }
 
-  udpate(game: ex.Engine, delta: number) {
+  udpate (game: Engine, delta: number) {
     super.update(game, delta)
-
   }
-
 }

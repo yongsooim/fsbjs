@@ -1,13 +1,12 @@
-import * as ex from 'excalibur'
-import { Engine } from 'excalibur'
+import { Engine, Scene, Actor, vec, Input, Animation, Sprite, Color, AnimationStrategy } from 'excalibur'
 import { resource } from '../../resource/resourceManage'
 import { fadeActor } from '../global/fadeActor'
 import { s001_opening } from '../cutscene/s001_opening'
 import { s999_test } from '../global/s999_test'
 
-export const s000_MainMenu = new ex.Scene()
+export const s000_MainMenu = new Scene()
 
-class MainMenu extends ex.Actor {
+class MainMenu extends Actor {
   Load = 0
   Start = 1
   Exit = 2
@@ -26,7 +25,7 @@ class MainMenu extends ex.Actor {
     return this._hovered
   }
 
-  onInitialize = (game: ex.Engine) => {
+  onInitialize = (game: Engine) => {
     this.graphics.layers.create({ name: 'background', order: 0 })
     this.graphics.layers.create({ name: 'selector', order: 1 })
     this.graphics.layers.get('background').show(MainMenu.introBackgroundImage)
@@ -43,28 +42,28 @@ class MainMenu extends ex.Actor {
   }
 
   update = (game: Engine, delta: number) => {
-    this.pos = ex.vec(game.drawWidth / 2, game.drawHeight / 2)
+    this.pos = vec(game.drawWidth / 2, game.drawHeight / 2)
 
     if (!this.stopAnimate) {
-      if (game.input.keyboard.wasPressed(ex.Input.Keys.Up)) {
+      if (game.input.keyboard.wasPressed(Input.Keys.Up)) {
         resource.fx('e156').play()
         this.hovered--
-      } else if (game.input.keyboard.wasPressed(ex.Input.Keys.Down)) {
+      } else if (game.input.keyboard.wasPressed(Input.Keys.Down)) {
         resource.fx('e156').play()
         this.hovered++
       }
 
       switch (this.hovered) {
       case (this.Load):
-        this.graphics.layers.get('selector').offset = ex.vec(183, 101)
+        this.graphics.layers.get('selector').offset = vec(183, 101)
         this.graphics.layers.get('selector').use(this.loadSelectedAnimation)
         break
       case (this.Start):
-        this.graphics.layers.get('selector').offset = ex.vec(183, 149)
+        this.graphics.layers.get('selector').offset = vec(183, 149)
         this.graphics.layers.get('selector').use(this.startSelectedAnimation)
         break
       case (this.Exit):
-        this.graphics.layers.get('selector').offset = ex.vec(186, 193)
+        this.graphics.layers.get('selector').offset = vec(186, 193)
         this.graphics.layers.get('selector').use(this.exitSelectedAnimation)
         break
       }
@@ -77,31 +76,30 @@ class MainMenu extends ex.Actor {
 
       switch (this.hovered) {
       case (this.Exit):
-        this.graphics.layers.get('selector').offset = ex.vec(186, 193)
-        this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
+        this.graphics.layers.get('selector').offset = vec(186, 193)
+        this.graphics.layers.get('selector').use(new Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 0, width: 112, height: 51 } }))
         break
 
       case (this.Start):
-        this.graphics.layers.get('selector').offset = ex.vec(183, 148)
-        this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
+        this.graphics.layers.get('selector').offset = vec(183, 148)
+        this.graphics.layers.get('selector').use(new Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 51, width: 150, height: 51 } }))
         break
 
       case (this.Load):
-        this.graphics.layers.get('selector').offset = ex.vec(182, 101)
-        this.graphics.layers.get('selector').use(new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
+        this.graphics.layers.get('selector').offset = vec(182, 101)
+        this.graphics.layers.get('selector').use(new Sprite({ image: resource.pcx('st01'), sourceView: { x: 0, y: 102, width: 128, height: 51 } }))
         break
       }
 
-      
       resource.fx('e154').play()
       resource.bgm('pusan').stop()
 
-      fadeActor.fadeOut(game, ex.Color.Black, 1000)
+      fadeActor.fadeOut(game, Color.Black, 1000)
 
       game.addScene('s001', s001_opening)
-      //game.addScene('s999', s999_test)
-      //game.goToScene('s999')
-      
+      // game.addScene('s999', s999_test)
+      // game.goToScene('s999')
+
       resource.load([
         resource.map('0469_tcl0___'),
         resource.bgm('sonata'),
@@ -114,9 +112,8 @@ class MainMenu extends ex.Actor {
         resource.ps('cson000'),
         resource.pcx('whdlgbox')
       ])
-  
-      setTimeout(async () => {
 
+      setTimeout(async () => {
         await resource.load([
           resource.map('0469_tcl0___'),
           resource.bgm('sonata'),
@@ -127,7 +124,7 @@ class MainMenu extends ex.Actor {
           resource.se('sp_thunder03'),
           resource.pcx('whdlgbox')
         ])
-      
+
         game.goToScene('s001')
 
         game.removeScene(s000_MainMenu)
@@ -135,31 +132,31 @@ class MainMenu extends ex.Actor {
     }
   }
 
-  loadSelectedAnimation = new ex.Animation({
+  loadSelectedAnimation = new Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 130, y: 102, width: 128, height: 51 } }), duration: 80 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 260, y: 102, width: 128, height: 51 } }), duration: 80 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 390, y: 102, width: 128, height: 51 } }), duration: 80 }
+      { graphic: new Sprite({ image: resource.pcx('st01'), sourceView: { x: 130, y: 102, width: 128, height: 51 } }), duration: 80 },
+      { graphic: new Sprite({ image: resource.pcx('st01'), sourceView: { x: 260, y: 102, width: 128, height: 51 } }), duration: 80 },
+      { graphic: new Sprite({ image: resource.pcx('st01'), sourceView: { x: 390, y: 102, width: 128, height: 51 } }), duration: 80 }
     ],
-    strategy: ex.AnimationStrategy.Loop
+    strategy: AnimationStrategy.Loop
   })
 
-  startSelectedAnimation = new ex.Animation({
+  startSelectedAnimation = new Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 80 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 80 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 80 }
+      { graphic: new Sprite({ image: resource.pcx('st01'), sourceView: { x: 150, y: 51, width: 150, height: 51 } }), duration: 80 },
+      { graphic: new Sprite({ image: resource.pcx('st01'), sourceView: { x: 298, y: 51, width: 150, height: 51 } }), duration: 80 },
+      { graphic: new Sprite({ image: resource.pcx('st01'), sourceView: { x: 446, y: 51, width: 150, height: 51 } }), duration: 80 }
     ],
-    strategy: ex.AnimationStrategy.Loop
+    strategy: AnimationStrategy.Loop
   })
 
-  exitSelectedAnimation = new ex.Animation({
+  exitSelectedAnimation = new Animation({
     frames: [
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 80 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 80 },
-      { graphic: new ex.Sprite({ image: resource.pcx('st01'), sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 80 }
+      { graphic: new Sprite({ image: resource.pcx('st01'), sourceView: { x: 112, y: 0, width: 112, height: 51 } }), duration: 80 },
+      { graphic: new Sprite({ image: resource.pcx('st01'), sourceView: { x: 224, y: 0, width: 112, height: 51 } }), duration: 80 },
+      { graphic: new Sprite({ image: resource.pcx('st01'), sourceView: { x: 336, y: 0, width: 112, height: 51 } }), duration: 80 }
     ],
-    strategy: ex.AnimationStrategy.Loop
+    strategy: AnimationStrategy.Loop
   })
 }
 
@@ -172,6 +169,5 @@ s000_MainMenu.onInitialize = (game) => {
   s000_MainMenu.camera.strategy.lockToActor(mainMenuActor)
   s000_MainMenu.camera.zoom = 1.5
 
-  fadeActor.fadeIn(game, ex.Color.White, 800)
-  
+  fadeActor.fadeIn(game, Color.White, 800)
 }

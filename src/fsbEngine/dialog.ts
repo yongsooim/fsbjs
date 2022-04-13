@@ -1,7 +1,6 @@
 // 대화창
 
-import * as ex from 'excalibur'
-
+import { Engine, Actor, Text } from 'excalibur'
 
 export enum DialogSpeed {
     pause = 500,
@@ -9,7 +8,7 @@ export enum DialogSpeed {
     fast = 40
 }
 
-enum DialogState{
+enum DialogState {
     showing,
     done
 }
@@ -18,26 +17,25 @@ class e {
 
 }
 
-export class DialogBox extends ex.Actor {
-    state : DialogState
-    target : ex.Text[]
-    cursor : number
-    speed = DialogSpeed.normal 
+export class DialogBox extends Actor {
+    state: DialogState
+    target: Text[]
+    cursor: number
+    speed = DialogSpeed.normal
 
-    show (elapsed:number) {
-
-    }
-
-    update(game:ex.Engine, delta:number){
-        super.update(game, delta)
+    show (elapsed: number) {
 
     }
 
-    collapse(){
+    update (game: Engine, delta: number) {
+      super.update(game, delta)
+    }
+
+    collapse () {
 
     }
 
-    expand(){
-        
+    expand () {
+
     }
 }
