@@ -39,14 +39,15 @@ s999_test.onInitialize = async (game) => {
   resource.bgm('pao').loop = true
 
   // resource.map('0022_tfi0___').addTiledMapToScene(game.currentScene)
-  // resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)
-  resource.map('0476_tbb0___').addTiledMapToScene(game.currentScene)
-  player.currentMap = resource.map('0476_tbb0___')
+   resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)
+  //resource.map('0476_tbb0___').addTiledMapToScene(game.currentScene)
+  //player.currentMap = resource.map('0476_tbb0___')
+  player.currentMap = resource.map('0130_tdi0___')
 
   const spriteSheet = SpriteSheet.fromImageSource({ image: resource.ps('csam00'), grid: { rows: 4, columns: 6, spriteWidth: 32, spriteHeight: 48 } })
 
   s999_test.add(player)
-  player.pos = vec(4 * 64, 4 * 48)
+  player.pos = vec(8 * 64, 8 * 48)
   player.z = -1
   // s999_test.camera.strategy.lockToActor(player)
   s999_test.camera.strategy.elasticToActor(player.focusActor, 0.6, 0.7)

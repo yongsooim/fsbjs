@@ -2135,6 +2135,7 @@ export declare class ResourceIndex {
   fx(fileName: 'e109'): Sound
   fx(fileName: 'e110'): Sound
   fx(fileName: 'e111'): Sound
+  /** 번개 소리 */
   fx(fileName: 'e112'): Sound
   fx(fileName: 'e113'): Sound
   fx(fileName: 'e114'): Sound
@@ -2177,8 +2178,10 @@ export declare class ResourceIndex {
   fx(fileName: 'e151'): Sound
   fx(fileName: 'e152'): Sound
   fx(fileName: 'e153'): Sound
+  /** 메뉴 커서 선택 소리 */
   fx(fileName: 'e154'): Sound
   fx(fileName: 'e155'): Sound
+  /** 메뉴 커서 이동 소리 */
   fx(fileName: 'e156'): Sound
   fx(fileName: 'e157'): Sound
   fx(fileName: 'e158'): Sound

@@ -48,9 +48,9 @@ const loader = new Loader(
 )
 
 loader.backgroundColor = '#000000'
-// loader.logo = loaderLogoBase64
+ loader.logo = loaderLogoBase64
 /** white dot */
-loader.logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjiJu+4D8ABYEClcC+vtcAAAAASUVORK5CYII='
+//loader.logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjiJu+4D8ABYEClcC+vtcAAAAASUVORK5CYII='
 loader.logoPosition = vec(game.screen.viewport.width * 45 / 100, game.screen.viewport.height * 2 / 5)
 loader.loadingBarPosition = vec(game.screen.viewport.width / 4, game.screen.viewport.height * 4 / 5)
 loader.logoWidth = game.screen.viewport.width / 2
@@ -63,7 +63,8 @@ loader.startButtonFactory = () => {
   }
 
   buttonElement.id = 'fsbPlay'
-  buttonElement.textContent = 's'
+  buttonElement.textContent = '시작'
+  //buttonElement.textContent = 's'
   return buttonElement
 }
 
