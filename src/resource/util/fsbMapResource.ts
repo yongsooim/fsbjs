@@ -30,13 +30,19 @@ export class FsbMapResource extends TiledMapResource {
     }
   }
 
-  load () {
+  async load () {
     const retPromise = super.load()
     // todo : need to add read map info
 
-    //this.move = new Resource((assetRootPath + 'mapset/png/' + this.path.split('/')[this.path.split('/').length - 1].split('.')[0] + '.json'), 'json')
+    this.move = new Resource((assetRootPath + 'mapset/json/' + this.path.split('/')[this.path.split('/').length - 1].split('.')[0] + '.json'), 'json')
 
-    //const retPromise2 = this.move.load()
+    const retPromise2 = this.move.load().then((data) => {
+      console.log(this.move)
+    })
+
+    await Promise.all([
+      retPromise, retPromise2
+    ])
 
     return retPromise
   }

@@ -1,5 +1,5 @@
 import { Engine, Scene, Actor, vec, Input, Animation, Sprite, Color, AnimationStrategy } from 'excalibur'
-import { resource } from '../../resource/resourceManage'
+import { resource } from '../../resource/ResourceManage'
 import { fadeActor } from '../global/fadeActor'
 import { s001_opening } from '../cutscene/s001_opening'
 import { s999_test } from '../global/s999_test'

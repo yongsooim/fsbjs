@@ -1,7 +1,7 @@
 import { Engine, DisplayMode, Loader, vec, Color } from 'excalibur'
 import { DevTool } from '@excaliburjs/dev-tools'
 
-import { resource } from './resource/resourceManage'
+import { resource } from './resource/ResourceManage'
 
 import { loaderLogoBase64 } from './fsbEngine/type/const'
 import { s000_MainMenu } from './scene/game/s000_mainMenu'
@@ -21,7 +21,6 @@ export const game = new Engine({
 game.screen.antialiasing = true
 game.setAntialiasing(false)
 game.screen.applyResolutionAndViewport()
-
 
 const loader = new Loader(
   [
@@ -49,7 +48,9 @@ const loader = new Loader(
 )
 
 loader.backgroundColor = '#000000'
-loader.logo = loaderLogoBase64
+// loader.logo = loaderLogoBase64
+/** white dot */
+loader.logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjiJu+4D8ABYEClcC+vtcAAAAASUVORK5CYII='
 loader.logoPosition = vec(game.screen.viewport.width * 45 / 100, game.screen.viewport.height * 2 / 5)
 loader.loadingBarPosition = vec(game.screen.viewport.width / 4, game.screen.viewport.height * 4 / 5)
 loader.logoWidth = game.screen.viewport.width / 2
@@ -73,6 +74,7 @@ game.start(loader).then(async () => {
   // game.add('intro', s000_MainMenu)
   // game.add('intro', s001_opening)
   game.add('intro', s999_test)
+  
   const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 
   game.goToScene('intro')

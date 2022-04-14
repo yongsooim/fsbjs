@@ -4,7 +4,7 @@ import { game } from '../../index'
 let targetZoom = 1
 
 export function enableWheelToZoom () {
-  game.input.pointers.on('wheel',wheelToZoomHandler)
+  game.input.pointers.on('wheel', wheelToZoomHandler)
 }
 
 export function disableWheelToZoom () {

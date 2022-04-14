@@ -1,5 +1,5 @@
 import { assetRootPath } from './const'
-import { Vector } from 'excalibur'
+import { vec, Vector } from 'excalibur'
 
 export const PlayerCharacter = {
   miro: 'miro',
@@ -21,6 +21,26 @@ export enum Direction {
     Down = 'Down'
 }
 
+// tile position (1 x 1 -> 64px x 48px)
+export class FsbCoordinate {
+  public x: number;
+  public y: number;
+
+  constructor (vOrfsbX: Vector|number, fsbY?: number) {
+    if (typeof vOrfsbX === 'number') {
+      this.x = vOrfsbX
+      this.y = fsbY
+    } else {
+      this.x = vOrfsbX.x / 64
+      this.y = vOrfsbX.y / 48
+    }
+  }
+
+  get v () {
+    return vec(this.x * 64, this.y * 48)
+  }
+}
+
 /** Convecrt Direction to Vector */
 export function d2v (d: Direction) {
   if (d === Direction.Up) {
@@ -31,6 +51,19 @@ export function d2v (d: Direction) {
     return Vector.Right
   } else if (d === Direction.Down) {
     return Vector.Down
+  }
+}
+
+/** direction to move target */
+export function d2mt (d: Direction) {
+  if (d === Direction.Up) {
+    return Vector.Up.scale(48)
+  } else if (d === Direction.Left) {
+    return Vector.Left.scale(64)
+  } else if (d === Direction.Right) {
+    return Vector.Right.scale(48)
+  } else if (d === Direction.Down) {
+    return Vector.Down.scale(64)
   }
 }
 
@@ -47,33 +80,22 @@ export function v2d (v : Vector) {
   }
 }
 
-// tile position (1 x 1 -> 64px x 48px)
-export class FsbCoordinate {
-    public fsbX: number;
-    public fsbY: number;
+/** vector to fsb coordinate */
+export function v2fc (v : Vector) {
+  return new FsbCoordinate(v)
+}
 
-    constructor (fsbX: number, fsbY: number) {
-      this.fsbX = fsbX
-      this.fsbY = fsbY
-      this.x = fsbX * 64
-      this.y = fsbY * 48
-    }
+/** index of array to fsb coordinate */
+export function i2fc (index : number, cols:number) {
+  return new FsbCoordinate(index % cols, Math.ceil(index / cols))
+}
 
-    get x () {
-      return this.fsbX * 64
-    }
+/** index of array to fsb coordinate */
+export function fc2i (fc : FsbCoordinate, cols:number) {
+  return fc.x + fc.y * cols
+}
 
-    set x (x) {
-      this.x = x
-      this.fsbX = x / 64
-    }
-
-    get y () {
-      return this.fsbY * 48
-    }
-
-    set y (y) {
-      this.y = y
-      this.fsbY = y / 48
-    }
+/** vector to index of array */
+export function v2i (v: Vector, cols:number) {
+  return v.x / 64 + v.y / 48 * cols
 }
