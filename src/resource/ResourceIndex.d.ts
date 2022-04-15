@@ -1,7 +1,7 @@
 import { ImageSource, Sound } from "excalibur";
 import { FsbMapResource } from "./util/fsbMapResource";
 
-/** alias for comments */
+/** alias for tsdoc */
 export declare class ResourceIndex {
   /**  남남주 */
   map(fileName: '0000_t_loc0_'): FsbMapResource

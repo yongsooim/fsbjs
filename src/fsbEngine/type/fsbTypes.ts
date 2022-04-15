@@ -22,7 +22,8 @@ export enum Direction {
     UpLeft = 'UpLeft',
     UpRight = 'UpRight',
     DownLeft = 'DownLeft',
-    DownRight = 'DownRight'
+    DownRight = 'DownRight',
+    None = 'None'
 }
 
 // tile position (1 x 1 -> 64px x 48px)
@@ -40,38 +41,61 @@ export class FsbCoordinate {
     }
   }
 
-  get v () {
+  get worldCoordinates () {
     return vec(this.x * 64, this.y * 48)
   }
 }
 
-/** Convecrt Direction to Vector */
+// v stands for vector
+const vUp = Vector.Up
+const vLeft = Vector.Left
+const vRight = Vector.Right
+const vDown = Vector.Down
+const vUpLeft = (Vector.Up.scale(3).add(Vector.Left).scale(4)).normalize()
+const vUpRight = (Vector.Up.scale(3).add(Vector.Right).scale(4)).normalize()
+const vDownLeft = (Vector.Down.scale(3).add(Vector.Left).scale(4)).normalize()
+const vDownRight = (Vector.Down.scale(3).add(Vector.Right).scale(4)).normalize()
+
+/** Convecrt Direction to unit Vector */
 export function d2v (d: Direction) {
   if (d === Direction.Up) {
-    return Vector.Up
+    return vUp
   } else if (d === Direction.Left) {
-    return Vector.Left
+    return vLeft
   } else if (d === Direction.Right) {
-    return Vector.Right
+    return vRight
   } else if (d === Direction.Down) {
-    return Vector.Down
+    return vDown
+  } else if (d === Direction.UpLeft) {
+    return vUpLeft
+  } else if (d === Direction.UpRight) {
+    return vUpRight
+  } else if (d === Direction.DownLeft) {
+    return vDownLeft
+  } else if (d === Direction.DownRight) {
+    return vDownRight
   }
 }
 
-/** direction to move target vector to add */
+ // t stands for tile
+const tUp = Vector.Up.scale(48)
+const tLeft = Vector.Left.scale(64)
+const tRight = Vector.Right.scale(64)
+const tDown = Vector.Down.scale(48)
+/** Convert Direction to move target diff vector to add */
 export function d2mt (d: Direction) {
   if (d === Direction.Up) {
-    return Vector.Up.scale(48)
+    return tUp
   } else if (d === Direction.Left) {
-    return Vector.Left.scale(64)
+    return tLeft
   } else if (d === Direction.Right) {
-    return Vector.Right.scale(48)
+    return tRight
   } else if (d === Direction.Down) {
-    return Vector.Down.scale(64)
+    return tDown
   }
 }
 
-/** Convecrt Vector to Direction */
+/** Convert Direction Vector to Direction */
 export function v2d (v : Vector) {
   if (v.equals(Vector.Up)) {
     return Direction.Up
@@ -101,5 +125,5 @@ export function fc2i (fc : FsbCoordinate, cols:number) {
 
 /** vector to index of array */
 export function v2i (v: Vector, cols:number) {
-  return v.x / 64 + v.y / 48 * cols
+  return v.x / 64 + v.y * cols / 48
 }

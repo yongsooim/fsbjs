@@ -3,6 +3,7 @@ import { player } from '../../fsbEngine/character/player'
 import { enableWheelToZoom, disableWheelToZoom } from '../../fsbEngine/camera/cameraUtil'
 import { DevTool } from '@excaliburjs/dev-tools'
 import { resource } from '../../resource/ResourceManage'
+import { input } from '../../fsbEngine/input/inputManage'
 
 export const s999_test = new Scene()
 
@@ -47,11 +48,11 @@ s999_test.onInitialize = async (game) => {
   const spriteSheet = SpriteSheet.fromImageSource({ image: resource.ps('csam00'), grid: { rows: 4, columns: 6, spriteWidth: 32, spriteHeight: 48 } })
 
   s999_test.add(player)
+  s999_test.add(input)
   player.pos = vec(8 * 64, 8 * 48)
   player.z = -1
   // s999_test.camera.strategy.lockToActor(player)
   s999_test.camera.strategy.elasticToActor(player.focusActor, 0.6, 0.7)
   // player.graphics.use(spriteSheet.getSprite(0, 0))
-  // player.actions.moveBy(vec(320, 480), 128)
-  
+  // player.actions.moveBy(vec(320, 480), 128)  
 }

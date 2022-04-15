@@ -15,7 +15,8 @@ export const game = new Engine({
   maxFps: 60,
   backgroundColor: Color.Black,
   suppressConsoleBootMessage: true,
-  displayMode: DisplayMode.FitScreen
+  displayMode: DisplayMode.FitScreen,
+  snapToPixel: true
 })
 
 game.screen.antialiasing = true
@@ -50,7 +51,7 @@ const loader = new Loader(
 loader.backgroundColor = '#000000'
  loader.logo = loaderLogoBase64
 /** white dot */
-//loader.logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjiJu+4D8ABYEClcC+vtcAAAAASUVORK5CYII='
+loader.logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjiJu+4D8ABYEClcC+vtcAAAAASUVORK5CYII='
 loader.logoPosition = vec(game.screen.viewport.width * 45 / 100, game.screen.viewport.height * 2 / 5)
 loader.loadingBarPosition = vec(game.screen.viewport.width / 4, game.screen.viewport.height * 4 / 5)
 loader.logoWidth = game.screen.viewport.width / 2

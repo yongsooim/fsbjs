@@ -4,7 +4,7 @@ import { ImageSource, Sound } from 'excalibur'
 import { ResourceIndex } from './ResourceIndex'
 
 /**
- * When get function is called, find the object with file name as index in an internal array.
+ * When the function is called, find the object with file name as index in an internal array.
  *
  * If the object already exists in the array, return it.
  *
@@ -87,5 +87,5 @@ class ResourceManager {
   }
 }
 
-/** Global singleton resource manager */
+/** Global singleton resource accessor */
 export const resource = new ResourceManager() as ResourceIndex

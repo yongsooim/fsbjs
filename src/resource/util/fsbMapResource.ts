@@ -36,9 +36,7 @@ export class FsbMapResource extends TiledMapResource {
 
     this.move = new Resource((assetRootPath + 'mapset/json/' + this.path.split('/')[this.path.split('/').length - 1].split('.')[0] + '.json'), 'json')
 
-    const retPromise2 = this.move.load().then((data) => {
-      console.log(this.move)
-    })
+    const retPromise2 = this.move.load()
 
     await Promise.all([
       retPromise, retPromise2
