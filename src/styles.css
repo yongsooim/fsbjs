@@ -22,10 +22,11 @@ button#fsbPlay {
   /*border: 3px solid;
     border-color: white;
     box-shadow: 0 0 10px #ccc;*/
+  padding: 30px 80px 30px 80px;
   margin: 0;
   text-decoration: none;
   background: #333333;
-  color: #eeeeee;
+  color: #aaaaaa;
   font-family: sans-serif;
   font-size: 2rem;
   white-space: nowrap;
@@ -35,16 +36,16 @@ button#fsbPlay {
   transition: background 500ms ease-in-out, transform 500ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
-  width:100%;
-  height:100%;
-  opacity: 0.4;
-  padding-top: 20%;
+
+  -webkit-animation: excalibur-button-fadein 500ms; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: excalibur-button-fadein 500ms; /* Firefox < 16 */
+  -ms-animation: excalibur-button-fadein 500ms; /* Internet Explorer */
+  -o-animation: excalibur-button-fadein 500ms; /* Opera < 12.1 */
+  animation: excalibur-button-fadein 500ms;
 }
 
 button#fsbPlay:hover {
   background : #999999;
-  transition: all 1s;
-  top:0px !important; 
-  width:500px;
-  aspect-ratio: 4/3;
+  padding: 30px 80px 30px 80px;
+
 }

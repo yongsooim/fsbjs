@@ -44,6 +44,7 @@ class Player extends Actor {
     this._isMoving = moving
     if (this._isMoving) {
       // initial move
+      this.walkAnimation[this.direction].reset()
       this.walkAnimation[this.direction].goToFrame(this.isRightFoot ? 0 : 4)
       this.graphics.use(this.walkAnimation[this.direction])
     } else {
@@ -136,6 +137,7 @@ class Player extends Actor {
           if (this.checkMoveTarget(tempMoveTarget)) {
             this.moveTarget = tempMoveTarget
             this.isRightFoot = !this.isRightFoot
+            this.pos.y -= this.speed * delta / 1000
           } else {
             this.arriveTarget()
           }
@@ -156,6 +158,7 @@ class Player extends Actor {
           if (this.checkMoveTarget(tempMoveTarget)) {
             this.moveTarget = tempMoveTarget
             this.isRightFoot = !this.isRightFoot
+            this.pos.y += this.speed * delta / 1000
           } else {
             this.arriveTarget()
           }
@@ -176,6 +179,7 @@ class Player extends Actor {
           if (this.checkMoveTarget(tempMoveTarget)) {
             this.moveTarget = tempMoveTarget
             this.isRightFoot = !this.isRightFoot
+            this.pos.x -= this.speed * delta / 1000
           } else {
             this.arriveTarget()
           }
@@ -196,6 +200,7 @@ class Player extends Actor {
           if (this.checkMoveTarget(tempMoveTarget)) {
             this.moveTarget = tempMoveTarget
             this.isRightFoot = !this.isRightFoot
+            this.pos.x += this.speed * delta / 1000
           } else {
             this.arriveTarget()
           }
@@ -219,32 +224,40 @@ class Player extends Actor {
     if (game.input.keyboard.isHeld(Input.Keys.Up)) {
       // check block
       const tempMoveTarget = this.pos.add(vec(0, -48))
+      this.direction = Direction.Up
       if (this.checkMoveTarget(tempMoveTarget)) {
         this.moveTarget = tempMoveTarget
         this.isMoving = true
+      } else {
+        this.graphics.use('stop' + this.direction)
       }
-      this.direction = Direction.Up
     } else if (game.input.keyboard.isHeld(Input.Keys.Down)) {
       const tempMoveTarget = this.pos.add(vec(0, 48))
+      this.direction = Direction.Down
       if (this.checkMoveTarget(tempMoveTarget)) {
         this.moveTarget = tempMoveTarget
         this.isMoving = true
+      } else {
+        this.graphics.use('stop' + this.direction)
       }
-      this.direction = Direction.Down
     } else if (game.input.keyboard.isHeld(Input.Keys.Left)) {
       const tempMoveTarget = this.pos.add(vec(-64, 0))
+      this.direction = Direction.Left
       if (this.checkMoveTarget(tempMoveTarget)) {
         this.moveTarget = tempMoveTarget
         this.isMoving = true
+      } else {
+        this.graphics.use('stop' + this.direction)
       }
-      this.direction = Direction.Left
     } else if (game.input.keyboard.isHeld(Input.Keys.Right)) {
       const tempMoveTarget = this.pos.add(vec(64, 0))
+      this.direction = Direction.Right
       if (this.checkMoveTarget(tempMoveTarget)) {
         this.moveTarget = tempMoveTarget
         this.isMoving = true
+      } else {
+        this.graphics.use('stop' + this.direction)
       }
-      this.direction = Direction.Right
     }
 
     // need to add block check of moveTarget
@@ -297,10 +310,10 @@ class Player extends Actor {
   }
 
   setSheet () {
-    this.walkAnimation['Up'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [0, 1, 2, 1, 0, 3, 4, 3], 33, AnimationStrategy.Loop)
-    this.walkAnimation['Down'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [7, 8, 7, 6, 9, 10, 9, 6], 33, AnimationStrategy.Loop)
-    this.walkAnimation['Left'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [13, 14, 13, 12, 15, 16, 15, 12], 33, AnimationStrategy.Loop)
-    this.walkAnimation['Right'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [19, 20, 19, 18, 21, 22, 21, 18], 33, AnimationStrategy.Loop)
+    this.walkAnimation['Up'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [1, 2, 1, 0, 3, 4, 3, 0], 33, AnimationStrategy.Loop)
+    this.walkAnimation['Down'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [8, 7, 6, 9, 10, 9, 6, 7], 33, AnimationStrategy.Loop)
+    this.walkAnimation['Left'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [14, 13, 12, 15, 16, 15, 12, 13], 33, AnimationStrategy.Loop)
+    this.walkAnimation['Right'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [20, 19, 18, 21, 22, 21, 18, 19], 33, AnimationStrategy.Loop)
 
     this.graphics.add('stop' + 'Up', playerWalkSheet[this.showingCharacterIndex].getSprite(0, 0))
     this.graphics.add('stop' + 'Down', playerWalkSheet[this.showingCharacterIndex].getSprite(0, 1))
