@@ -1,6 +1,6 @@
 import { assetRootPath } from '../fsbEngine/type/const'
 import { FsbMapResource } from './util/fsbMapResource'
-import { ImageSource, Loader, Sound } from 'excalibur'
+import { ImageSource, Sound } from 'excalibur'
 import { ResourceIndex } from './ResourceIndex'
 
 /**

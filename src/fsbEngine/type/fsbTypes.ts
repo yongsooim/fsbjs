@@ -18,7 +18,11 @@ export enum Direction {
     Up = 'Up',
     Left = 'Left',
     Right = 'Right',
-    Down = 'Down'
+    Down = 'Down',
+    UpLeft = 'UpLeft',
+    UpRight = 'UpRight',
+    DownLeft = 'DownLeft',
+    DownRight = 'DownRight'
 }
 
 // tile position (1 x 1 -> 64px x 48px)
@@ -54,7 +58,7 @@ export function d2v (d: Direction) {
   }
 }
 
-/** direction to move target */
+/** direction to move target vector to add */
 export function d2mt (d: Direction) {
   if (d === Direction.Up) {
     return Vector.Up.scale(48)

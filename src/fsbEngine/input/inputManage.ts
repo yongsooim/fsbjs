@@ -1,4 +1,5 @@
 import { Input } from 'excalibur'
+import { game } from '../../index'
 
 declare enum fsbKey {
   Up,
@@ -12,4 +13,8 @@ declare enum fsbKey {
 
 class InputManager {
 
+
+
 }
+ 
+export const input = new InputManager()
