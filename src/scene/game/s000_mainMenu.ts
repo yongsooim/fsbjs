@@ -25,7 +25,19 @@ class MainMenu extends Actor {
     return this._hovered
   }
 
-  onInitialize = (game: Engine) => {
+  onInitialize = async (game: Engine) => {
+
+      await Promise.all([
+        resource.pcx('st00').load(),
+        resource.pcx('st01').load(),
+        resource.fx('e156').load(),
+        resource.fx('e154').load(),
+        resource.bgm('pusan').load(),
+      ])
+      
+    
+    
+    
     this.graphics.layers.create({ name: 'background', order: 0 })
     this.graphics.layers.create({ name: 'selector', order: 1 })
     this.graphics.layers.get('background').show(MainMenu.introBackgroundImage)
@@ -96,7 +108,7 @@ class MainMenu extends Actor {
 
       fadeActor.fadeOut(game, Color.Black, 1000)
 
-      game.addScene('s001', s001_opening)
+//      game.addScene('s001', s001_opening)
       // game.addScene('s999', s999_test)
       // game.goToScene('s999')
 

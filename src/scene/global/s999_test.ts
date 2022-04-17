@@ -12,10 +12,10 @@ s999_test.onInitialize = async (game) => {
 
   await resource.load([
     // resource.map('0022_tfi0___'),
-    // resource.map('0130_tdi0___'),
-    resource.map('0476_tbb0___'),
+     resource.map('0130_tdi0___'),
+    //resource.map('0476_tbb0___'),
 
-    resource.bgm('pao')
+   // resource.bgm('pao')
   ])
 
   await resource.load([
@@ -36,8 +36,8 @@ s999_test.onInitialize = async (game) => {
   // disableWheelToZoom(game, s999_test)
   // resource.bgm('vill2').loop = true
   // resource.bgm('vill2').play()
-  //  resource.bgm('pao').play()
-  resource.bgm('pao').loop = true
+   //resource.bgm('pao').play()
+  //resource.bgm('pao').loop = true
 
   // resource.map('0022_tfi0___').addTiledMapToScene(game.currentScene)
    resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)

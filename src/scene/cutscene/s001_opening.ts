@@ -3,7 +3,7 @@ import { resource } from '../../resource/ResourceManage'
 import { fadeActor } from '../global/fadeActor'
 import { fromFlexImageSource } from '../../resource/util/fsbAnimationUtil'
 import { enableWheelToZoom } from '../../fsbEngine/camera/cameraUtil'
-import { DevTool } from '@excaliburjs/dev-tools'
+//import { DevTool } from '@excaliburjs/dev-tools'
 
 export const s001_opening = new Scene()
 
@@ -12,7 +12,7 @@ const sonataSynth = new Actor({ x: 550, y: 1600 })
 const son = new Actor()
 
 s001_opening.onInitialize = async (game) => {
-  const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
+  //const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 
   await resource.load([
     resource.bgm('sonata'),
@@ -115,7 +115,7 @@ s001_opening.onInitialize = async (game) => {
   }, 2500)
 
   game.currentScene.camera.pos = vec(resource.map('0469_tcl0___').data.width * 32, 1280)
-  game.currentScene.camera.zoom = 1.8
+  game.currentScene.camera.zoom = 2
 
   setTimeout(() => {
     game.currentScene.camera.move(vec(resource.map('0469_tcl0___').data.width * 32, resource.map('0469_tcl0___').data.height * 48 - 316), 6000)

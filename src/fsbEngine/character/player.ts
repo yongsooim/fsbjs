@@ -33,12 +33,13 @@ class Player extends Actor {
   public moveTarget: Vector // x should be N * 48,  y should be M * 64
   public direction = Direction.Down
   public oldDirection = Direction.Down
-  public party = [...Object.values(PlayerCharacter)] // charters in current party
+  public party = [...Object.values(PlayerCharacter)] // characters in current party
   public walkAnimation = [] as Animation[]
   public fsbPos: FsbCoordinate // tile coordinate that player is occupying
   public currentMap: FsbMapResource
 
   private speed = 500
+  private pixelPerMsSecond = this.speed / 1000
 
   private _isMoving = false
   set isMoving(moving: boolean) {
@@ -99,11 +100,20 @@ class Player extends Actor {
     this.graphics.offset = vec(0, -48) // 캐릭터가 밟고 있는 타일의 좌상단 픽셀좌표와 위치좌표를 정렬시키기 위한 오프셋
   }
 
+  public sum = 0
+  public count = 0
+  public oldDelta = 0
   update(game: Engine, delta: number) {
+    delta = Math.round(delta)
+    if(this.oldDelta !== delta ){
+      console.log(delta)
+      this.oldDelta = delta
+    }
+    
     super.update(game, delta)
     this.checkShowingCharacterSwap()
     this.moveProc(delta) // move process
-    this.focusActor.pos = this.pos.add(vec(32, 48))
+    this.focusActor.pos = this.pos.add(vec(32, 0))
   }
 
   checkShowingCharacterSwap() {
@@ -121,20 +131,19 @@ class Player extends Actor {
     }
   }
 
+  public deltaPixel = 0
   /** character moving process */
   moveProc(delta: number) {
-    let deltaPixel = this.speed * delta / 1000
+    this.deltaPixel = this.pixelPerMsSecond * delta
     if (this.isMoving) {
-      this.checkWhileMove(deltaPixel)
+      this.checkWhileMove(this.deltaPixel)
     } else { // isMoving false
-      this.checkInitialMove(deltaPixel)
+      this.checkInitialMove(this.deltaPixel)
     }
   }
 
   checkWhileMove(deltaPixel: number) {
     const deltaVector = d2v(this.direction).scale(deltaPixel)
-    if (this.direction === Direction.Up) {
-      //if (input.isDirectionPressed(this.direction)){
       if (this.checkExceeds(this.pos, this.moveTarget, this.direction, deltaPixel)) { // exceeds move target
         this.isRightFoot = !this.isRightFoot
         const maybeMoveTarget = this.moveTarget.add(d2mt(this.direction))
@@ -151,188 +160,42 @@ class Player extends Actor {
       } else {
         this.pos = this.pos.add(deltaVector) // move forward, unstoppable normal move between tile
       }
-
-      /* 
-            if (game.input.keyboard.isHeld(Input.Keys.Up)) {
-              if (this.moveTarget.y > this.pos.y - deltaPixel) { // exceeds move target and key held
-                this.isRightFoot = !this.isRightFoot
-                const tempMoveTarget = this.moveTarget.add(d2mt(this.direction))
-                if (this.checkMoveTarget(tempMoveTarget)) { // check if can move forward
-                  this.moveTarget = tempMoveTarget // update move target
-                  this.pos.add(deltaVector) // move forward 
-                } else { // cannot move to move target
-                  this.arriveTarget()
-                }
-              } else {
-                this.pos.y -= deltaPixel // unstoppable normal move between tile while key held
-              }
-            } else {
-              if (this.moveTarget.y > this.pos.y - deltaPixel) { // exceeds move target and no key held
-                this.arriveTarget()
-              } else {
-                this.pos.y -= deltaPixel // unstoppable normal move between tile while no key held
-              }
-            }
-       */
-    }
-
-    else if (this.direction === Direction.Down) {
-      if (input.isDirectionPressed(this.direction)) {
-        if (this.moveTarget.y < this.pos.y + deltaPixel) { // exceeds move target and key held
-          this.isRightFoot = !this.isRightFoot
-          const maybeMoveTarget = this.moveTarget.add(vec(0, 48))
-          if (this.checkMoveTarget(maybeMoveTarget)) {
-            this.moveTarget = maybeMoveTarget
-            this.pos.y += deltaPixel
-          } else {
-            this.arriveTarget()
-          }
-        } else {
-          this.pos.y += deltaPixel // unstoppable normal move between tile while key held
-        }
-      } else {
-        if (this.moveTarget.y < this.pos.y + deltaPixel) { // exceeds move target and no key held
-          this.arriveTarget()
-        } else {
-          this.pos.y += deltaPixel
-        }
-      }
-    }
-
-    else if (this.direction === Direction.Left) {
-      if (input.isDirectionPressed(this.direction)) {
-        if (this.moveTarget.x > this.pos.x + deltaPixel) { // exceeds move target with key
-          const maybeMoveTarget = this.moveTarget.add(vec(-64, 0))
-          this.isRightFoot = !this.isRightFoot
-          if (this.checkMoveTarget(maybeMoveTarget)) {
-            this.moveTarget = maybeMoveTarget
-            this.pos.x -= deltaPixel
-          } else {
-            this.arriveTarget()
-          }
-        } else { // normal move between tiles
-          this.pos.x -= deltaPixel
-        }
-      } else {
-        if (this.moveTarget.x > this.pos.x + deltaPixel) { // exeeds with no key
-          this.arriveTarget()
-        } else {
-          this.pos.x -= deltaPixel // normal move with no key
-        }
-      }
-    }
-
-    else if (this.direction === Direction.Right) {
-      if (input.isDirectionPressed(this.direction)) {
-        if (this.moveTarget.x < this.pos.x + deltaPixel) { // exceeds with key
-          const maybeMoveTarget = this.moveTarget.add(vec(64, 0))
-          this.isRightFoot = !this.isRightFoot
-          if (this.checkMoveTarget(maybeMoveTarget)) {
-            this.moveTarget = maybeMoveTarget
-            this.pos.x += deltaPixel
-          } else {
-            this.arriveTarget()
-          }
-        } else { // between tiles with key
-          this.pos.x += deltaPixel
-        }
-      } else {
-        if (this.moveTarget.x < this.pos.x + deltaPixel) { // exceeds wihout key
-          this.arriveTarget()
-        } else { // between tiles without key
-          this.pos.x += deltaPixel
-        }
-      }
-    }
   }
 
   /** returns true if move exceeds target */
   checkExceeds(currentPos: Vector, targetPos: Vector, direction: Direction, deltaPixel: number) {
-    if (direction === Direction.Up && (targetPos.y > currentPos.y - deltaPixel)) {
+    if (direction === Direction.Up && (targetPos.y >= currentPos.y - deltaPixel)) {
       return true
-    } else if (direction === Direction.Down && (targetPos.y < currentPos.y + deltaPixel)) {
+    } else if (direction === Direction.Down && (targetPos.y <= currentPos.y + deltaPixel)) {
       return true
-    } else if (direction === Direction.Left && (targetPos.x > currentPos.x - deltaPixel)) {
+    } else if (direction === Direction.Left && (targetPos.x >= currentPos.x - deltaPixel)) {
       return true
-    } else if (direction === Direction.Right && (targetPos.x < currentPos.x + deltaPixel)) {
+    } else if (direction === Direction.Right && (targetPos.x <= currentPos.x + deltaPixel)) {
       return true
     } else {  // need to add diagonal move
       return false
     }
   }
 
+  public inputDirection = Direction.None
+  public maybeMoveTarget = vec(0, 0)
   checkInitialMove(deltaPixel: number) {
-    let inputDirection = input.isAnyDirectionPressed()
-    if (inputDirection !== Direction.None) {
-      this.direction = inputDirection
-      let maybeMoveTarget = this.pos.add(d2mt(this.direction))
-      if (this.checkMoveTarget(maybeMoveTarget)) {
-        console.log(maybeMoveTarget)
-        this.moveTarget = maybeMoveTarget
+    this.inputDirection = input.isAnyDirectionPressed()
+    if (this.inputDirection !== Direction.None) {
+      this.direction = this.inputDirection
+      this.maybeMoveTarget = this.pos.add(d2mt(this.direction))
+      if (this.checkMoveTarget(this.maybeMoveTarget)) {
+        this.moveTarget = this.maybeMoveTarget
         this.isMoving = true
       } else {
         this.graphics.use('stop' + this.direction)
       }
     }
 
-    /* 
-        if (game.input.keyboard.isHeld(Input.Keys.Up)) {
-          // check block
-          this.direction = Direction.Up
-          if (this.checkMoveTarget(tempMoveTarget)) {
-            this.moveTarget = tempMoveTarget
-            this.isMoving = true
-          } else {
-            this.graphics.use('stop' + this.direction)
-          }
-        } 
-        
-        
-        else if (game.input.keyboard.isHeld(Input.Keys.Down)) {
-          this.direction = Direction.Down
-          if (this.checkMoveTarget(tempMoveTarget)) {
-            this.moveTarget = tempMoveTarget
-            this.isMoving = true
-          } else {
-            this.graphics.use('stop' + this.direction)
-          }
-        } else if (game.input.keyboard.isHeld(Input.Keys.Left)) {
-          this.direction = Direction.Left
-          if (this.checkMoveTarget(tempMoveTarget)) {
-            this.moveTarget = tempMoveTarget
-            this.isMoving = true
-          } else {
-            this.graphics.use('stop' + this.direction)
-          }
-        } else if (game.input.keyboard.isHeld(Input.Keys.Right)) {
-          this.direction = Direction.Right
-          if (this.checkMoveTarget(tempMoveTarget)) {
-            this.moveTarget = tempMoveTarget
-            this.isMoving = true
-          } else {
-            this.graphics.use('stop' + this.direction)
-          }
-        } */
-
-    // need to add block check of moveTarget
     if (this.isMoving) {
       // initial move
       this.fsbPos = v2fc(this.moveTarget) // occupy target tile
-      this.pos = this.pos.add(d2v(this.direction).scale(deltaPixel))
-      //      switch (this.direction) {
-      //      case Direction.Up:
-      //        this.pos.y -= deltaPixel
-      //        break
-      //      case Direction.Down:
-      //        this.pos.y += deltaPixel
-      //        break
-      //      case Direction.Left:
-      //        this.pos.x -= deltaPixel
-      //        break
-      //      case Direction.Right:
-      //        this.pos.x += deltaPixel
-      //        break
-      //      }
+      //this.pos = this.pos.add(d2v(this.direction).scale(deltaPixel))
     }
   }
 
@@ -361,7 +224,6 @@ class Player extends Actor {
     const cols = game.currentScene.tileMaps[0].cols // cols of current map
     const index = fc2i(fc, cols) // index of move target
     try {
-      console.log(this.currentMap.move.data.z0[index])
       if (index < 0 || index >= this.currentMap.move.data.z0.length) { // check coordinate is out of the map
         throw Error
       }
@@ -386,10 +248,10 @@ class Player extends Actor {
   }
 
   setSheet() {
-    this.walkAnimation['Up'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [1, 2, 1, 0, 3, 4, 3, 0], 33, AnimationStrategy.Loop)
-    this.walkAnimation['Down'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [8, 7, 6, 9, 10, 9, 6, 7], 33, AnimationStrategy.Loop)
-    this.walkAnimation['Left'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [14, 13, 12, 15, 16, 15, 12, 13], 33, AnimationStrategy.Loop)
-    this.walkAnimation['Right'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [20, 19, 18, 21, 22, 21, 18, 19], 33, AnimationStrategy.Loop)
+    this.walkAnimation['Up'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [1, 2, 1, 0, 3, 4, 3, 0], 2000 / 60 , AnimationStrategy.Loop)
+    this.walkAnimation['Down'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [8, 7, 6, 9, 10, 9, 6, 7], 2000 / 60 , AnimationStrategy.Loop)
+    this.walkAnimation['Left'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [14, 13, 12, 15, 16, 15, 12, 13], 2000 / 60 , AnimationStrategy.Loop)
+    this.walkAnimation['Right'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [20, 19, 18, 21, 22, 21, 18, 19], 2000 / 60 , AnimationStrategy.Loop)
 
     this.graphics.add('stop' + 'Up', playerWalkSheet[this.showingCharacterIndex].getSprite(0, 0))
     this.graphics.add('stop' + 'Down', playerWalkSheet[this.showingCharacterIndex].getSprite(0, 1))

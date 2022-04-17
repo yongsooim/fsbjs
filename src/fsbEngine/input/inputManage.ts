@@ -98,6 +98,7 @@ class InputManager extends Entity {
     }
 
     if (game.input.keyboard.isHeld(Input.Keys.Space) || game.input.keyboard.isHeld(Input.Keys.Enter)) {
+      console.log('enter pressed')
       this.isPressed.Enter = true
     } else {
       this.isPressed.Enter = false
@@ -109,7 +110,7 @@ class InputManager extends Entity {
       this.isPressed.Shift = false
     }
 
-    if (game.input.keyboard.isHeld(Input.Keys.C) || game.input.keyboard.isHeld(Input.Keys.KeyC)) {
+    if (game.input.keyboard.wasPressed(Input.Keys.C) || game.input.keyboard.wasPressed(Input.Keys.KeyC)) {
       this.isPressed.C = true
     } else {
       this.isPressed.C = false
