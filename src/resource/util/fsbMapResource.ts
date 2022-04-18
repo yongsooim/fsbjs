@@ -2,11 +2,15 @@ import { TiledMapResource } from '@excaliburjs/plugin-tiled'
 import { assetRootPath } from '../../fsbEngine/type/const'
 import { Resource } from 'excalibur'
 
+declare type moveData = {
+  z0 : number[]
+  z1? : number[]
+}
 export class FsbMapResource extends TiledMapResource {
   public mapName : string
   public width : number // tile unit
   public height : number // tile unit
-  public move : any
+  public move : Resource<moveData>
 
   // todo : need to add set pos, set direction according to toMap, fromMap
 
@@ -32,10 +36,9 @@ export class FsbMapResource extends TiledMapResource {
 
   async load () {
     const retPromise = super.load()
-    // todo : need to add read map info
 
-    this.move = new Resource((assetRootPath + 'mapset/json/' + this.path.split('/')[this.path.split('/').length - 1].split('.')[0] + '.json'), 'json')
-
+    let split = this.path.split('/')
+    this.move = new Resource((assetRootPath + 'mapset/json/' + split[split.length - 1].split('.')[0] + '.json'), 'json')
     const retPromise2 = this.move.load()
 
     await Promise.all([

@@ -31,13 +31,13 @@ export class FsbCoordinate {
   public x: number;
   public y: number;
 
-  constructor (vOrfsbX: Vector|number, fsbY?: number) {
-    if (typeof vOrfsbX === 'number') {
-      this.x = vOrfsbX
+  constructor (vOrFsbX: Vector|number, fsbY?: number) {
+    if (typeof vOrFsbX === 'number') {
+      this.x = vOrFsbX
       this.y = fsbY
     } else {
-      this.x = vOrfsbX.x / 64
-      this.y = vOrfsbX.y / 48
+      this.x = vOrFsbX.x / 64
+      this.y = vOrFsbX.y / 48
     }
   }
 
@@ -51,10 +51,10 @@ const vUp = Vector.Up
 const vLeft = Vector.Left
 const vRight = Vector.Right
 const vDown = Vector.Down
-const vUpLeft = (Vector.Up.scale(3).add(Vector.Left).scale(4)).normalize()
-const vUpRight = (Vector.Up.scale(3).add(Vector.Right).scale(4)).normalize()
-const vDownLeft = (Vector.Down.scale(3).add(Vector.Left).scale(4)).normalize()
-const vDownRight = (Vector.Down.scale(3).add(Vector.Right).scale(4)).normalize()
+const vUpLeft = vec(-4, -3).normalize() // diagonal unit vector
+const vUpRight = vec(4, -3).normalize()
+const vDownLeft = vec(-4, 3).normalize()
+const vDownRight = vec(4, 3).normalize()
 
 /** Convecrt Direction to unit Vector */
 export function d2v (d: Direction) {
@@ -115,7 +115,7 @@ export function v2fc (v : Vector) {
 
 /** index of array to fsb coordinate */
 export function i2fc (index : number, cols:number) {
-  return new FsbCoordinate(index % cols, Math.ceil(index / cols))
+  return new FsbCoordinate(index % cols, Math.floor(index / cols))
 }
 
 /** index of array to fsb coordinate */
