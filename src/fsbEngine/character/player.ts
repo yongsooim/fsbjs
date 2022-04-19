@@ -163,15 +163,15 @@ class Player extends Actor {
 
   /** returns true if move exceeds target */
   checkExceeds(currentPos: Vector, targetPos: Vector, direction: Direction, deltaPixel: number) {
-    if (direction === Direction.Up && (targetPos.y >= currentPos.y - deltaPixel)) {
+    if ((direction === Direction.Up || direction === Direction.UpLeft || direction === Direction.UpRight) && (targetPos.y >= currentPos.y - deltaPixel)) {
       return true
-    } else if (direction === Direction.Down && (targetPos.y <= currentPos.y + deltaPixel)) {
+    } else if ((direction === Direction.Down || direction === Direction.DownLeft || direction === Direction.DownRight) && (targetPos.y <= currentPos.y + deltaPixel)) {
       return true
     } else if (direction === Direction.Left && (targetPos.x >= currentPos.x - deltaPixel)) {
       return true
     } else if (direction === Direction.Right && (targetPos.x <= currentPos.x + deltaPixel)) {
       return true
-    } else {  // need to add diagonal move
+    } else { 
       return false
     }
   }
