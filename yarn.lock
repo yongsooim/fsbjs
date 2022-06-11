@@ -265,21 +265,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pixi-essentials/object-pool@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@pixi-essentials/object-pool/-/object-pool-0.1.0.tgz#e612a3a57b13fa1c92061a9a8e80cd5cd0bbc707"
-  integrity sha512-TAppOWSKBbONgphgx5W9Kw06dvoPRChcDLLB5O/+/pUBbx13fDk6Ra+azqLXqOvwzBEZ5pG3AGFIxRn2twJbOg==
-
-"@pixi-pbr/diffy@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@pixi-pbr/diffy/-/diffy-1.1.0.tgz#f5f8aa43c54910aebb87989af40c3604c91e7c84"
-  integrity sha512-PENv/V86IgHtJNDdqP5bC9r7PQLIvaXig22d79H0AE7IDoS0tHZIKCd5KjKp8XrIe5ukhikQib/BMalHJMPlOQ==
-
-"@pixi-spine/base@^3.0.13":
-  version "3.0.15"
-  resolved "https://registry.yarnpkg.com/@pixi-spine/base/-/base-3.0.15.tgz#714842a45460cf6a98dcfc3ccd12c39f27415d9a"
-  integrity sha512-5tuqbApTS7RFazWycyglnu0WA2mby39yX9Y8B2EoKEjuj2sB9TwzTW/h5dFqHZR6RjLs9zgVF5BkYen7Sv0fiw==
-
 "@pixi/accessibility@6.4.2":
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/@pixi/accessibility/-/accessibility-6.4.2.tgz#612d64d14b1eee4314fead64c7916c96953b2f39"
