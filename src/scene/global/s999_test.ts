@@ -2,13 +2,13 @@ import { SpriteSheet, Scene, Actor, Engine, LockCameraToActorStrategy, vec } fro
 import { player } from '../../fsbEngine/character/player'
 import { enableWheelToZoom, disableWheelToZoom } from '../../fsbEngine/camera/cameraUtil'
 import { DevTool } from '@excaliburjs/dev-tools'
-import { resource } from '../../resource/ResourceManage'
+import { resource } from '../../resource/resourceManage'
 import { input } from '../../fsbEngine/input/inputManage'
 
 export const s999_test = new Scene()
 
 s999_test.onInitialize = async (game) => {
-  // const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
+  //const devtool = new DevTool(game) // dev tools 사용 안하려면 주석처리
 
   await resource.load([
     // resource.map('0022_tfi0___'),
@@ -36,8 +36,8 @@ s999_test.onInitialize = async (game) => {
   // disableWheelToZoom(game, s999_test)
   // resource.bgm('vill2').loop = true
   // resource.bgm('vill2').play()
-   //resource.bgm('pao').play()
-  //resource.bgm('pao').loop = true
+  resource.bgm('pao').play()
+  resource.bgm('pao').loop = true
 
   // resource.map('0022_tfi0___').addTiledMapToScene(game.currentScene)
    resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)

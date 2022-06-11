@@ -1,6 +1,6 @@
 import { Physics, Flags, Engine, DisplayMode, Loader, vec, Color } from 'excalibur'
 
-import { resource } from './resource/ResourceManage'
+import { resource } from './resource/resourceManage'
 
 import { loaderLogoBase64 } from './fsbEngine/type/const'
 import { s000_MainMenu } from './scene/game/s000_mainMenu'
@@ -11,8 +11,8 @@ import { DevTool } from '@excaliburjs/dev-tools'
 
 Physics.enabled = false
 export const game = new Engine({
-  width: 1280,
-  height: 960,
+  //width: 1280,
+  //height: 960,
   backgroundColor: Color.Black,
   suppressConsoleBootMessage: true,
   displayMode: DisplayMode.FitScreen,
@@ -32,7 +32,7 @@ const loader = new Loader(
     resource.ps('cson000'),
     resource.se('sp_wind_first'),
     resource.se('sp_thunder03'),
-    resource.pcx('whdlgbox')
+    resource.pcx('whdlgbox'),
     //resource.pcx('st00'),
     //resource.pcx('st01'),
     //resource.fx('e156'),
@@ -52,7 +52,7 @@ const loader = new Loader(
     //resource.pcx('shadow'),
     //resource.map('0130_tdi0___'),
     //resource.map('0476_tbb0___'),
-    //resource.bgm('pao')
+    resource.bgm('pao')
   ]
 )
 

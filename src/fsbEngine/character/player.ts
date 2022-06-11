@@ -1,6 +1,6 @@
 import { SpriteSheet, Actor, Vector, Sprite, vec, ActorArgs, Engine, Input, AnimationStrategy, Animation } from 'excalibur'
 import { FsbCoordinate, Direction, d2v, PlayerCharacter, v2i, fc2i, v2fc, d2mt } from '../type/fsbTypes'
-import { resource } from '../../resource/ResourceManage'
+import { resource } from '../../resource/resourceManage'
 import { AnimationfromSpriteSheet } from '../../resource/util/fsbAnimationUtil'
 import { game } from '../..'
 import { FsbMapResource } from '../../resource/util/fsbMapResource'
@@ -142,7 +142,8 @@ class Player extends Actor {
   }
 
   checkWhileMove(deltaPixel: number) {
-    const deltaVector = d2v(this.direction).scale(deltaPixel)
+    //const deltaVector = d2v(this.direction).scale(deltaPixel)
+    const deltaVector = d2v(this.direction).scale(8)
       if (this.checkExceeds(this.pos, this.moveTarget, this.direction, deltaPixel)) { // exceeds move target
         this.isRightFoot = !this.isRightFoot
         const maybeMoveTarget = this.moveTarget.add(d2mt(this.direction))
@@ -203,7 +204,7 @@ class Player extends Actor {
    * It should be changed to semantic number (map move, npc, box etc...)
    * */
   checkMoveTarget(v: Vector) {
-    const cols = game.currentScene.tileMaps[0].cols // cols of current map
+    const cols = game.currentScene.tileMaps[0].columns // cols of current map
     const index = v2i(v, cols) // index of move target
     try {
       if (index < 0 || index >= this.currentMap.move.data.z0.length) { // check coordinate is out of the map
@@ -220,7 +221,7 @@ class Player extends Actor {
   }
 
   checkMoveTargetByFc(fc: FsbCoordinate) {
-    const cols = game.currentScene.tileMaps[0].cols // cols of current map
+    const cols = game.currentScene.tileMaps[0].columns // cols of current map
     const index = fc2i(fc, cols) // index of move target
     try {
       if (index < 0 || index >= this.currentMap.move.data.z0.length) { // check coordinate is out of the map
