@@ -2230,4 +2230,5 @@ export declare class ResourceIndex {
   map(fileName: string): FsbMapResource
   load(resources: (Sound | ImageSource | FsbMapResource)[])
   loadSync(resources: (Sound | ImageSource | FsbMapResource)[])
+  unloadAll()
 }

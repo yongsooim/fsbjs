@@ -2,6 +2,7 @@ import { assetRootPath } from '../fsbEngine/type/const'
 import { FsbMapResource } from './util/fsbMapResource'
 import { ImageSource, Sound } from 'excalibur'
 import { ResourceIndex } from './ResourceIndex'
+import { game } from '../index'
 
 /**
  * When the function is called, find the object with file name as index in an internal array.
@@ -85,7 +86,23 @@ class ResourceManager {
   async loadSync (resources : (Sound|ImageSource|FsbMapResource)[]) {
     await this.load(resources)
   }
+
+  unloadAll() {
+    this._fx = [] as ImageSource[]
+    this._se = [] as Sound[]
+    this._pcx = [] as ImageSource[]
+    this._aseFm = [] as ImageSource[]
+    this._asePs = [] as ImageSource[]
+    this._map = [] as FsbMapResource[]
+    this._bgm = [] as Sound[]
+  }
 }
 
 /** Global singleton resource accessor */
-export const resource = new ResourceManager() as ResourceIndex
+export let resource = new ResourceManager() as ResourceIndex
+
+window.onbeforeunload = function() {
+  game.stop()
+  resource.unloadAll()
+  console.log(resource)
+}

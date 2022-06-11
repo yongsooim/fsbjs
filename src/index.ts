@@ -11,12 +11,9 @@ import { DevTool } from '@excaliburjs/dev-tools'
 
 Physics.enabled = false
 export const game = new Engine({
-  //width: 1280,
-  //height: 960,
-  backgroundColor: Color.Black,
+  backgroundColor: Color.Black, 
   suppressConsoleBootMessage: true,
-  displayMode: DisplayMode.FitScreen,
-  maxFps: 60
+  displayMode: DisplayMode.FitScreenAndFill
 })
 
 game.screen.applyResolutionAndViewport()
@@ -76,6 +73,8 @@ loader.startButtonFactory = () => {
   buttonElement.textContent = 's'
   return buttonElement
 }
+
+console.log('?')
 
 game.start(loader).then(async () => {
 //  resource.map('0130_tdi0___').addTiledMapToScene(game.currentScene)

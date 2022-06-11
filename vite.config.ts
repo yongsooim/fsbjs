@@ -7,6 +7,9 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 4096
   },
+  server: {
+    hmr: false
+  }, 
   worker: {
     format: 'es'
   },
@@ -16,8 +19,8 @@ export default defineConfig({
       name: 'configure-response-headers',
       configureServer: (server) => {
         server.middlewares.use((_req, res, next) => {
-          res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp')
-          res.setHeader('Cross-Origin-Opener-Policy', 'same-origin')
+          res.setHeader('Cross-Origin-Embedder-Policy', '*')
+          res.setHeader('Cross-Origin-Opener-Policy', '*')
           res.setHeader('Access-Control-Allow-Origin', '*')
           next()
         })

@@ -38,7 +38,7 @@ class Player extends Actor {
   public fsbPos: FsbCoordinate // tile coordinate that player is occupying
   public currentMap: FsbMapResource
 
-  private speed = 500
+  private speed = 800
   private pixelPerMsSecond = this.speed / 1000
 
   private _isMoving = false
@@ -105,7 +105,6 @@ class Player extends Actor {
   public oldDelta = 0
   update(game: Engine, delta: number) {
     if(this.oldDelta !== delta ){
-      console.log(delta)
       this.oldDelta = delta
     }
     
@@ -142,8 +141,8 @@ class Player extends Actor {
   }
 
   checkWhileMove(deltaPixel: number) {
-    //const deltaVector = d2v(this.direction).scale(deltaPixel)
-    const deltaVector = d2v(this.direction).scale(8)
+    const deltaVector = d2v(this.direction).scale(deltaPixel)
+    //const deltaVector = d2v(this.direction).scale(8)
       if (this.checkExceeds(this.pos, this.moveTarget, this.direction, deltaPixel)) { // exceeds move target
         this.isRightFoot = !this.isRightFoot
         const maybeMoveTarget = this.moveTarget.add(d2mt(this.direction))
@@ -248,10 +247,10 @@ class Player extends Actor {
   }
 
   setSheet() {
-    this.walkAnimation['Up'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [1, 2, 1, 0, 3, 4, 3, 0], 2000 / 60 , AnimationStrategy.Loop)
-    this.walkAnimation['Down'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [8, 7, 6, 9, 10, 9, 6, 7], 2000 / 60 , AnimationStrategy.Loop)
-    this.walkAnimation['Left'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [14, 13, 12, 15, 16, 15, 12, 13], 2000 / 60 , AnimationStrategy.Loop)
-    this.walkAnimation['Right'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [20, 19, 18, 21, 22, 21, 18, 19], 2000 / 60 , AnimationStrategy.Loop)
+    this.walkAnimation['Up'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [1, 2, 1, 0, 3, 4, 3, 0], 1000 / 60 , AnimationStrategy.Loop)
+    this.walkAnimation['Down'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [8, 7, 6, 9, 10, 9, 6, 7], 1000 / 60 , AnimationStrategy.Loop)
+    this.walkAnimation['Left'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [14, 13, 12, 15, 16, 15, 12, 13], 1000 / 60 , AnimationStrategy.Loop)
+    this.walkAnimation['Right'] = AnimationfromSpriteSheet(playerWalkSheet[this.showingCharacterIndex], [20, 19, 18, 21, 22, 21, 18, 19], 1000 / 60 , AnimationStrategy.Loop)
 
     this.graphics.add('stop' + 'Up', playerWalkSheet[this.showingCharacterIndex].getSprite(0, 0))
     this.graphics.add('stop' + 'Down', playerWalkSheet[this.showingCharacterIndex].getSprite(0, 1))
