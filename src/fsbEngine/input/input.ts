@@ -1,6 +1,7 @@
 import { Engine, Entity, Input } from 'excalibur'
 import { game } from '../../index'
 import { Direction } from '../type/fsbTypes'
+import {touch}   from './touch'
 
 export declare enum FsbKey {
   Up = 'Up',
@@ -65,27 +66,38 @@ class InputManager extends Entity {
     super()
   }
 
+  toucnEnable() {
+    //touch.init()
+
+  }
+
+  touchDisable() {
+
+  }
+
+
   /** Updating fsb keys */
   update(game: Engine, delta: number) {
-    if (game.input.keyboard.isHeld(Input.Keys.Up) || game.input.keyboard.isHeld(Input.Keys.W) || game.input.keyboard.isHeld(Input.Keys.KeyW)) {
+
+    if (game.input.keyboard.isHeld(Input.Keys.Up) || game.input.keyboard.isHeld(Input.Keys.W) || game.input.keyboard.isHeld(Input.Keys.KeyW) || touch.isPressed.Up) {
       this.isPressed.Up = true
     } else {
       this.isPressed.Up = false
     }
 
-    if (game.input.keyboard.isHeld(Input.Keys.Down) || game.input.keyboard.isHeld(Input.Keys.S) || game.input.keyboard.isHeld(Input.Keys.KeyS)) {
+    if (game.input.keyboard.isHeld(Input.Keys.Down) || game.input.keyboard.isHeld(Input.Keys.S) || game.input.keyboard.isHeld(Input.Keys.KeyS) || touch.isPressed.Down) {
       this.isPressed.Down = true
     } else {
       this.isPressed.Down = false
     }
 
-    if (game.input.keyboard.isHeld(Input.Keys.Left) || game.input.keyboard.isHeld(Input.Keys.A) || game.input.keyboard.isHeld(Input.Keys.KeyA)) {
+    if (game.input.keyboard.isHeld(Input.Keys.Left) || game.input.keyboard.isHeld(Input.Keys.A) || game.input.keyboard.isHeld(Input.Keys.KeyA) || touch.isPressed.Left) {
       this.isPressed.Left = true
     } else {
       this.isPressed.Left = false
     }
 
-    if (game.input.keyboard.isHeld(Input.Keys.Right) || game.input.keyboard.isHeld(Input.Keys.D) || game.input.keyboard.isHeld(Input.Keys.KeyD)) {
+    if (game.input.keyboard.isHeld(Input.Keys.Right) || game.input.keyboard.isHeld(Input.Keys.D) || game.input.keyboard.isHeld(Input.Keys.KeyD) || touch.isPressed.Right) {
       this.isPressed.Right = true
     } else {
       this.isPressed.Right = false

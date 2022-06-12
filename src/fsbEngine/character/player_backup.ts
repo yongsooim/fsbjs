@@ -105,7 +105,7 @@ class Player extends Actor {
   public oldDelta = 0
   update(game: Engine, delta: number) {
     if(this.oldDelta !== delta ){
-      console.log(delta)
+      //console.log(delta)
       this.oldDelta = delta
     }
     

@@ -32,7 +32,12 @@ export default defineConfig({
         {
           src: 'src/asset/netlify.toml', // for netlify cross origin setting
           dest: './'
-        }
+        },
+        //{
+        //  src: 'fsba', // for netlify cross origin setting
+        //  dest: './fsba/'
+        //}
+
       ]
     })
   ]

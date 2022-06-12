@@ -1,5 +1,5 @@
 import { Scene, Actor, Font, FontUnit, Color, Animation, vec, Sprite, Text, BoundingBox, EasingFunctions, Rectangle } from 'excalibur'
-import { resource } from '../../resource/ResourceManage'
+import { resource } from '../../resource/resource'
 import { fadeActor } from '../global/fadeActor'
 import { fromFlexImageSource } from '../../resource/util/fsbAnimationUtil'
 import { enableWheelToZoom } from '../../fsbEngine/camera/cameraUtil'

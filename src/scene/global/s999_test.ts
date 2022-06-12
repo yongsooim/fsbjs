@@ -1,9 +1,10 @@
 import { SpriteSheet, Scene, Actor, Engine, LockCameraToActorStrategy, vec, BoundingBox } from 'excalibur'
+//import { player } from '../../fsbEngine/character/player'
 import { player } from '../../fsbEngine/character/player'
-import { enableWheelToZoom, disableWheelToZoom, cameraBound, cameraBound2 } from '../../fsbEngine/camera/cameraUtil'
+import { enableWheelToZoom, disableWheelToZoom, cameraBound } from '../../fsbEngine/camera/cameraUtil'
 import { DevTool } from '@excaliburjs/dev-tools'
-import { resource } from '../../resource/resourceManage'
-import { input } from '../../fsbEngine/input/inputManage'
+import { resource } from '../../resource/resource'
+import { input } from '../../fsbEngine/input/input'
 
 export const s999_test = new Scene()
 
@@ -32,11 +33,13 @@ s999_test.onInitialize = async (game) => {
     resource.pcx('shadow')
   ])
 
+  input.toucnEnable()
+
   enableWheelToZoom()
   // disableWheelToZoom(game, s999_test)
   // resource.bgm('vill2').loop = true
   // resource.bgm('vill2').play()
-  resource.bgm('pao').play()
+  //resource.bgm('pao').play()
   resource.bgm('pao').loop = true
 
   // resource.map('0022_tfi0___').addTiledMapToScene(game.currentScene)
@@ -53,7 +56,7 @@ s999_test.onInitialize = async (game) => {
   player.z = -1
   // s999_test.camera.strategy.lockToActor(player)
   //s999_test.camera.strategy.elasticToActor(player.focusActor, 0.6, 0.7)
-  cameraBound2()
+  cameraBound()
   
   // player.graphics.use(spriteSheet.getSprite(0, 0))
   // player.actions.moveBy(vec(320, 480), 128)  

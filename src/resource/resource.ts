@@ -23,7 +23,7 @@ class ResourceManager {
   /** Get sound effect */
   fx (fileName:string) : Sound {
     if (!(fileName in this._fx)) {
-      this._fx[fileName] = new Sound(assetRootPath + 'ogg/wav_eft/' + fileName + '.ogg')
+      this._fx[fileName] = new Sound(assetRootPath + 'mp3/wav_eft/' + fileName + '.mp3')
     }
     return this._fx[fileName]
   }
@@ -31,7 +31,7 @@ class ResourceManager {
   /** Get sound event */
   se (fileName:string): Sound {
     if (!(fileName in this._se)) {
-      this._se[fileName] = new Sound(assetRootPath + 'ogg/se_event/' + fileName + '.ogg')
+      this._se[fileName] = new Sound(assetRootPath + 'mp3/se_event/' + fileName + '.mp3')
     }
     return this._se[fileName]
   }
@@ -62,7 +62,7 @@ class ResourceManager {
   /** Get bgm */
   bgm (fileName:string) : Sound {
     if (!(fileName in this._bgm)) {
-      this._bgm[fileName] = new Sound(assetRootPath + 'ogg/bgm/' + fileName + '.ogg')
+      this._bgm[fileName] = new Sound(assetRootPath + 'mp3/bgm/' + fileName + '.mp3')
     }
     return this._bgm[fileName]
   }
@@ -101,8 +101,3 @@ class ResourceManager {
 /** Global singleton resource accessor */
 export let resource = new ResourceManager() as ResourceIndex
 
-window.onbeforeunload = function() {
-  game.stop()
-  resource.unloadAll()
-  console.log(resource)
-}

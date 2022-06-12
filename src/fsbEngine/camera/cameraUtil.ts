@@ -11,70 +11,6 @@ enum ELetterBoxAxis {
   Both,
 }
 
-export function cameraBound() {
-  let mapWidth = game.currentScene.tileMaps[0].columns * 64
-  let mapHeight = game.currentScene.tileMaps[0].rows * 48
-
-  let screenWidth = game.canvasWidth
-  let screenHeight = game.canvasHeight
-
-  let letterboxAxis = ELetterBoxAxis.None
-
-  if (mapWidth < screenWidth && mapHeight < screenHeight) {
-    letterboxAxis = ELetterBoxAxis.Both
-
-    game.currentScene.camera.x = mapWidth / 2
-    game.currentScene.camera.y = mapHeight / 2
-
-  } else if (mapWidth < screenWidth) {
-    letterboxAxis = ELetterBoxAxis.Y
-
-    let boundingBox = new BoundingBox(
-      0,
-      0,
-      screenWidth,
-      game.currentScene.tileMaps[0].rows * 48
-    )
-
-    game.currentScene.camera.x = mapWidth / 2
-    game.currentScene.camera.strategy.lockToActorAxis(player.focusActor, Axis.X)
-    game.currentScene.camera.strategy.limitCameraBounds(boundingBox)
-  } else if (mapHeight < screenHeight) {
-
-    letterboxAxis = ELetterBoxAxis.X
-
-    let boundingBox = new BoundingBox(
-      0,
-      0,
-      game.currentScene.tileMaps[0].columns * 64,
-      screenHeight
-    )
-    
-    game.currentScene.camera.y = mapHeight / 2
-
-    game.currentScene.camera.strategy.lockToActorAxis(player.focusActor, Axis.Y)
-    game.currentScene.camera.strategy.limitCameraBounds(boundingBox)
-    game.currentScene.camera.onPreUpdate = () => { 
-      game.currentScene.camera.x = screenWidth / 2
-    }
-
-  } else {
-    letterboxAxis = ELetterBoxAxis.None
-
-    let boundingBox = new BoundingBox(
-      0,
-      0,
-      game.currentScene.tileMaps[0].columns * 64,
-      game.currentScene.tileMaps[0].rows * 48
-    )
-
-    game.currentScene.camera.strategy.lockToActor(player.focusActor)
-    game.currentScene.camera.strategy.limitCameraBounds(boundingBox)
-
-    console.log("?")
-  }
-}
-
 export function enableWheelToZoom() {
   game.input.pointers.on("wheel", wheelToZoomHandler)
 }
@@ -83,43 +19,57 @@ export function disableWheelToZoom() {
   game.input.pointers.off("wheel", wheelToZoomHandler)
 }
 
+const zoomPow = 1.15
+let currentZoomLevel = 0
+
 const wheelToZoomHandler = (evt: Input.WheelEvent) => {
   if (evt.deltaY > 0) {
-    if (targetZoom > 0.4) {
-      targetZoom /= 1.1
-    }
+    zoomIn()
   } else {
-    if (targetZoom < 4) {
-      targetZoom *= 1.1
-    }
+    zoomOut()
   }
-  game.currentScene.camera.zoom = targetZoom
+
+  console.log(`zoom level ${currentZoomLevel}, zoom scale ${game.currentScene.camera.zoom}`)
+}
+
+export function zoomIn() {
+  currentZoomLevel--
+  if (currentZoomLevel < -10) {
+    currentZoomLevel = -10
+  }
+  game.currentScene.camera.zoom = zoomPow ** currentZoomLevel
+}
+
+export function zoomOut() {
+  currentZoomLevel++
+  if (currentZoomLevel > 10) {
+    currentZoomLevel = 10
+  }
+  game.currentScene.camera.zoom = zoomPow ** currentZoomLevel
+
 }
 
 
-export function cameraBound2() {
+export function cameraBound() {
 
   game.currentScene.camera.onPreUpdate = () => {
-
-    
     let mapWidth = game.currentScene.tileMaps[0].columns * 64
     let mapHeight = game.currentScene.tileMaps[0].rows * 48
 
-    let screenWidth = game.canvasWidth / game.currentScene.camera.zoom
-    let screenHeight = game.canvasHeight / game.currentScene.camera.zoom
+    let screenWidth = game.drawWidth
+    let screenHeight = game.drawHeight
 
     game.currentScene.camera.x = player.focusActor.pos.x
     game.currentScene.camera.y = player.focusActor.pos.y
 
+
     let letterboxAxis : ELetterBoxAxis
-
-
+    
     if (mapWidth < screenWidth && mapHeight < screenHeight) {
       letterboxAxis = ELetterBoxAxis.Both
 
       game.currentScene.camera.x = mapWidth / 2
       game.currentScene.camera.y = mapHeight / 2
-
 
     } else if (mapWidth < screenWidth) {
       letterboxAxis = ELetterBoxAxis.Y
@@ -160,17 +110,13 @@ export function cameraBound2() {
         game.currentScene.camera.y = mapHeight - screenHeight / 2
       }
     }
-        
-
   }
-
 }
 
 
 window.onresize = () => {
-  //cameraBound()
-  cameraBound2()
-
+  cameraBound()
+  console.log(game.canvasHeight)
 }
 
 

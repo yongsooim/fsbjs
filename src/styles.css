@@ -6,7 +6,7 @@ body {
   left:0px;
   right:0px;
   bottom: 0px;
-  background-color: black;
+  background-color: grey;
 }
 
 canvas {
@@ -47,5 +47,10 @@ button#fsbPlay {
 button#fsbPlay:hover {
   background : #999999;
   padding: 30px 80px 30px 80px;
+
+}
+
+div .front {
+  background : green;
 
 }
