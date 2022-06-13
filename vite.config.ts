@@ -7,13 +7,13 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 4096
   },
-  server: {
-    hmr: false
-  }, 
+  //server: {
+  //  hmr: false
+  //}, 
   worker: {
     format: 'es'
   },
-  base: process.env.ELECTRON === 'true' ? './' : '/',
+  base: process.env.ELECTRON === 'true' ? './' : './',
   plugins: [
     {
       name: 'configure-response-headers',

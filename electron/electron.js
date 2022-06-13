@@ -28,7 +28,7 @@ function createWindow() {
       allowEval: true, // This is the key!
     },
   });
-
+  mainWindow.menuBarVisible = false;
 
   // and load the index.html of the app.
   // win.loadFile("index.html");
