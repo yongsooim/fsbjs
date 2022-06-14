@@ -12,7 +12,7 @@ export default class TestScene extends Phaser.Scene {
     this.load.image("tfi0___p", assetRootPath + "mapset/png/tfi0___p.png")
     this.load.image("tfi0___s", assetRootPath + "mapset/png/tfi0___s.png")
 
-    this.load.spritesheet("player", assetRootPath + "graphics/ase_ps/csam00.png", {
+    this.load.spritesheet("player", assetRootPath + "graphics/ase_ps/cmiro00.png", {
       frameWidth: 64,
       frameHeight: 96,
     });
@@ -41,19 +41,18 @@ export default class TestScene extends Phaser.Scene {
     this.cameras.main.startFollow(playerSprite, true);
     this.cameras.main.setFollowOffset(-playerSprite.width, -playerSprite.height);
   
-
-    console.log(map)
-    console.log(this.gridEngine)
     this.gridEngine.create(map, {
       characters: [
         {
           id: "player",
           sprite: playerSprite,
-          //walkingAnimationMapping: 0,
+          walkingAnimationMapping: 0,
           startPosition: { x: 8, y: 8 },
+          speed: 8
         },
         ],
     });
+    this.cameras.main.zoom = 2
   }
   gridEngine: GridEngine
 
@@ -68,7 +67,7 @@ export default class TestScene extends Phaser.Scene {
     } else if (cursors.down.isDown) {
       this.gridEngine.move("player", Direction.DOWN);
     }
-    console.log(this.gridEngine.isMoving('player'))
+    //console.log(this.gridEngine.isMoving('player'))
   }
 
 }

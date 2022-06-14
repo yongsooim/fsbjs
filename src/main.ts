@@ -17,6 +17,8 @@ export const game = new Phaser.Game({
   type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
   width: 1920,
   height: 1080,
+  antialias:false,
+  antialiasGL:false,
   //width: 0,
   //height: 0,
   scale: {
