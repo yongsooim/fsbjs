@@ -1,13 +1,37 @@
-import Phaser from "phaser"
-import {GridEngine, Direction} from "fsb-grid"
-//import {GridEngine, Direction} from "grid-engine"
+import  {GridEngine, Direction} from "../grid/GridEngine"
+import {wheelToZoom} from "../input/mouse"
+
 import { assetRootPath } from "../const"
+import nipplejs from 'nipplejs';
+
+
+let manager = nipplejs.create({
+  mode: 'dynamic',
+  size: 70,
+  fadeTime: 0
+})
+
+let isPressed = ''
+
+manager.on('move', (evt, data)=> {
+  if(data.direction) {
+    isPressed = data.direction.angle as string
+  } else {
+    isPressed = ''
+  }
+})
+
+manager.on('end', (evt, data)=> {
+  isPressed = ''
+})
 
 export default class TestScene extends Phaser.Scene {
   constructor() {
     super("test")
   }
   preload() {
+    this.load.plugin('rexkawaseblurpipelineplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexkawaseblurpipelineplugin.min.js', true);
+
     // load the PNG file
     this.load.image("tfi0___p", assetRootPath + "mapset/png/tfi0___p.png")
     this.load.image("tfi0___s", assetRootPath + "mapset/png/tfi0___s.png")
@@ -25,6 +49,7 @@ export default class TestScene extends Phaser.Scene {
   }
 
   create() {
+
     const map = this.make.tilemap({ key: "tilemap" })
 
     // add the tileset image we are using
@@ -36,10 +61,12 @@ export default class TestScene extends Phaser.Scene {
     map.createLayer("Z1 P Layer", tilesetP)
     map.createLayer("Z1 S Layer", tilesetS)
 
-    const playerSprite = this.add.sprite(640, 640, "player");
+    const playerSprite = this.add.sprite(0, 0, "player");
     playerSprite.name = "player"
-    this.cameras.main.startFollow(playerSprite, true);
-    this.cameras.main.setFollowOffset(-playerSprite.width, -playerSprite.height);
+    this.cameras.main.startFollow(playerSprite, false);
+    //this.cameras.main.setFollowOffset(playerSprite.width / 2, -playerSprite.height);
+    this.cameras.main.setFollowOffset(- playerSprite.width / 2, -playerSprite.height / 2);
+
   
     this.gridEngine.create(map, {
       characters: [
@@ -47,29 +74,38 @@ export default class TestScene extends Phaser.Scene {
           id: "player",
           sprite: playerSprite,
           walkingAnimationMapping: 0,
-          startPosition: { x: 8, y: 8 },
-          speed: 8
+          startPosition: { x: 10, y: 17 },
+          speed: 8,
+          offsetX: 0,
+          offsetY: -6
         },
         ],
     });
     this.cameras.main.zoom = 2
+
+
+
+    this.input.on("wheel",  evt => {
+      wheelToZoom(this, evt.deltaY)
+  });
+
   }
   gridEngine: GridEngine
 
   update() {
     const cursors = this.input.keyboard.createCursorKeys();
-    if (cursors.left.isDown) {
+    if (cursors.left.isDown || isPressed === 'left') {
       this.gridEngine.move("player", Direction.LEFT);
-    } else if (cursors.right.isDown) {
+    } else if (cursors.right.isDown || isPressed === 'right') {
       this.gridEngine.move("player", Direction.RIGHT);
-    } else if (cursors.up.isDown) {
+    } else if (cursors.up.isDown || isPressed === 'up') {
       this.gridEngine.move("player", Direction.UP);
-    } else if (cursors.down.isDown) {
+    } else if (cursors.down.isDown || isPressed === 'down') {
       this.gridEngine.move("player", Direction.DOWN);
     }
-    //console.log(this.gridEngine.isMoving('player'))
   }
 
 }
 
+/** 테스트 */
 export const s999_testScene = new TestScene()

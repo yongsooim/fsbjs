@@ -33,6 +33,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
+    "rxjs": "^7.3.1",
     "typescript": "4.6.3",
     "vite": "^2.9.5",
     "vite-plugin-cross-origin-isolation": "^0.1.6",
@@ -44,11 +45,10 @@
   },
   "dependencies": {
     "electron-reload": "^2.0.0-alpha.1",
-    "fsb-grid": "git+https://github.com/yongsooim/fsb-grid.git",
     "is-mobile": "^3.1.1",
     "nipplejs": "^0.9.1",
     "phaser": "^3.55.2",
-    "rxjs": "^7.3.1"
+    "phaser3-rex-plugins": "^1.1.70"
   },
   "build": {
     "appId": "fsbjs",
