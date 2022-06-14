@@ -1,1 +1,1 @@
-export const assetRootPath = 'https://yongsooim.github.io/fsba/'
+export const assetRootPath = './fsba/'

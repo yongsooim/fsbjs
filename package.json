@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "description": "fsbjs",
   "main": "electron/electron.js",
+  "type": "commonjs",
   "scripts": {
     "start": "yarn electron:dev",
     "build": "yarn app:build",
@@ -43,10 +44,11 @@
   },
   "dependencies": {
     "electron-reload": "^2.0.0-alpha.1",
-    "grid-engine": "^2.16.0",
+    "fsb-grid": "git+https://github.com/yongsooim/fsb-grid.git",
     "is-mobile": "^3.1.1",
     "nipplejs": "^0.9.1",
-    "phaser": "^3.55.2"
+    "phaser": "^3.55.2",
+    "rxjs": "^7.3.1"
   },
   "build": {
     "appId": "fsbjs",

@@ -9,7 +9,7 @@ enum Button {
   EXIT = 2,
 }
 
-class MenuScene extends Phaser.Scene {
+class OpeningScene extends Phaser.Scene {
   background: Phaser.GameObjects.Image
   selected = Button.LOAD as number
 
