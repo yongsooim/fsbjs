@@ -74,27 +74,20 @@ class OpeningScene extends Phaser.Scene {
     const offsetX = 850
     const offsetY = 500
 
-    this.loadSprite = this.add.sprite(100, 100, "load")
+    this.loadSprite = this.add.sprite(1200, 690, "load")
     this.loadSprite.scale = 2
-    this.loadSprite.x = 1200
-    this.loadSprite.y = 690
     this.loadSprite.play("load")
     this.loadSprite.setVisible(false)
 
-    this.startSprite = this.add.sprite(100, 200, "start")
+    this.startSprite = this.add.sprite(1175, 790, "start")
     this.startSprite.scale = 2
-    this.startSprite.x = 1175
-    this.startSprite.y = 790
     this.startSprite.play("start")
     this.startSprite.setVisible(false)
 
-    this.exitSprite = this.add.sprite(100, 300, "exit")
+    this.exitSprite = this.add.sprite(1220, 875, "exit")
     this.exitSprite.scale = 2
-    this.exitSprite.x = 1220
-    this.exitSprite.y = 875
     this.exitSprite.play("exit")
     this.exitSprite.setVisible(false)
-
 
     //this.sound.play("pusan", { loop: true })
     this.up = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -133,7 +126,7 @@ class OpeningScene extends Phaser.Scene {
       this.startSprite.setVisible(false)
       this.exitSprite.setVisible(true)
     }
-}
+  }
 }
 
-export const s000_menu = new MenuScene()
+export const s000_menu = new OpeningScene()

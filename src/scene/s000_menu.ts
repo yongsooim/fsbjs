@@ -38,7 +38,6 @@ class MenuScene extends Phaser.Scene {
     this.container = this.add.container(0, 0)
 
     this.background = this.add.image(0, 0, "background")
-    this.background.scale = 2
 
     this.anims.create({
       key: "load",
@@ -73,22 +72,19 @@ class MenuScene extends Phaser.Scene {
       repeat: -1,
     })
 
-    this.loadSprite = this.add.sprite(100, 100, "load")
-    this.loadSprite.scale = 2
+    this.loadSprite = this.add.sprite(0, 0, "load")
     this.loadSprite.x = 240
     this.loadSprite.y = 150
     this.loadSprite.play("load")
     this.loadSprite.setVisible(false)
 
-    this.startSprite = this.add.sprite(100, 200, "start")
-    this.startSprite.scale = 2
+    this.startSprite = this.add.sprite(0, 0, "start")
     this.startSprite.x = 215
     this.startSprite.y = 246
     this.startSprite.play("start")
     this.startSprite.setVisible(false)
 
-    this.exitSprite = this.add.sprite(100, 300, "exit")
-    this.exitSprite.scale = 2
+    this.exitSprite = this.add.sprite(0, 0, "exit")
     this.exitSprite.x = 259
     this.exitSprite.y = 334
     this.exitSprite.play("exit")

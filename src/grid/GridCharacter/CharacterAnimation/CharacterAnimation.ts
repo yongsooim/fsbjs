@@ -34,7 +34,7 @@ export class CharacterAnimation {
 
   updateCharacterFrame( movementDirection: Direction, hasWalkedQuarterATile: number): void {
     if (this._isEnabled) {
-      this.setWalkingFrameDouble(movementDirection, hasWalkedQuarterATile );
+      this.setWalkingFrame(movementDirection, hasWalkedQuarterATile );
     }
   }
 
@@ -71,14 +71,7 @@ export class CharacterAnimation {
     this._setStandingFrame(direction);
   }
 
-  //private setWalkingFrame(direction: Direction): void {
-  //  const frameRow = this.framesOfDirection(direction);
-  //  this.sprite.setFrame(
-  //    this.lastFootLeft ? frameRow.rightFoot : frameRow.leftFoot
-  //  );
-  //}
-
-  private setWalkingFrameDouble(direction: Direction, hasWalkedQuarterATile:number): void {
+  private setWalkingFrame(direction: Direction, hasWalkedQuarterATile:number): void {
     const frameRow = this.framesOfDirection(direction);
 
     if (hasWalkedQuarterATile === 0) {

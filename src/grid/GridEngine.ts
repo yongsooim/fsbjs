@@ -2,6 +2,8 @@ import { GlobalConfig } from "./GlobalConfig/GlobalConfig";
 import { CollisionStrategy } from "./Collisions/CollisionStrategy";
 import { FollowMovement } from "./Movement/FollowMovement/FollowMovement";
 import {
+  Finished,
+  MoveToConfig,
   MoveToResult,
   TargetMovement,
 } from "./Movement/TargetMovement/TargetMovement";
