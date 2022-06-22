@@ -19,10 +19,13 @@ function fitAndFill() {
   }
 }
 
-
 fitAndFill()
 
 window.addEventListener("resize", fitAndFill)
 window.addEventListener("change", fitAndFill)
 window.addEventListener("orientationchange", fitAndFill)
 screen.orientation.addEventListener('change', fitAndFill)
+
+document.getElementsByTagName('canvas')[0].addEventListener('pointerdown', ()=> {
+  document.getElementById('game').focus()
+})

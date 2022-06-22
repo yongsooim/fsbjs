@@ -7,6 +7,23 @@ body {
   bottom: 0px;
   background-color: #202020;
   overflow: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-callout: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-modify: none;
+  -webkit-highlight: none;
+  -webkit-touch-callout: none;           
+  -webkit-text-size-adjust: none;        
+  -moz-user-select: none;
+  -webkit-touch-callout: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+:focus-visible {
+  outline: -webkit-focus-ring-color auto 0px;
 }
 
 canvas {
@@ -15,4 +32,12 @@ canvas {
   padding:0px;
   margin: 0px;
   display: block;
+  overflow: hidden;
+}
+
+.back {
+  background-image: url("./asset/d.svg") !important;
+  background-size:cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
 }

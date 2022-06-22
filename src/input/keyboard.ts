@@ -1,7 +1,22 @@
-import Phaser from "phaser";
-import { game } from "../main";
+import Phaser from "phaser"
 
 
-game.input.keyboard.onKeyDown("W", () => {
-  console.log("W");
-})
+export function setKeyboard() {
+  document
+    .getElementsByTagName("body")[0]
+    .addEventListener("keydown", (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      return false
+    })
+
+  document
+    .getElementsByTagName("body")[0]
+    .addEventListener("keypress", (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      return false
+    })
+}
+
+export {}

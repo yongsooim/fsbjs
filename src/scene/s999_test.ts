@@ -6,15 +6,22 @@ import { touch } from "../input/touch"
 import * as cameraUtil from '../camera/camera'
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
 import Pinch from "phaser3-rex-plugins/plugins/input/gestures/pinch/Pinch"
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 import KawaseBlurPipelinePlugin from 'phaser3-rex-plugins/plugins/kawaseblurpipeline-plugin.js';
 import { input } from "../input/input"
 
 export default class TestScene extends Phaser.Scene {
+  rexUI: RexUIPlugin;  // Declare scene property 'rexUI' as RexUIPlugin type
+
   constructor() {
     super("test")
   }
   preload() {
-
+    this.load.scenePlugin({
+      key: 'rexuiplugin',
+      url: RexUIPlugin,
+      sceneKey: 'rexUI'
+    });
     // load the PNG file
     this.load.image("tfi0___p", assetRootPath + "mapset/png/tfi0___p.png")
     this.load.image("tfi0___s", assetRootPath + "mapset/png/tfi0___s.png")
@@ -30,7 +37,6 @@ export default class TestScene extends Phaser.Scene {
       assetRootPath + "mapset/tmj/0022_tfi0___.tmj"
     )
     this.load.json('moveProp', assetRootPath + "mapset/json/0022_tfi0___.json");
-
 
   }
 
@@ -65,6 +71,7 @@ export default class TestScene extends Phaser.Scene {
 
 
     this.map = this.make.tilemap({ key: "tilemap" })
+    
 
     // add the tileset image we are using
     //const tilesetP = this.map.addTilesetImage("tfi0___p", "tfi0___p", 64, 48, 1, 2)
@@ -80,7 +87,7 @@ export default class TestScene extends Phaser.Scene {
     this.playerSprite = this.add.sprite(0, 0, "player");
     this.playerSprite.name = "player"
     this.cameras.main.startFollow(this.playerSprite, false, 1, 1, -32, -48);
-  //  this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+    this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
     
     this.gridEngine.create(this.map, {
       numberOfDirections: NumberOfDirections.EIGHT,
