@@ -9,6 +9,7 @@ import Pinch from "phaser3-rex-plugins/plugins/input/gestures/pinch/Pinch"
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 import KawaseBlurPipelinePlugin from 'phaser3-rex-plugins/plugins/kawaseblurpipeline-plugin.js';
 import { input } from "../input/input"
+import {keyboard, Keys} from '../input/keyboard'
 
 export default class TestScene extends Phaser.Scene {
   rexUI: RexUIPlugin;  // Declare scene property 'rexUI' as RexUIPlugin type
@@ -23,8 +24,8 @@ export default class TestScene extends Phaser.Scene {
       sceneKey: 'rexUI'
     });
     // load the PNG file
-    this.load.image("tfi0___p", assetRootPath + "mapset/png/tfi0___p.png")
-    this.load.image("tfi0___s", assetRootPath + "mapset/png/tfi0___s.png")
+    this.load.image("tfi0___p", assetRootPath + "mapset/png_ext/tfi0___p.png")
+    this.load.image("tfi0___s", assetRootPath + "mapset/png_ext/tfi0___s.png")
 
     this.load.spritesheet("player", assetRootPath + "graphics/ase_ps/cmiro00.png", {
       frameWidth: 64,
@@ -45,11 +46,6 @@ export default class TestScene extends Phaser.Scene {
   rexGestures: GesturesPlugin
   gridEngine: GridEngine
 
-  keyA: Phaser.Input.Keyboard.Key
-  keyS: Phaser.Input.Keyboard.Key
-  keyW: Phaser.Input.Keyboard.Key
-  keyD: Phaser.Input.Keyboard.Key
-
   create() {
     //let pipelineInstance = this.plugins.get('rexKawaseBlurPipeline') as KawaseBlurPipelinePlugin
     //pipelineInstance.add(this.cameras.main, {
@@ -57,11 +53,7 @@ export default class TestScene extends Phaser.Scene {
     //  quality: 1
     //});
 
-    this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-    this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-
+    keyboard.init()
 
     let pinch = this.rexGestures.add.pinch(this, {enable: true, threshold: 30});
     
@@ -76,8 +68,8 @@ export default class TestScene extends Phaser.Scene {
     // add the tileset image we are using
     //const tilesetP = this.map.addTilesetImage("tfi0___p", "tfi0___p", 64, 48, 1, 2)
     //const tilesetS = this.map.addTilesetImage("tfi0___s", "tfi0___s", 64, 48, 1, 2)
-    const tilesetP = this.map.addTilesetImage("tfi0___p", "tfi0___p")
-    const tilesetS = this.map.addTilesetImage("tfi0___s", "tfi0___s", 64, 48, 0, 0, 1001)
+    const tilesetP = this.map.addTilesetImage("tfi0___p", "tfi0___p", 64, 48, 1, 2)
+    const tilesetS = this.map.addTilesetImage("tfi0___s", "tfi0___s", 64, 48, 1, 2, 1001)
 
     this.map.createLayer("Z0 P Layer", tilesetP)
     this.map.createLayer("Z0 S Layer", [tilesetP, tilesetS])
@@ -113,6 +105,7 @@ export default class TestScene extends Phaser.Scene {
   update() {
     //console.log(this.playerSprite.depth)
 
+    console.log(keyboard.wasPressed(Keys.A))
     this.counter++ 
     if(this.counter === 100) {
       this.counter = 0
@@ -121,13 +114,13 @@ export default class TestScene extends Phaser.Scene {
     this.map.getLayer('Z0 P Layer').data[0][0].index = this.counter
 
     const cursors = this.input.keyboard.createCursorKeys();
-    if (this.keyA.isDown || cursors.left.isDown || touch.isPressed === 'left') {
+    if (keyboard.isHeld(Keys.A) || cursors.left.isDown || touch.isPressed === 'left') {
       this.gridEngine.move("player", Direction.LEFT);
-    } else if (this.keyD.isDown || cursors.right.isDown || touch.isPressed === 'right') {
+    } else if (keyboard.isHeld(Keys.D)  || cursors.right.isDown || touch.isPressed === 'right') {
       this.gridEngine.move("player", Direction.RIGHT);
-    } else if (this.keyW.isDown || cursors.up.isDown || touch.isPressed === 'up') {
+    } else if (keyboard.isHeld(Keys.W)  || cursors.up.isDown || touch.isPressed === 'up') {
       this.gridEngine.move("player", Direction.UP);
-    } else if (this.keyS.isDown || cursors.down.isDown || touch.isPressed === 'down') {
+    } else if (keyboard.isHeld(Keys.S)  || cursors.down.isDown || touch.isPressed === 'down') {
       this.gridEngine.move("player", Direction.DOWN);
     }
 
@@ -151,6 +144,8 @@ export default class TestScene extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.playerSprite, false, 1, 1, -32, -48);
     */  
+    keyboard.update()
+
   }
 
 }

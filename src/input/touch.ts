@@ -25,11 +25,6 @@ class Touch {
       restOpacity: 0.7
     })
 
-    
-    this.manager.on('move', (evt, data)=> {
-      console.log(data)
-    })
-
     this.manager.on('dir', (evt, data)=> {
       this.isPressed = data.direction.angle as string
       clearTimeout(this.holdTimer)

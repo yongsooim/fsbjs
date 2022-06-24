@@ -1,19 +1,19 @@
 <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
  <g>
   <title>Layer 1</title>
-  <path fill="none" stroke-linejoin="undefined" stroke-linecap="undefined" opacity="undefined" d="m0.15385,0.15385l32.00003,32.00003" id="svg_4" stroke="#000" stroke-width="2"/>
-  <line fill="none" y1="32.61542" x2="100" y2="0.15385" id="svg_5" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#000" x1="67.53843" stroke-width="2"/>
-  <ellipse fill="none" stroke="#000" cx="50" cy="50" id="svg_6" rx="25" ry="25" stroke-width="2"/>
-  <path fill="none" stroke-linejoin="undefined" stroke-linecap="undefined" opacity="undefined" d="m67.84612,67.84612l32.00003,32.00003" id="svg_11" stroke="#000" stroke-width="2"/>
-  <line fill="none" y1="100" x2="32.46157" y2="67.53843" id="svg_12" stroke-linejoin="undefined" stroke-linecap="undefined" stroke="#000" stroke-width="2"/>
-  <path transform="rotate(-45 53.1726 5.05045)" id="svg_1" d="m53.17265,0.05045l0,10" opacity="undefined" stroke-linecap="undefined" stroke-linejoin="undefined" stroke-width="2" stroke="#000" fill="none"/>
-  <line transform="rotate(45 47.4258 5.04625)" stroke="#000" stroke-width="2" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_15" y2="10.04625" x2="47.42578" y1="0.04625" x1="47.42578" fill="none"/>
-  <path transform="rotate(-45 94.8371 42.1658)" id="svg_16" d="m94.8371,37.16577l0,10" opacity="undefined" stroke-linecap="undefined" stroke-linejoin="undefined" stroke-width="2" stroke="#000" fill="none"/>
-  <line transform="rotate(45 94.8046 47.8909)" stroke="#000" stroke-width="2" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_17" y2="52.8909" x2="94.80456" y1="42.8909" x1="94.80456" fill="none"/>
-  <path transform="rotate(-45 4.95758 50.5192)" id="svg_18" d="m4.95758,45.51918l0,10" opacity="undefined" stroke-linecap="undefined" stroke-linejoin="undefined" stroke-width="2" stroke="#000" fill="none"/>
-  <line transform="rotate(45 5.64797 44.1961)" stroke="#000" stroke-width="2" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_19" y2="49.19612" x2="5.64793" y1="39.19612" x1="5.64793" fill="none"/>
-  <path transform="rotate(-45 48.7549 94.93)" id="svg_20" d="m48.75498,89.92997l0,10" opacity="undefined" stroke-linecap="undefined" stroke-linejoin="undefined" stroke-width="2" stroke="#000" fill="none"/>
-  <line transform="rotate(45 54.4941 94.9258)" stroke="#000" stroke-width="2" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_21" y2="99.92576" x2="54.49406" y1="89.92576" x1="54.49406" fill="none"/>
+  <path stroke-width="2" stroke="#000" id="svg_4" d="m0.15385,0.15385l32.00003,32.00003" opacity="undefined" stroke-linecap="undefined" stroke-linejoin="undefined" fill="none"/>
+  <line stroke-width="2" x1="67.53843" stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_5" y2="0.15385" x2="100" y1="32.61542" fill="none"/>
+  <ellipse stroke-width="2" ry="25" rx="25" id="svg_6" cy="50" cx="50" stroke="#000" fill="none"/>
+  <path stroke-width="2" stroke="#000" id="svg_11" d="m67.70387,67.84612l32.00003,32.00003" opacity="undefined" stroke-linecap="undefined" stroke-linejoin="undefined" fill="none"/>
+  <line stroke-width="2" stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_12" y2="67.53843" x2="32.46157" y1="100" fill="none"/>
+  <path transform="rotate(-45 53.1726 7.0541)" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="undefined" stroke-linecap="undefined" opacity="undefined" d="m53.17265,2.05411l0,10" id="svg_1"/>
+  <line transform="rotate(45 47.4258 7.0499)" fill="none" x1="47.42578" y1="2.17978" x2="47.42578" y2="12.17978" id="svg_15" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="2" stroke="#000"/>
+  <path transform="rotate(-45 94.1258 42.1658)" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="undefined" stroke-linecap="undefined" opacity="undefined" d="m94.12586,37.16577l0,10" id="svg_16"/>
+  <line transform="rotate(45 94.0934 47.8909)" fill="none" x1="94.09332" y1="42.8909" x2="94.09332" y2="52.8909" id="svg_17" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="2" stroke="#000"/>
+  <path transform="rotate(-45 6.55009 50.9737)" stroke="#000" fill="none" stroke-width="2" stroke-linejoin="undefined" stroke-linecap="undefined" opacity="undefined" d="m6.55009,45.33091l0,11.28565" id="svg_18"/>
+  <line transform="rotate(45 6.78595 44.1961)" fill="none" x1="6.78591" y1="39.19612" x2="6.78591" y2="49.19612" id="svg_19" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="2" stroke="#000"/>
+  <path transform="rotate(-45 48.7549 93.792)" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="undefined" stroke-linecap="undefined" opacity="undefined" d="m48.75498,88.79199l0,10" id="svg_20"/>
+  <line transform="rotate(45 54.4941 93.7878)" fill="none" x1="54.49406" y1="88.78778" x2="54.49406" y2="98.78778" id="svg_21" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="2" stroke="#000"/>
  </g>
 
 </svg>

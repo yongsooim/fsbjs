@@ -13,8 +13,8 @@ export const config : Phaser.Types.Core.GameConfig = {
   //  deltaHistory: 600
   //},
   roundPixels: false,
-  antialias:   false,
-  antialiasGL: false,
+  antialias:   true,
+  antialiasGL: true,
 
   type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
   width: 1440,

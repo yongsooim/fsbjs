@@ -13,8 +13,7 @@ export enum FsbKey {
 
 class Input {
   update(scene: Phaser.Scene) {
-    const keys = scene.input.keyboard.
-    console.log(keys)
+   
   }
 }
 
