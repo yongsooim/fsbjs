@@ -8,7 +8,7 @@ import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
 import Pinch from "phaser3-rex-plugins/plugins/input/gestures/pinch/Pinch"
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 import KawaseBlurPipelinePlugin from 'phaser3-rex-plugins/plugins/kawaseblurpipeline-plugin.js';
-import { input } from "../input/input"
+import { FsbKey, input } from "../input/input"
 import {keyboard, Keys} from '../input/keyboard'
 
 export default class TestScene extends Phaser.Scene {
@@ -103,24 +103,14 @@ export default class TestScene extends Phaser.Scene {
   
   counter = 0
   update() {
-    //console.log(this.playerSprite.depth)
-
-    console.log(keyboard.wasPressed(Keys.A))
-    this.counter++ 
-    if(this.counter === 100) {
-      this.counter = 0
-    }
-
-    this.map.getLayer('Z0 P Layer').data[0][0].index = this.counter
-
     const cursors = this.input.keyboard.createCursorKeys();
-    if (keyboard.isHeld(Keys.A) || cursors.left.isDown || touch.isPressed === 'left') {
+    if (keyboard.isHeld(Keys.A) || cursors.left.isDown || touch.isPressed === FsbKey.Left) {
       this.gridEngine.move("player", Direction.LEFT);
-    } else if (keyboard.isHeld(Keys.D)  || cursors.right.isDown || touch.isPressed === 'right') {
+    } else if (keyboard.isHeld(Keys.D)  || cursors.right.isDown || touch.isPressed === FsbKey.Right) {
       this.gridEngine.move("player", Direction.RIGHT);
-    } else if (keyboard.isHeld(Keys.W)  || cursors.up.isDown || touch.isPressed === 'up') {
+    } else if (keyboard.isHeld(Keys.W)  || cursors.up.isDown || touch.isPressed === FsbKey.Up) {
       this.gridEngine.move("player", Direction.UP);
-    } else if (keyboard.isHeld(Keys.S)  || cursors.down.isDown || touch.isPressed === 'down') {
+    } else if (keyboard.isHeld(Keys.S)  || cursors.down.isDown || touch.isPressed === FsbKey.Down) {
       this.gridEngine.move("player", Direction.DOWN);
     }
 

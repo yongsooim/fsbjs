@@ -37,7 +37,7 @@ canvas {
 
 .back {
   background-image: url("./asset/d2.svg") !important;
-  background-size:cover !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
+  background-size:cover ;
+  background-repeat: no-repeat ;
+  background-position: center center ;
 }

@@ -1,17 +1,25 @@
 import nipplejs from 'nipplejs';
 import { game } from '../main';
+import { FsbKey } from './input';
 
 class Touch {
   manager: nipplejs.JoystickManager | null
-  isPressed = ''
+  isPressed = FsbKey.None
   holdStart = 0
   holdTimer = 0
   destoryTimer = 0
+  touchToInput = new Map<string, FsbKey>()
 
   constructor() {
     this.manager = null
+    this.touchToInput.set('', FsbKey.None)
+    this.touchToInput.set('up', FsbKey.Up)
+    this.touchToInput.set('down', FsbKey.Down)
+    this.touchToInput.set('left', FsbKey.Left)
+    this.touchToInput.set('right', FsbKey.Right)
   }
 
+  
   init() {
     if(this.manager != null) return 
 
@@ -26,63 +34,61 @@ class Touch {
     })
 
     this.manager.on('dir', (evt, data)=> {
-      this.isPressed = data.direction.angle as string
+      this.isPressed = this.touchToInput.get(data.direction.angle)
       clearTimeout(this.holdTimer)
       clearTimeout(this.destoryTimer)
     })
     
     this.manager.on('start', (event)=> {
       this.holdStart = Date.now()
-      this.holdTimer = setTimeout(() => { console.log('calceled')}, 300)
+      this.holdTimer = setTimeout(() => {
+        console.log('canceled')
+      }, 300)
       clearTimeout(this.destoryTimer)
     })
 
-    this.manager.on('shown', ()=> {
-      document.getElementsByClassName('front')[0].addEventListener('wheel', wheelHandler)
-      document.getElementsByClassName('back')[0].addEventListener('wheel', wheelHandler)
+    this.manager.on('shown', () => {
+      document.getElementsByClassName('front')[0].addEventListener('wheel', this.wheelHandler)
+      document.getElementsByClassName('back')[0].addEventListener('wheel', this.wheelHandler)
     })
 
     this.manager.on('end', ()=> {
       clearTimeout(this.holdTimer)
-      if(this.isPressed == ''){
+      
+      if(this.isPressed == FsbKey.None){ 
         if(Date.now() - this.holdStart < 350){
-          console.log('clicked')
+          console.log('clicked') 
         }
-      } else {
-        this.isPressed = ''
-      }
+      } else {  this.isPressed = FsbKey.None }
+
       this.destoryTimer = setTimeout(() => {
         this.destroy()
         this.init()
-      }, 5000)
+      }, 3000)
 
     })
   }
 
   destroy() {
-    this.isPressed = ''
+    this.isPressed = FsbKey.None
     clearTimeout(this.holdTimer)
     this.manager.destroy()
     this.manager = null
   } 
 
+  wheelHandler(event: WheelEvent) {
+    const clonedEvt = new WheelEvent('wheel', {
+      deltaY: event.deltaY,
+    })
+    document.getElementsByTagName('canvas')[0].dispatchEvent(clonedEvt)
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
 }
 
 export const touch = new Touch()
 touch.init()
-
-const wheelHandler = (evt: Event) => {
-  // for glueing viewport wheel zoom and nipple element event
-  // it is to solve the problem that wheel zoom is not working while pointer is on nipplejs event
-  const originalEvt = evt as WheelEvent
-
-  const clonedEvt = new WheelEvent('wheel', {
-    deltaY: originalEvt.deltaY,
-  })
-  document.getElementsByTagName('canvas')[0].dispatchEvent(clonedEvt)
-  evt.preventDefault()
-  evt.stopPropagation()
-}
 
 document.getElementsByTagName('body')[0].addEventListener('touchstart', (event) => {
   event.preventDefault();  
