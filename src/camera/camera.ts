@@ -20,10 +20,10 @@ class CameraUtil {
   }
 
   setBoundsAndCenter(scene:Phaser.Scene, map: Phaser.Tilemaps.Tilemap) {
-    let screenWidth = scene.game.canvas.width / scene.cameras.main.zoom
-    let screenHeight = scene.game.canvas.height / scene.cameras.main.zoom
-    let mapWidth = map.widthInPixels
-    let mapHeight = map.heightInPixels
+    const screenWidth = scene.game.canvas.width / scene.cameras.main.zoom
+    const screenHeight = scene.game.canvas.height / scene.cameras.main.zoom
+    const mapWidth = map.widthInPixels
+    const mapHeight = map.heightInPixels
     
     if( mapWidth < screenWidth && mapHeight < screenHeight ) {
       scene.cameras.main.setBounds(-screenWidth / 2 + mapWidth / 2, -screenHeight / 2 + mapHeight / 2, screenWidth, screenHeight)
