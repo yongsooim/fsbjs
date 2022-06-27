@@ -1,3 +1,4 @@
+import cameraUtil from "../camera/camera";
 
 /**
  * Enum representing physical input key codes
@@ -244,6 +245,7 @@ export class Keyboard {
   public wasReleased (key: Keys): boolean {
     return this._keysUp.indexOf(key) > -1
   }
+
 }
 
 export const keyboard = new Keyboard()

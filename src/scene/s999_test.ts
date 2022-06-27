@@ -38,6 +38,8 @@ export default class TestScene extends Phaser.Scene {
       assetRootPath + "mapset/tmj/0022_tfi0___.tmj"
     )
     this.load.json('moveProp', assetRootPath + "mapset/json/0022_tfi0___.json");
+    this.load.audio('bgm', assetRootPath + "mp3/bgm/vill2.mp3");
+
   }
 
   map:Phaser.Tilemaps.Tilemap
@@ -47,6 +49,7 @@ export default class TestScene extends Phaser.Scene {
   gridEngine: GridEngine
 
   create() {
+    this.sound.play('bgm', { loop: true })
     //let pipelineInstance = this.plugins.get('rexKawaseBlurPipeline') as KawaseBlurPipelinePlugin
     //pipelineInstance.add(this.cameras.main, {
     //  blur: 1, 
@@ -58,7 +61,13 @@ export default class TestScene extends Phaser.Scene {
     let pinch = this.rexGestures.add.pinch(this, {enable: true, threshold: 30});
     
     pinch.on('pinchstart', () => { if(touch.manager) touch.destroy() })
-    pinch.on('pinch', (dragScale: Pinch) => { this.cameras.main.zoom *= dragScale.scaleFactor })
+    pinch.on('pinch', (dragScale: Pinch) => { 
+      //this.cameras.main.zoom *= dragScale.scaleFactor 
+      //mouse.wheelToZoom(this, dragScale.scaleFactor ) 
+      touch.pinchToZoom(this, dragScale.scaleFactor ) 
+      cameraUtil.setBoundsAndCenter(this, this.map)
+
+    })
     pinch.on('pinchend', () => { touch.init()})
 
 
@@ -119,8 +128,14 @@ export default class TestScene extends Phaser.Scene {
       this.gridEngine.move("player", Direction.DOWN);
     }
 
+    if(keyboard.isHeld(Keys.Equal)) {
+      cameraUtil.zoomBy(this, 1.02)
+      cameraUtil.setBoundsAndCenter(this, this.map)
+    } else if(keyboard.isHeld(Keys.Minus)) {
+      cameraUtil.zoomBy(this, 0.98)
+      cameraUtil.setBoundsAndCenter(this, this.map)
+    }
     keyboard.update()
-
   }
 
 }

@@ -1,4 +1,5 @@
 import nipplejs from 'nipplejs';
+import cameraUtil from '../camera/camera';
 import { game } from '../main';
 import { FsbKey } from './input';
 
@@ -83,6 +84,10 @@ class Touch {
     document.getElementsByTagName('canvas')[0].dispatchEvent(clonedEvt)
     event.preventDefault()
     event.stopPropagation()
+  }
+
+  pinchToZoom(scene: Phaser.Scene, dragScale: number) {
+    cameraUtil.zoomBy(scene, dragScale)
   }
 
 }
