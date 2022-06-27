@@ -1,8 +1,16 @@
+import cameraUtil from "../camera/camera"
 
-export function wheelToZoom (scene:Phaser.Scene , deltaY: number) {
-  if (deltaY > 0) {
-    scene.cameras.main.zoom /= 1.1
-  } else {
-    scene.cameras.main.zoom *= 1.1
+class Mouse {
+  wheelToZoom (scene:Phaser.Scene , deltaY: number) {
+    if (deltaY > 0) {
+      cameraUtil.zoomBy(scene, 0.9)
+    } else {
+      cameraUtil.zoomBy(scene, 1.1)
+    }
   }
+  
 }
+
+const mouse = new Mouse()
+
+export default mouse

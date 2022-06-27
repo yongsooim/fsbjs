@@ -1,15 +1,15 @@
 import  {GridEngine, Direction, NumberOfDirections} from "../grid/GridEngine"
-import {wheelToZoom} from "../input/mouse"
 
 import { assetRootPath } from "../const"
 import { touch } from "../input/touch"
-import * as cameraUtil from '../camera/camera'
+import cameraUtil from '../camera/camera'
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
 import Pinch from "phaser3-rex-plugins/plugins/input/gestures/pinch/Pinch"
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 import KawaseBlurPipelinePlugin from 'phaser3-rex-plugins/plugins/kawaseblurpipeline-plugin.js';
 import { FsbKey, input } from "../input/input"
 import {keyboard, Keys} from '../input/keyboard'
+import mouse from "../input/mouse"
 
 export default class TestScene extends Phaser.Scene {
   rexUI: RexUIPlugin;  // Declare scene property 'rexUI' as RexUIPlugin type
@@ -38,10 +38,10 @@ export default class TestScene extends Phaser.Scene {
       assetRootPath + "mapset/tmj/0022_tfi0___.tmj"
     )
     this.load.json('moveProp', assetRootPath + "mapset/json/0022_tfi0___.json");
-
   }
 
   map:Phaser.Tilemaps.Tilemap
+  playerContainer:Phaser.GameObjects.Container
   playerSprite:Phaser.GameObjects.Sprite
   rexGestures: GesturesPlugin
   gridEngine: GridEngine
@@ -64,7 +64,6 @@ export default class TestScene extends Phaser.Scene {
 
     this.map = this.make.tilemap({ key: "tilemap" })
     
-
     // add the tileset image we are using
     //const tilesetP = this.map.addTilesetImage("tfi0___p", "tfi0___p", 64, 48, 1, 2)
     //const tilesetS = this.map.addTilesetImage("tfi0___s", "tfi0___s", 64, 48, 1, 2)
@@ -78,8 +77,6 @@ export default class TestScene extends Phaser.Scene {
 
     this.playerSprite = this.add.sprite(0, 0, "player");
     this.playerSprite.name = "player"
-    this.cameras.main.startFollow(this.playerSprite, false, 1, 1, -32, -48);
-    this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
     
     this.gridEngine.create(this.map, {
       numberOfDirections: NumberOfDirections.EIGHT,
@@ -98,13 +95,21 @@ export default class TestScene extends Phaser.Scene {
         ],
     });
 
-    this.input.on("wheel",  (evt: WheelEvent) => wheelToZoom(this, evt.deltaY) );
+    this.input.on("wheel",  (evt: WheelEvent) => {
+      mouse.wheelToZoom(this, evt.deltaY) 
+      cameraUtil.setBoundsAndCenter(this, this.map)
+    });
+    this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels, true)
+    this.cameras.main.startFollow(this.playerSprite, false, 1, 1, -32, -54)
+
   }
   
   counter = 0
   update() {
+    //cameraUtil.followUpdate(this, this.map, this.playerSprite)
+
     const cursors = this.input.keyboard.createCursorKeys();
-    if (keyboard.isHeld(Keys.A) || cursors.left.isDown || touch.isPressed === FsbKey.Left) {
+    if(keyboard.isHeld(Keys.A) || cursors.left.isDown || touch.isPressed === FsbKey.Left) {
       this.gridEngine.move("player", Direction.LEFT);
     } else if (keyboard.isHeld(Keys.D)  || cursors.right.isDown || touch.isPressed === FsbKey.Right) {
       this.gridEngine.move("player", Direction.RIGHT);
@@ -114,26 +119,6 @@ export default class TestScene extends Phaser.Scene {
       this.gridEngine.move("player", Direction.DOWN);
     }
 
-    /* 
-
-    deciding letterbox should be done in resize event and zoom event
-
-    console.log(this.cameras.main.worldView.width, this.map.widthInPixels)
-    if(this.cameras.main.worldView.width > this.map.widthInPixels){
-      this.cameras.main.x = (this.cameras.main.worldView.width - this.map.widthInPixels / this.cameras.main.zoom) / 2
-      console.log(this.cameras.main.x )
-    } else {
-      this.cameras.main.x = 0
-    }
-
-    if(this.cameras.main.worldView.height > this.map.heightInPixels){
-      this.cameras.main.y = this.map.heightInPixels / 4
-    } else {
-      this.cameras.main.y = 0
-    }
-
-    this.cameras.main.startFollow(this.playerSprite, false, 1, 1, -32, -48);
-    */  
     keyboard.update()
 
   }

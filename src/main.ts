@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import cameraUtil from "./camera/camera"
 import { config } from "./config"
 
 // create the game, and pass it the configuration
@@ -17,6 +18,7 @@ function fitAndFill() {
   } else {
     game.scale.setGameSize(guaranteedWidth, guaranteedWidth / screenRatio)
   }
+
 }
 
 fitAndFill()
