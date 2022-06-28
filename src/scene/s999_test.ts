@@ -3,16 +3,20 @@ import  {GridEngine, Direction, NumberOfDirections} from "../grid/GridEngine"
 import { assetRootPath } from "../const"
 import { touch } from "../input/touch"
 import cameraUtil from '../camera/camera'
-import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
+import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js'
 import Pinch from "phaser3-rex-plugins/plugins/input/gestures/pinch/Pinch"
-import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
-import KawaseBlurPipelinePlugin from 'phaser3-rex-plugins/plugins/kawaseblurpipeline-plugin.js';
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'
 import { FsbKey, input } from "../input/input"
 import {keyboard, Keys} from '../input/keyboard'
 import mouse from "../input/mouse"
 
 export default class TestScene extends Phaser.Scene {
-  rexUI: RexUIPlugin;  // Declare scene property 'rexUI' as RexUIPlugin type
+  rexUI: RexUIPlugin // Declare scene property 'rexUI' as RexUIPlugin type
+  map:Phaser.Tilemaps.Tilemap
+  playerContainer:Phaser.GameObjects.Container
+  playerSprite:Phaser.GameObjects.Sprite
+  rexGestures: GesturesPlugin
+  gridEngine: GridEngine
 
   constructor() {
     super("test")
@@ -33,20 +37,10 @@ export default class TestScene extends Phaser.Scene {
     });
   
     // load the JSON file
-    this.load.tilemapTiledJSON(
-      "tilemap",
-      assetRootPath + "mapset/tmj/0022_tfi0___.tmj"
-    )
+    this.load.tilemapTiledJSON("tilemap", assetRootPath + "mapset/tmj/0022_tfi0___.tmj")
     this.load.json('moveProp', assetRootPath + "mapset/json/0022_tfi0___.json");
     this.load.audio('bgm', assetRootPath + "mp3/bgm/vill2.mp3");
-
   }
-
-  map:Phaser.Tilemaps.Tilemap
-  playerContainer:Phaser.GameObjects.Container
-  playerSprite:Phaser.GameObjects.Sprite
-  rexGestures: GesturesPlugin
-  gridEngine: GridEngine
 
   create() {
     this.sound.play('bgm', { loop: true })
@@ -56,7 +50,6 @@ export default class TestScene extends Phaser.Scene {
     //  quality: 1
     //});
 
-    keyboard.init()
 
     let pinch = this.rexGestures.add.pinch(this, {enable: true, threshold: 30});
     
@@ -84,7 +77,7 @@ export default class TestScene extends Phaser.Scene {
     this.map.createLayer("Z1 P Layer", tilesetP)
     this.map.createLayer("Z1 S Layer", [tilesetP, tilesetS])
 
-    this.playerSprite = this.add.sprite(0, 0, "player");
+    this.playerSprite = this.add.sprite(0, 0, "player")
     this.playerSprite.name = "player"
     
     this.gridEngine.create(this.map, {

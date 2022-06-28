@@ -149,7 +149,8 @@ import cameraUtil from "../camera/camera";
   Esc = 'Escape',
   Escape = 'Escape',
   PageUp = 'PageUp',
-  PageDown = 'PageDown'
+  PageDown = 'PageDown',
+  Enter = 'Enter'
 
 }
 

@@ -2,6 +2,8 @@ import Phaser from "phaser"
 import { assetRootPath } from "../const"
 import { game } from "../main"
 import st01 from "./st01.json"
+import * as scene from './scene'
+import { keyboard, Keys } from "../input/keyboard"
 
 enum Button {
   LOAD = 0,
@@ -10,13 +12,15 @@ enum Button {
 }
 
 class MenuScene extends Phaser.Scene {
-  background: Phaser.GameObjects.Image
   selected = Button.LOAD as number
+  background: Phaser.GameObjects.Image
+  container: Phaser.GameObjects.Container
+  loadSprite: Phaser.GameObjects.Sprite
+  startSprite: Phaser.GameObjects.Sprite
+  exitSprite: Phaser.GameObjects.Sprite
 
   constructor() {
-    super({
-      key: "menu",
-    })
+    super({ key: "menu",})
   }
 
   preload() {
@@ -27,13 +31,7 @@ class MenuScene extends Phaser.Scene {
     this.load.aseprite("st01", assetRootPath + "graphics/pcxset/st01.png", st01)
   }
 
-  container: Phaser.GameObjects.Container
-  loadSprite: Phaser.GameObjects.Sprite
-  startSprite: Phaser.GameObjects.Sprite
-  exitSprite: Phaser.GameObjects.Sprite
-  
-  create() {
-    
+  create() {    
     //this.container = this.add.container(this.cameras.main.width / 2, this.cameras.main.height / 2)
     this.container = this.add.container(0, 0)
 
@@ -92,32 +90,33 @@ class MenuScene extends Phaser.Scene {
 
 
     this.sound.play("pusan", { loop: true })
-    this.up = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-    this.down = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-    this.enter = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
-
 
     this.container.add([this.background, this.startSprite, this.exitSprite, this.loadSprite])
 
     this.cameras.main.fadeIn(1000, 255, 255, 255);
   }
-  up: Phaser.Input.Keyboard.Key
-  down: Phaser.Input.Keyboard.Key
-  enter:Phaser.Input.Keyboard.Key
   
   update() {
     this.container.x = this.cameras.main.width / 2
     this.container.y = this.cameras.main.height / 2
-    
-    if (Phaser.Input.Keyboard.JustDown(this.up)) {
-      this.sound.play("e156")
 
+    this.checkInput()
+    this.updateAnimation()
+
+    keyboard.update()
+  }
+
+  checkInput() {
+    if (keyboard.wasPressed(Keys.Up)) {
+      this.sound.play("e156")
       this.selected--
-    } else if (Phaser.Input.Keyboard.JustDown(this.down)) {
+    } else if (keyboard.wasPressed(Keys.Down)) {
       this.sound.play("e156")
       this.selected++
-    } else if (Phaser.Input.Keyboard.JustDown(this.enter)) {
+    } else if (keyboard.wasPressed(Keys.Enter)) {
       this.sound.play("e154")
+      game.scene.stop(this)
+      game.scene.start(scene.s999_testScene)
     }
 
     if(this.selected < 0) {
@@ -125,23 +124,29 @@ class MenuScene extends Phaser.Scene {
     } else if(this.selected > 2) {
       this.selected = 0
     }
+  }
 
-    if(this.selected == Button.LOAD) {
-      this.loadSprite.setVisible(true)
-      //this.loadSprite.play("load")
-      this.startSprite.setVisible(false)
-      this.exitSprite.setVisible(false)
-    } else if(this.selected == Button.START) {
-      this.loadSprite.setVisible(false)
-      this.startSprite.setVisible(true)
-      this.exitSprite.setVisible(false)
-    } else if(this.selected == Button.EXIT) {
-      this.loadSprite.setVisible(false)
-      this.startSprite.setVisible(false)
-      this.exitSprite.setVisible(true)
+  updateAnimation() {
+    switch(this.selected) {
+      case Button.LOAD:
+        this.loadSprite.setVisible(true)
+        this.startSprite.setVisible(false)
+        this.exitSprite.setVisible(false)
+        break
+      
+      case Button.START:
+        this.loadSprite.setVisible(false)
+        this.startSprite.setVisible(true)
+        this.exitSprite.setVisible(false)
+        break
+      
+      case Button.EXIT:
+        this.loadSprite.setVisible(false)
+        this.startSprite.setVisible(false)
+        this.exitSprite.setVisible(true)
+        break
     }
   }
 }
 
-/** 메인 메뉴 */
 export const s000_menu = new MenuScene()

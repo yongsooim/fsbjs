@@ -1,9 +1,7 @@
 import { GridEngine } from "./grid/GridEngine"
-import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
+import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js'
 import * as scene from './scene/scene'
-import KawaseBlurPostFx from 'phaser3-rex-plugins/plugins/kawaseblurpipeline.js';
-import KawaseBlurPipelinePlugin from 'phaser3-rex-plugins/plugins/kawaseblurpipeline-plugin.js';
-import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'
 
 export const config : Phaser.Types.Core.GameConfig = {
   //fps: {
@@ -17,18 +15,11 @@ export const config : Phaser.Types.Core.GameConfig = {
   antialiasGL: true,
 
   type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
-  width: 1440,
-  height: 1080,
+  width: 800,
+  height: 600,
   parent:'game',
 
   plugins: {
-    //global: [{
-    //  key: 'rexKawaseBlurPipeline',
-    //  plugin: KawaseBlurPipelinePlugin,
-    //  start: true
-    //},
-    //],
-
     scene: [
       {
         key: 'rexUI',
@@ -49,6 +40,9 @@ export const config : Phaser.Types.Core.GameConfig = {
     
   },
   banner: false,
-  scene: scene.s999_testScene,
+  scene: [
+    scene.s000_menu,
+    scene.s999_testScene,
+  ]
   //scene: scene.s000_menu,
 }

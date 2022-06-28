@@ -1,10 +1,10 @@
 import Phaser from "phaser"
 import cameraUtil from "./camera/camera"
 import { config } from "./config"
+import { keyboard } from "./input/keyboard"
 
 // create the game, and pass it the configuration
 export const game = new Phaser.Game(config)
-  
 
 function fitAndFill() {
   const screenRatio = window.innerWidth / window.innerHeight
@@ -18,10 +18,11 @@ function fitAndFill() {
   } else {
     game.scale.setGameSize(guaranteedWidth, guaranteedWidth / screenRatio)
   }
-
 }
 
 fitAndFill()
+
+keyboard.init()
 
 window.addEventListener("resize", fitAndFill)
 window.addEventListener("change", fitAndFill)

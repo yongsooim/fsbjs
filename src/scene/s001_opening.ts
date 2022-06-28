@@ -129,4 +129,4 @@ class OpeningScene extends Phaser.Scene {
   }
 }
 
-export const s000_menu = new OpeningScene()
+export const s001_opening = new OpeningScene()
