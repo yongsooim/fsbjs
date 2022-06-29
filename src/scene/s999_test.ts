@@ -22,24 +22,6 @@ export default class TestScene extends Phaser.Scene {
     super("test")
   }
   preload() {
-    this.load.scenePlugin({
-      key: 'rexuiplugin',
-      url: RexUIPlugin,
-      sceneKey: 'rexUI'
-    });
-    // load the PNG file
-    this.load.image("tfi0___p", assetRootPath + "mapset/png_ext/tfi0___p.png")
-    this.load.image("tfi0___s", assetRootPath + "mapset/png_ext/tfi0___s.png")
-
-    this.load.spritesheet("player", assetRootPath + "graphics/ase_ps/cmiro00.png", {
-      frameWidth: 64,
-      frameHeight: 96,
-    });
-  
-    // load the JSON file
-    this.load.tilemapTiledJSON("tilemap", assetRootPath + "mapset/tmj/0022_tfi0___.tmj")
-    this.load.json('moveProp', assetRootPath + "mapset/json/0022_tfi0___.json");
-    this.load.audio('bgm', assetRootPath + "mp3/bgm/vill2.mp3");
   }
 
   create() {

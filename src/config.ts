@@ -41,7 +41,8 @@ export const config : Phaser.Types.Core.GameConfig = {
   },
   banner: false,
   scene: [
-    scene.s000_menu,
+    scene.s000_loading,
+    scene.s001_menu,
     scene.s999_testScene,
   ]
   //scene: scene.s000_menu,

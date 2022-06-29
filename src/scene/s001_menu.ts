@@ -1,6 +1,5 @@
 import Phaser from "phaser"
 import { assetRootPath } from "../const"
-import { game } from "../main"
 import st01 from "./st01.json"
 import * as scene from './scene'
 import { keyboard, Keys } from "../input/keyboard"
@@ -24,9 +23,9 @@ class MenuScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.audio("pusan", assetRootPath + "mp3/bgm/pusan.mp3")
-    this.load.audio("e154", assetRootPath + "mp3/wav_eft/e154.mp3")
-    this.load.audio("e156", assetRootPath + "mp3/wav_eft/e156.mp3")
+    this.load.audio("pusan", assetRootPath + "wav/bgm/pusan.wav")
+    this.load.audio("e154", assetRootPath + "wav/wav_eft/e154.wav")
+    this.load.audio("e156", assetRootPath + "wav/wav_eft/e156.wav")
     this.load.image("background", assetRootPath + "graphics/pcxset/st00.png")
     this.load.aseprite("st01", assetRootPath + "graphics/pcxset/st01.png", st01)
   }
@@ -71,20 +70,20 @@ class MenuScene extends Phaser.Scene {
     })
 
     this.loadSprite = this.add.sprite(0, 0, "load")
-    this.loadSprite.x = 240
-    this.loadSprite.y = 150
+    this.loadSprite.x = 120
+    this.loadSprite.y = 75
     this.loadSprite.play("load")
     this.loadSprite.setVisible(false)
 
     this.startSprite = this.add.sprite(0, 0, "start")
-    this.startSprite.x = 215
-    this.startSprite.y = 246
+    this.startSprite.x = 107
+    this.startSprite.y = 123
     this.startSprite.play("start")
     this.startSprite.setVisible(false)
 
     this.exitSprite = this.add.sprite(0, 0, "exit")
-    this.exitSprite.x = 259
-    this.exitSprite.y = 334
+    this.exitSprite.x = 130
+    this.exitSprite.y = 167
     this.exitSprite.play("exit")
     this.exitSprite.setVisible(false)
 
@@ -114,9 +113,9 @@ class MenuScene extends Phaser.Scene {
       this.sound.play("e156")
       this.selected++
     } else if (keyboard.wasPressed(Keys.Enter)) {
+      this.sound.stopAll()
       this.sound.play("e154")
-      game.scene.stop(this)
-      game.scene.start(scene.s999_testScene)
+      this.scene.start(scene.s999_testScene)
     }
 
     if(this.selected < 0) {
@@ -149,4 +148,4 @@ class MenuScene extends Phaser.Scene {
   }
 }
 
-export const s000_menu = new MenuScene()
+export const s001_menu = new MenuScene()
