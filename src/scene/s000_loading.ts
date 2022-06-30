@@ -75,7 +75,7 @@ class Loading extends Phaser.Scene {
         //progressBox.destroy();
         //loadingText.destroy();
         //percentText.destroy();
-        assetText.destroy();
+        //assetText.destroy();
         scene.isReady = true
     });
 
@@ -83,10 +83,10 @@ class Loading extends Phaser.Scene {
   }
 
   loadFiles() {
-    this.load.audio("pusan", assetRootPath + "wav/bgm/pusan.wav")
-    this.load.audio("pao", assetRootPath + "wav/bgm/pao.wav")
-    this.load.audio("e154", assetRootPath + "wav/wav_eft/e154.wav")
-    this.load.audio("e156", assetRootPath + "wav/wav_eft/e156.wav")
+    this.load.audio("pusan", assetRootPath + "mp3/bgm/pusan.mp3")
+    this.load.audio("pao", assetRootPath + "mp3/bgm/pao.mp3")
+    this.load.audio("e154", assetRootPath + "mp3/wav_eft/e154.mp3")
+    this.load.audio("e156", assetRootPath + "mp3/wav_eft/e156.mp3")
     this.load.image("background", assetRootPath + "graphics/pcxset/st00.png")
     this.load.aseprite("st01", assetRootPath + "graphics/pcxset/st01.png", st01)
 
@@ -119,7 +119,6 @@ class Loading extends Phaser.Scene {
 
   update() {
     if(this.isReady) {
-      console.log('done')
       this.scene.start('menu')
     }
   }

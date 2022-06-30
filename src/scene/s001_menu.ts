@@ -3,6 +3,8 @@ import { assetRootPath } from "../const"
 import st01 from "./st01.json"
 import * as scene from './scene'
 import { keyboard, Keys } from "../input/keyboard"
+import { touch } from "../input/touch"
+import { FsbKey } from "../input/input"
 
 enum Button {
   LOAD = 0,
@@ -23,9 +25,9 @@ class MenuScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.audio("pusan", assetRootPath + "wav/bgm/pusan.wav")
-    this.load.audio("e154", assetRootPath + "wav/wav_eft/e154.wav")
-    this.load.audio("e156", assetRootPath + "wav/wav_eft/e156.wav")
+    this.load.audio("pusan", assetRootPath + "mp3/bgm/pusan.mp3")
+    this.load.audio("e154", assetRootPath + "mp3/wav_eft/e154.mp3")
+    this.load.audio("e156", assetRootPath + "mp3/wav_eft/e156.mp3")
     this.load.image("background", assetRootPath + "graphics/pcxset/st00.png")
     this.load.aseprite("st01", assetRootPath + "graphics/pcxset/st01.png", st01)
   }
@@ -106,13 +108,13 @@ class MenuScene extends Phaser.Scene {
   }
 
   checkInput() {
-    if (keyboard.wasPressed(Keys.Up)) {
+    if (keyboard.wasPressed(Keys.Up) ) {
       this.sound.play("e156")
       this.selected--
     } else if (keyboard.wasPressed(Keys.Down)) {
       this.sound.play("e156")
       this.selected++
-    } else if (keyboard.wasPressed(Keys.Enter)) {
+    } else if (keyboard.wasPressed(Keys.Enter) ) {
       this.sound.stopAll()
       this.sound.play("e154")
       this.scene.start(scene.s999_testScene)

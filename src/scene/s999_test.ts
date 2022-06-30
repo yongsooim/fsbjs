@@ -93,13 +93,13 @@ export default class TestScene extends Phaser.Scene {
     //cameraUtil.followUpdate(this, this.map, this.playerSprite)
 
     const cursors = this.input.keyboard.createCursorKeys();
-    if(keyboard.isHeld(Keys.A) || cursors.left.isDown || touch.isPressed === FsbKey.Left) {
+    if(keyboard.isHeld(Keys.A) || keyboard.isHeld(Keys.ArrowLeft)) {
       this.gridEngine.move("player", Direction.LEFT);
-    } else if (keyboard.isHeld(Keys.D)  || cursors.right.isDown || touch.isPressed === FsbKey.Right) {
+    } else if (keyboard.isHeld(Keys.D)  || keyboard.isHeld(Keys.ArrowRight)) {
       this.gridEngine.move("player", Direction.RIGHT);
-    } else if (keyboard.isHeld(Keys.W)  || cursors.up.isDown || touch.isPressed === FsbKey.Up) {
+    } else if (keyboard.isHeld(Keys.W)  || keyboard.isHeld(Keys.ArrowUp)) {
       this.gridEngine.move("player", Direction.UP);
-    } else if (keyboard.isHeld(Keys.S)  || cursors.down.isDown || touch.isPressed === FsbKey.Down) {
+    } else if (keyboard.isHeld(Keys.S)  || keyboard.isHeld(Keys.ArrowDown)) {
       this.gridEngine.move("player", Direction.DOWN);
     }
 
@@ -110,6 +110,7 @@ export default class TestScene extends Phaser.Scene {
       cameraUtil.zoomBy(this, 0.98)
       cameraUtil.setBoundsAndCenter(this, this.map)
     }
+    console.log(keyboard.getKeys())
     keyboard.update()
   }
 

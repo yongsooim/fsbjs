@@ -36,41 +36,6 @@ class CameraUtil {
     }
 
   }
-
-  followUpdate(
-    scene: Phaser.Scene,
-    map: Phaser.Tilemaps.Tilemap,
-    sprite: Phaser.GameObjects.Sprite
-  ) {
-    const camera = scene.cameras.main
-    //
-    //if(camera.worldView.width/2 > sprite.x + 32){ // left bound
-    //  camera.worldView.x = 0
-    //} else {
-    //  camera.centerOn(sprite.x + 32, sprite.y + 54)
-    //}
-    //
-    //console.log(camera.worldView.x)
-    //
-    //if(camera.worldView.width > map.widthInPixelsInPixels){
-    //  console.log('zoomed out')
-    //}
-    //
-
-    let screenWidth = camera.worldView.width
-    let screenHeight = camera.worldView.height
-    camera.setBounds(0, 0, map.widthInPixels * 2, map.heightInPixels * 2, true)
-    if (map.widthInPixels < screenWidth && map.heightInPixels < screenHeight) {
-      camera.centerOn(map.widthInPixels / 2, map.heightInPixels / 2)
-    } else if (map.widthInPixels < screenWidth) {
-
-    } else if (map.heightInPixels < screenHeight) {
-
-    }else {
-
-      camera.centerOn(sprite.x + 32, sprite.y + 54)
-    }
-  }
 }
 
 const cameraUtil = new CameraUtil()

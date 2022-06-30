@@ -6,10 +6,13 @@ import { FsbKey } from './input';
 class Touch {
   manager: nipplejs.JoystickManager | null
   isPressed = FsbKey.None
+  wasPressed = FsbKey.None // for Enter and Esc
   holdStart = 0
   holdTimer = 0
   destoryTimer = 0
   touchToInput = new Map<string, FsbKey>()
+  touchToKeyboard =  new Map<string, string>()
+  lastDirection = '' // Arrow + direction
 
   constructor() {
     this.manager = null
@@ -18,6 +21,10 @@ class Touch {
     this.touchToInput.set('down', FsbKey.Down)
     this.touchToInput.set('left', FsbKey.Left)
     this.touchToInput.set('right', FsbKey.Right)
+    this.touchToKeyboard.set('up', 'ArrowUp')
+    this.touchToKeyboard.set('down', 'ArrowDown')
+    this.touchToKeyboard.set('left', 'ArrowLeft')
+    this.touchToKeyboard.set('right', 'ArrowRight')
   }
 
   
@@ -34,16 +41,33 @@ class Touch {
       restOpacity: 0.7
     })
 
-    this.manager.on('dir', (evt, data)=> {
+    this.manager.on('dir', (evt, data) => {
+      globalThis.dispatchEvent(new KeyboardEvent('keyup', {
+        key: this.lastDirection,
+        code: this.lastDirection
+        })
+      )
+
       this.isPressed = this.touchToInput.get(data.direction.angle)
+      this.lastDirection = this.touchToKeyboard.get(this.isPressed)
       clearTimeout(this.holdTimer)
       clearTimeout(this.destoryTimer)
+      
+      globalThis.dispatchEvent(new KeyboardEvent('keydown', {
+        key: this.touchToKeyboard.get(data.direction.angle),
+        code: this.touchToKeyboard.get(data.direction.angle)
+        })
+      )
     })
     
     this.manager.on('start', (event)=> {
       this.holdStart = Date.now()
       this.holdTimer = setTimeout(() => {
-        console.log('canceled')
+        globalThis.dispatchEvent(new KeyboardEvent('keydown', {
+          key: 'Escape',
+          code: 'Escape'
+          })
+        )
       }, 300)
       clearTimeout(this.destoryTimer)
     })
@@ -54,11 +78,43 @@ class Touch {
     })
 
     this.manager.on('end', ()=> {
+      globalThis.dispatchEvent(new KeyboardEvent('keyup', {
+        key: this.lastDirection,
+        code: this.lastDirection
+        })
+      )
+      
+      globalThis.dispatchEvent(new KeyboardEvent('keyup', {
+        key: 'Enter',
+        code: 'Enter',
+        })
+      )
+
+      globalThis.dispatchEvent(new KeyboardEvent('keyup', {
+        key: 'Esc',
+        code: 'Esc',
+        })
+      )
+
+
       clearTimeout(this.holdTimer)
       
       if(this.isPressed == FsbKey.None){ 
         if(Date.now() - this.holdStart < 350){
-          console.log('clicked') 
+          globalThis.dispatchEvent(new KeyboardEvent('keydown', {
+            key: 'Enter',
+            code: 'Enter',
+            })
+          )
+          
+          setTimeout(()=> {
+            globalThis.dispatchEvent(new KeyboardEvent('keyup', {
+              key: 'Enter',
+              code: 'Enter',
+              })
+            )}, 100
+          )
+
         }
       } else {  this.isPressed = FsbKey.None }
 
@@ -71,6 +127,24 @@ class Touch {
   }
 
   destroy() {
+    globalThis.dispatchEvent(new KeyboardEvent('keyup', {
+      key: 'Enter',
+      code: 'Enter',
+      })
+    )
+
+    globalThis.dispatchEvent(new KeyboardEvent('keyup', {
+      key: 'Esc',
+      code: 'Esc',
+      })
+    )
+
+    globalThis.dispatchEvent(new KeyboardEvent('keyup', {
+      key: this.lastDirection,
+      code: this.lastDirection,
+    })
+    )
+
     this.isPressed = FsbKey.None
     clearTimeout(this.holdTimer)
     this.manager.destroy()
@@ -90,6 +164,9 @@ class Touch {
     cameraUtil.zoomBy(scene, dragScale)
   }
 
+  update() {
+    this.wasPressed = FsbKey.None
+  }
 }
 
 export const touch = new Touch()
