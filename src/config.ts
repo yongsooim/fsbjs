@@ -1,23 +1,24 @@
-import { GridEngine } from "./grid/GridEngine"
+import Phaser from 'phaser'
+import { GridEngine } from './grid/GridEngine'
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js'
 import * as scene from './scene/scene'
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'
 
 export const config : Phaser.Types.Core.GameConfig = {
-  //fps: {
+  // fps: {
   //  target: 60,
   //  forceSetTimeOut: true,
   //  smoothStep: true,
   //  deltaHistory: 600
-  //},
+  // },
   roundPixels: false,
-  antialias:   true,
+  antialias: true,
   antialiasGL: true,
 
-  type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
+  type: Phaser.AUTO, // Phaser will decide how to render our game (WebGL or Canvas)
   width: 800,
   height: 600,
-  parent:'game',
+  parent: 'game',
 
   plugins: {
     scene: [
@@ -27,23 +28,24 @@ export const config : Phaser.Types.Core.GameConfig = {
         mapping: 'rexUI'
       },
       {
-        key: "gridEngine",
+        key: 'gridEngine',
         plugin: GridEngine,
-        mapping: "gridEngine",
+        mapping: 'gridEngine'
       },
       {
         key: 'rexGestures',
         plugin: GesturesPlugin,
         mapping: 'rexGestures'
-      },
-    ],
-    
+      }
+    ]
+
   },
   banner: false,
   scene: [
     scene.s000_loading,
     scene.s001_menu,
     scene.s999_testScene,
+    scene.mainScene
   ]
-  //scene: scene.s000_menu,
+  // scene: scene.s000_menu,
 }

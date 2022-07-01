@@ -394,7 +394,8 @@ export class GridEngine {
     this.unknownCharGuard(charId);
     const randomMovement = new RandomMovement(
       this.gridCharacters.get(charId),
-      GlobalConfig.get().numberOfDirections,
+      //GlobalConfig.get().numberOfDirections,
+      NumberOfDirections.FOUR, 
       delay,
       radius
     );

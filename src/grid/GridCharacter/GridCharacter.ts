@@ -83,6 +83,11 @@ export class GridCharacter {
   private collidesWithTilesInternal: boolean;
   private collisionGroups: Set<string>;
 
+  /** added in fsbjs */
+  isDirectionChanging = false;
+  directionChangingElapsed = 0;
+  directionchangeTarget: Direction;
+
   constructor(private id: string, config: CharConfig) {
     if (typeof config.walkingAnimationMapping == "number") {
       this.characterIndex = config.walkingAnimationMapping;
@@ -183,21 +188,28 @@ export class GridCharacter {
     this.lastMovementImpulse = direction;
     if (direction == Direction.NONE) return;
     if (this.isMoving()) return;
+    if (this.isDirectionChanging) return;
     if (this.isBlockingDirection(direction)) {
       this.facingDirection = direction;
       this.animation.setStandingFrame(direction);
       this.directionChanged$.next(direction);
+    } if (this.facingDirection !== direction){
+      this.directionChangingElapsed = 0;
+      this.directionchangeTarget = direction
+      this.animation.setDirectionChangingFrame(this.facingDirection, direction);
     } else {
       this.startMoving(direction);
     }
   }
 
   update(delta: number): void {
-    //console.log(this.isMoving())
     this.movement?.update(delta);
     if (this.isMoving()) {
       this.updateCharacterPosition(delta);
       this.updateZindex();
+    }
+    if (this.isDirectionChanging) {
+      this.updateDirectionChanging(delta)
     }
     this.lastMovementImpulse = Direction.NONE;
 
@@ -456,6 +468,15 @@ export class GridCharacter {
     this.updateTilePos();
   }
 
+  updateDirectionChanging (delta: number) {
+    this.directionChangingElapsed += delta
+    if(this.directionChangingElapsed >= 1000 / this.speed) {
+      this.isDirectionChanging = false
+      this.directionChangingElapsed = 0
+      this.directionChanged$.next(this.directionchangeTarget)
+    }
+  }
+
   private updateTilePos() {
     this.tilePos = this.nextTilePos;
     const newTilePos = this.tilePosInDirection(this.movementDirection);
@@ -502,23 +523,6 @@ export class GridCharacter {
     return this.speedPixelsPerSecond(this.movementDirection)
       .scalarMult(deltaInSeconds)
       .multiply(directionVector(this.movementDirection));
-
-    switch(this.movementDirection)
-    {
-      case Direction.UP:
-        return new Vector2(0, -6);
-        break;
-      case Direction.DOWN:
-        return new Vector2(0, 6);
-        break;
-      case Direction.LEFT:
-        return new Vector2(-8, 0);
-        break;
-      case Direction.RIGHT:
-        return new Vector2(8, 0);
-        break;
-    }
-    
   }
 
   private moveCharacterSprite(speed: Vector2): void {
@@ -545,31 +549,7 @@ export class GridCharacter {
     this.fire(this.positionChangeFinished$, exitTile, enterTile);
   }
 
-  //private hasWalkedHalfATile(): boolean {
-  //  return (
-  //    this.tileSizePixelsWalked.x >
-  //      this.tilemap.getTileDistance(this.movementDirection).x / 2 ||
-  //    this.tileSizePixelsWalked.y >
-  //      this.tilemap.getTileDistance(this.movementDirection).y / 2
-  //  );
-  //}
-
   private hasWalkedQuarterATile(): number {
-    //if(this.tileSizePixelsWalked.x > this.tilemap.getTileDistance(this.movementDirection).x * 3/ 4 || 
-    //  this.tileSizePixelsWalked.y > this.tilemap.getTileDistance(this.movementDirection).y * 3/ 4) {
-    //    return 3;
-    //  } else if(this.tileSizePixelsWalked.x > this.tilemap.getTileDistance(this.movementDirection).x / 2 || 
-    //  this.tileSizePixelsWalked.y > this.tilemap.getTileDistance(this.movementDirection).y / 2) {
-    //    return 2;
-    //  } else if(this.tileSizePixelsWalked.x > this.tilemap.getTileDistance(this.movementDirection).x / 4 || 
-    //  this.tileSizePixelsWalked.y > this.tilemap.getTileDistance(this.movementDirection).y / 4) {
-    //    return 1;
-    //  } else {
-    //    return 0
-    //  }
-
-    // const for performance
-
     if(this.tileSizePixelsWalked.x > 48 || 
       this.tileSizePixelsWalked.y > 36) {
       return 3;

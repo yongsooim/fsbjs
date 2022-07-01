@@ -5,7 +5,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    chunkSizeWarningLimit: 4096
+    chunkSizeWarningLimit: 4096,
   },
   //server: {
   //  hmr: false
@@ -33,11 +33,6 @@ export default defineConfig({
           src: 'src/asset/netlify.toml', // for netlify cross origin setting
           dest: './'
         },
-        //{
-        //  src: 'fsba', // for netlify cross origin setting
-        //  dest: './fsba/'
-        //}
-
       ]
     })
   ]

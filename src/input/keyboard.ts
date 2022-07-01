@@ -1,9 +1,12 @@
-import cameraUtil from "../camera/camera";
+import cameraUtil from '../camera/camera'
+import { Direction } from '../grid/Direction/Direction'
+
+/** Source is from Excalibur.js */
 
 /**
  * Enum representing physical input key codes
  */
- export enum Keys {
+export enum Keys {
   // NUMPAD
   Num0 = 'Numpad0',
   Num1 = 'Numpad1',
@@ -162,6 +165,22 @@ export class Keyboard {
   private _keysUp: Keys[] = [];
   private _keysDown: Keys[] = [];
 
+  alias = new Map<Keys, Keys>([
+    [Keys.W, Keys.ArrowUp],
+    [Keys.A, Keys.ArrowLeft],
+    [Keys.S, Keys.ArrowDown],
+    [Keys.D, Keys.ArrowRight],
+    [Keys.Space, Keys.Enter],
+    [Keys.Numpad0, Keys.Esc]
+  ])
+
+  keyToDirection = new Map<Keys, Direction>([
+    [Keys.ArrowUp, Direction.UP],
+    [Keys.ArrowDown, Direction.DOWN],
+    [Keys.ArrowLeft, Direction.LEFT],
+    [Keys.ArrowRight, Direction.RIGHT]
+  ])
+
   /**
    * Initialize Keyboard event listeners
    */
@@ -193,7 +212,12 @@ export class Keyboard {
 
       // key up is on window because canvas cannot have focus
       global.addEventListener('keyup', (ev: KeyboardEvent) => {
-        const code = ev.code as Keys
+        let code = ev.code as Keys
+
+        if (this.alias.has(code)) {
+          code = this.alias.get(code) as Keys
+        }
+
         const key = this._keys.indexOf(code)
         this._keys.splice(key, 1)
         this._keysUp.push(code)
@@ -201,7 +225,10 @@ export class Keyboard {
 
       // key down is on window because canvas cannot have focus
       global.addEventListener('keydown', (ev: KeyboardEvent) => {
-        const code = ev.code as Keys
+        let code = ev.code as Keys
+
+        if (this.alias.has(code)) { code = this.alias.get(code) as Keys }
+
         if (this._keys.indexOf(code) === -1) {
           this._keys.push(code)
           this._keysDown.push(code)
@@ -247,6 +274,19 @@ export class Keyboard {
     return this._keysUp.indexOf(key) > -1
   }
 
+  public lastDirectionHeld (): Direction {
+    const directionIndex = Math.max(
+      this._keys.indexOf(Keys.ArrowUp),
+      this._keys.indexOf(Keys.ArrowDown),
+      this._keys.indexOf(Keys.ArrowLeft),
+      this._keys.indexOf(Keys.ArrowRight)
+    )
+    if (directionIndex !== -1) {
+      return this.keyToDirection.get(this._keys[directionIndex])
+    } else {
+      return Direction.NONE
+    }
+  }
 }
 
 export const keyboard = new Keyboard()

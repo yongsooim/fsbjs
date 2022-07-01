@@ -12,11 +12,25 @@ export class CharacterAnimation {
     [Direction.LEFT]: 2,
     [Direction.RIGHT]: 3,
     [Direction.DOWN_LEFT]: 1,
-    [Direction.DOWN_RIGHT]: 2,
-    [Direction.UP_LEFT]: 1,
-    [Direction.UP_RIGHT]: 2,
+    [Direction.DOWN_RIGHT]: 3,
+    [Direction.UP_LEFT]: 2,
+    [Direction.UP_RIGHT]: 3,
   };
   private _isEnabled = true;
+  private directioinChangingFrame = new Map([
+    [[Direction.LEFT, Direction.UP], 0],
+    [[Direction.LEFT, Direction.RIGHT], 0],
+    [[Direction.LEFT, Direction.DOWN], 0],
+    [[Direction.UP, Direction.DOWN], 0],
+    [[Direction.UP, Direction.LEFT], 0],
+    [[Direction.UP, Direction.RIGHT], 0],
+    [[Direction.RIGHT, Direction.DOWN], 0],
+    [[Direction.RIGHT, Direction.LEFT], 0],
+    [[Direction.RIGHT, Direction.UP], 0],
+    [[Direction.DOWN, Direction.LEFT], 0],
+    [[Direction.DOWN, Direction.RIGHT], 0],
+    [[Direction.DOWN, Direction.UP], 0],
+  ])
 
   constructor(
     private sprite: Phaser.GameObjects.Sprite,
@@ -41,6 +55,12 @@ export class CharacterAnimation {
   setStandingFrame(direction: Direction): void {
     if (this._isEnabled) {
       this._setStandingFrame(direction);
+    }
+  }
+
+  setDirectionChangingFrame(from: Direction, to: Direction) : void {
+    if (this._isEnabled) {
+      this.sprite.setFrame(this.directioinChangingFrame.get([from, to]))
     }
   }
 
@@ -140,11 +160,11 @@ export class CharacterAnimation {
       playerCharRow * CharacterAnimation.FRAMES_CHAR_COL;
     const startFrame = framesInSameRowBefore + rows * framesInRow;
     return {
-      rightFoot1: startFrame + 3,
-      rightFoot2: startFrame + 4,
       standing: startFrame,
       leftFoot1: startFrame + 1,
       leftFoot2: startFrame + 2,
+      rightFoot1: startFrame + 3,
+      rightFoot2: startFrame + 4,
     };
   }
 }

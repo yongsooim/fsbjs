@@ -19,5 +19,8 @@
         "no-unused-vars" : "off",
         "dot-notation" : "off",
         "indent": ["error", 2]
-    }
+    },
+    "ignorePatterns": [
+        "src/grid/"
+    ]
 }

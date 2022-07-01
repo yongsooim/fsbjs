@@ -1,35 +1,24 @@
-import nipplejs from 'nipplejs';
-import cameraUtil from '../camera/camera';
-import { game } from '../main';
-import { FsbKey } from './input';
+import nipplejs from 'nipplejs'
+import { FsbKey } from './input'
 
 class Touch {
-  manager: nipplejs.JoystickManager | null
-  isPressed = FsbKey.None
-  wasPressed = FsbKey.None // for Enter and Esc
+  manager: nipplejs.JoystickManager | null = null
+
   holdStart = 0
   holdTimer = 0
-  destoryTimer = 0
-  touchToInput = new Map<string, FsbKey>()
-  touchToKeyboard =  new Map<string, string>()
+  destroyTimer = 0
+
+  touchToKeyboard = new Map<string, string>([
+    ['up', 'ArrowUp'],
+    ['down', 'ArrowDown'],
+    ['left', 'ArrowLeft'],
+    ['right', 'ArrowRight']
+  ])
+
   lastDirection = '' // Arrow + direction
 
-  constructor() {
-    this.manager = null
-    this.touchToInput.set('', FsbKey.None)
-    this.touchToInput.set('up', FsbKey.Up)
-    this.touchToInput.set('down', FsbKey.Down)
-    this.touchToInput.set('left', FsbKey.Left)
-    this.touchToInput.set('right', FsbKey.Right)
-    this.touchToKeyboard.set('up', 'ArrowUp')
-    this.touchToKeyboard.set('down', 'ArrowDown')
-    this.touchToKeyboard.set('left', 'ArrowLeft')
-    this.touchToKeyboard.set('right', 'ArrowRight')
-  }
-
-  
-  init() {
-    if(this.manager != null) return 
+  init () {
+    if (this.manager != null) return
 
     this.manager = nipplejs.create({
       mode: 'semi',
@@ -41,35 +30,10 @@ class Touch {
       restOpacity: 0.7
     })
 
-    this.manager.on('dir', (evt, data) => {
-      globalThis.dispatchEvent(new KeyboardEvent('keyup', {
-        key: this.lastDirection,
-        code: this.lastDirection
-        })
-      )
-
-      this.isPressed = this.touchToInput.get(data.direction.angle)
-      this.lastDirection = this.touchToKeyboard.get(this.isPressed)
-      clearTimeout(this.holdTimer)
-      clearTimeout(this.destoryTimer)
-      
-      globalThis.dispatchEvent(new KeyboardEvent('keydown', {
-        key: this.touchToKeyboard.get(data.direction.angle),
-        code: this.touchToKeyboard.get(data.direction.angle)
-        })
-      )
-    })
-    
-    this.manager.on('start', (event)=> {
+    this.manager.on('start', (event) => {
       this.holdStart = Date.now()
-      this.holdTimer = setTimeout(() => {
-        globalThis.dispatchEvent(new KeyboardEvent('keydown', {
-          key: 'Escape',
-          code: 'Escape'
-          })
-        )
-      }, 300)
-      clearTimeout(this.destoryTimer)
+      this.holdTimer = setTimeout(() => { globalThis.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' })) }, 300)
+      clearTimeout(this.destroyTimer)
     })
 
     this.manager.on('shown', () => {
@@ -77,95 +41,41 @@ class Touch {
       document.getElementsByClassName('back')[0].addEventListener('wheel', this.wheelHandler)
     })
 
-    this.manager.on('end', ()=> {
-      globalThis.dispatchEvent(new KeyboardEvent('keyup', {
-        key: this.lastDirection,
-        code: this.lastDirection
-        })
-      )
-      
-      globalThis.dispatchEvent(new KeyboardEvent('keyup', {
-        key: 'Enter',
-        code: 'Enter',
-        })
-      )
-
-      globalThis.dispatchEvent(new KeyboardEvent('keyup', {
-        key: 'Esc',
-        code: 'Esc',
-        })
-      )
-
-
+    this.manager.on('dir', (evt, data) => {
+      globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
+      globalThis.dispatchEvent(new KeyboardEvent('keydown', { code: this.touchToKeyboard.get(data.direction.angle) }))
+      this.lastDirection = this.touchToKeyboard.get(data.direction.angle)
       clearTimeout(this.holdTimer)
-      
-      if(this.isPressed == FsbKey.None){ 
-        if(Date.now() - this.holdStart < 350){
-          globalThis.dispatchEvent(new KeyboardEvent('keydown', {
-            key: 'Enter',
-            code: 'Enter',
-            })
-          )
-          
-          setTimeout(()=> {
-            globalThis.dispatchEvent(new KeyboardEvent('keyup', {
-              key: 'Enter',
-              code: 'Enter',
-              })
-            )}, 100
-          )
+      clearTimeout(this.destroyTimer)
+    })
 
-        }
-      } else {  this.isPressed = FsbKey.None }
+    this.manager.on('end', () => {
+      clearTimeout(this.holdTimer)
+      globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
+      globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }))
+      globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Esc' }))
+      if (Date.now() - this.holdStart < 300) {
+        globalThis.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }))
+        setTimeout(() => { globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' })) }, 50)
+      }
 
-      this.destoryTimer = setTimeout(() => {
+      this.destroyTimer = setTimeout(() => {
         this.destroy()
         this.init()
       }, 3000)
-
     })
   }
 
-  destroy() {
-    globalThis.dispatchEvent(new KeyboardEvent('keyup', {
-      key: 'Enter',
-      code: 'Enter',
-      })
-    )
-
-    globalThis.dispatchEvent(new KeyboardEvent('keyup', {
-      key: 'Esc',
-      code: 'Esc',
-      })
-    )
-
-    globalThis.dispatchEvent(new KeyboardEvent('keyup', {
-      key: this.lastDirection,
-      code: this.lastDirection,
-    })
-    )
-
-    this.isPressed = FsbKey.None
+  destroy () {
     clearTimeout(this.holdTimer)
     this.manager.destroy()
     this.manager = null
-  } 
+  }
 
-  wheelHandler(event: WheelEvent) {
-    const clonedEvt = new WheelEvent('wheel', {
-      deltaY: event.deltaY,
-    })
-    document.getElementsByTagName('canvas')[0].dispatchEvent(clonedEvt)
+  wheelHandler (event: WheelEvent) {
+    document.getElementsByTagName('canvas')[0].dispatchEvent(new WheelEvent('wheel', { deltaY: event.deltaY }))
     event.preventDefault()
     event.stopPropagation()
-  }
-
-  pinchToZoom(scene: Phaser.Scene, dragScale: number) {
-    cameraUtil.zoomBy(scene, dragScale)
-  }
-
-  update() {
-    this.wasPressed = FsbKey.None
   }
 }
 
@@ -173,5 +83,5 @@ export const touch = new Touch()
 touch.init()
 
 document.getElementsByTagName('body')[0].addEventListener('touchstart', (event) => {
-  event.preventDefault();  
+  event.preventDefault()
 })

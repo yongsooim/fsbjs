@@ -23,7 +23,7 @@ body {
 }
 
 :focus-visible {
-  outline: -webkit-focus-ring-color auto 0px;
+  outline: -webkit-focus-ring-color auto 1px;
 }
 
 canvas {
@@ -36,7 +36,7 @@ canvas {
 }
 
 .back {
-  background-image: url("./asset/d2.svg") !important;
+  background-image: url("./asset/d.svg") !important;
   background-size:cover ;
   background-repeat: no-repeat ;
   background-position: center center ;

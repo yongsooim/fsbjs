@@ -1,7 +1,7 @@
-import Phaser from "phaser";
+import Phaser from 'phaser'
 
-import { keyboard } from "./keyboard";
-import { touch } from "./touch";
+import { keyboard } from './keyboard'
+import { touch } from './touch'
 
 export enum FsbKey {
   Up = 'Up',
@@ -16,18 +16,17 @@ export enum FsbKey {
 }
 
 class Input {
-  update(scene: Phaser.Scene) {
-   
+  update (scene: Phaser.Scene) {
+
   }
 
-  wasPressed(key: FsbKey) {
+  wasPressed (key: FsbKey) {
     return false
   }
 
-  isHeld(key: FsbKey) {
+  isHeld (key: FsbKey) {
     return false
   }
-  
 }
 
 export const input = new Input()
