@@ -136,13 +136,13 @@ class Loading extends Phaser.Scene {
     const extension = 'mp3'
     //const extension = 'wav'
     for (const wav of fxList) {
-      this.load.image(wav, assetRootPath + extension + '/wav_eft/' + wav + extension)
+      this.load.audio(wav, assetRootPath + extension + '/wav_eft/' + wav + '.' + extension)
     }
     for (const wav of seList) {
-      this.load.image(wav, assetRootPath + extension + '/se_event/' + wav + extension)
+      this.load.audio(wav, assetRootPath + extension + '/se_event/' + wav + '.' + extension)
     }
     for (const wav of bgmList) {
-      this.load.image(wav, assetRootPath + extension + '/bgm/' + wav + extension)
+      this.load.audio(wav, assetRootPath + extension + '/bgm/' + wav + '.' + extension)
     }
   }
 

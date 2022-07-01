@@ -86,6 +86,7 @@ export class GridCharacter {
   /** added in fsbjs */
   isDirectionChanging = false;
   directionChangingElapsed = 0;
+  directionchangeFrom: Direction;
   directionchangeTarget: Direction;
 
   constructor(private id: string, config: CharConfig) {
@@ -185,7 +186,6 @@ export class GridCharacter {
   }
 
   move(direction: Direction): void {
-    this.lastMovementImpulse = direction;
     if (direction == Direction.NONE) return;
     if (this.isMoving()) return;
     if (this.isDirectionChanging) return;
@@ -194,10 +194,12 @@ export class GridCharacter {
       this.animation.setStandingFrame(direction);
       this.directionChanged$.next(direction);
     } if (this.facingDirection !== direction){
+      this.isDirectionChanging = true
       this.directionChangingElapsed = 0;
+      this.directionchangeFrom = this.facingDirection
       this.directionchangeTarget = direction
-      this.animation.setDirectionChangingFrame(this.facingDirection, direction);
     } else {
+      this.lastMovementImpulse = direction;
       this.startMoving(direction);
     }
   }
@@ -469,11 +471,29 @@ export class GridCharacter {
   }
 
   updateDirectionChanging (delta: number) {
+    let changingDuration : number
+
+    if(oppositeDirection(this.directionchangeFrom) === this.directionchangeTarget) {
+      changingDuration = 90
+    } else {
+      changingDuration = 40
+    }
+    
     this.directionChangingElapsed += delta
-    if(this.directionChangingElapsed >= 1000 / this.speed) {
+    if(this.directionChangingElapsed >= changingDuration) {
       this.isDirectionChanging = false
       this.directionChangingElapsed = 0
+      this.facingDirection = this.directionchangeTarget
+      this.animation.setStandingFrame(this.facingDirection)
       this.directionChanged$.next(this.directionchangeTarget)
+    } else {
+      if(this.directionChangingElapsed < changingDuration / 3) {
+        this.animation.setDirectionChangingFrame(this.directionchangeFrom, this.directionchangeTarget, 0)
+      } else if(this.directionChangingElapsed < changingDuration * 2 / 3) {
+        this.animation.setDirectionChangingFrame(this.directionchangeFrom, this.directionchangeTarget, 1)
+      } else if(this.directionChangingElapsed < changingDuration * 3 / 3) {
+        this.animation.setDirectionChangingFrame(this.directionchangeFrom, this.directionchangeTarget, 2)
+      }
     }
   }
 

@@ -26,7 +26,7 @@ export default class TestScene extends Phaser.Scene {
   }
 
   create () {
-    this.sound.play('bgm', { loop: true })
+    this.sound.play('vill2', { loop: true })
 
     const pinch = this.rexGestures.add.pinch(this, { enable: true, threshold: 30 })
 
@@ -87,7 +87,6 @@ export default class TestScene extends Phaser.Scene {
       cameraUtil.zoomBy(this, 0.98)
       cameraUtil.setBoundsAndCenter(this, this.map)
     }
-    console.log(keyboard.getKeys())
     keyboard.update()
   }
 }

@@ -1,11 +1,8 @@
 const path = require("path");
 const { app, powerSaveBlocker, BrowserWindow, session } = require("electron");
 
-app.commandLine.appendSwitch('enable-features', "SharedArrayBuffer")
-
-
-
 app.commandLine.appendSwitch ("disable-http-cache");
+app.commandLine.appendSwitch("disable-http-cache");
 
 const id = powerSaveBlocker.start('prevent-display-sleep')
 //console.log(powerSaveBlocker.isStarted(id))
@@ -14,7 +11,6 @@ powerSaveBlocker.stop(id)
 
 const isDev = process.env.IS_DEV == "true" ? true : false;
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "1"; // need to check someday...
-app.commandLine.appendSwitch("disable-http-cache");
 
 function createWindow() {
   // Create the browser window.
@@ -24,10 +20,8 @@ function createWindow() {
     minWidth: 800,
     minHeight: 600,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
       webSecurity: false,
-      allowEval: true, // This is the key!
     },
   });
   mainWindow.menuBarVisible = false;
@@ -42,11 +36,10 @@ function createWindow() {
   );
   // Open the DevTools.
   if (isDev) {
-    mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools({ mode: 'left', activate: false});
   } else {
-    //require("electron").Menu.setApplicationMenu(null);
     mainWindow.webContents.openDevTools();
-    webContents.reloadIgnoringCache();
+    mainWindow.webContents.reloadIgnoringCache();
   }
 }
 

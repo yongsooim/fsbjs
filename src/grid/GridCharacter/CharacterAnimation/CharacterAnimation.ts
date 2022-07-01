@@ -18,18 +18,26 @@ export class CharacterAnimation {
   };
   private _isEnabled = true;
   private directioinChangingFrame = new Map([
-    [[Direction.LEFT, Direction.UP], 0],
-    [[Direction.LEFT, Direction.RIGHT], 0],
-    [[Direction.LEFT, Direction.DOWN], 0],
-    [[Direction.UP, Direction.DOWN], 0],
-    [[Direction.UP, Direction.LEFT], 0],
-    [[Direction.UP, Direction.RIGHT], 0],
-    [[Direction.RIGHT, Direction.DOWN], 0],
-    [[Direction.RIGHT, Direction.LEFT], 0],
-    [[Direction.RIGHT, Direction.UP], 0],
-    [[Direction.DOWN, Direction.LEFT], 0],
-    [[Direction.DOWN, Direction.RIGHT], 0],
-    [[Direction.DOWN, Direction.UP], 0],
+    [Direction.LEFT, new Map([
+      [Direction.UP, [17, 17, 17]],
+      [Direction.RIGHT, [11, 6, 23]],
+      [Direction.DOWN, [11, 11, 11]]
+    ])],
+    [Direction.RIGHT, new Map([
+      [Direction.UP, [5, 5, 5]],
+      [Direction.LEFT, [5, 0, 17]],
+      [Direction.DOWN, [23, 23, 23]]
+    ])],
+    [Direction.DOWN, new Map([
+      [Direction.UP, [23, 18, 5]],
+      [Direction.RIGHT, [23, 23, 23]],
+      [Direction.LEFT, [11, 11, 11]]
+    ])],
+    [Direction.UP, new Map([
+      [Direction.LEFT, [17, 17, 17]],
+      [Direction.RIGHT, [5, 5, 5]],
+      [Direction.DOWN, [17, 12, 11]]
+    ])],
   ])
 
   constructor(
@@ -58,9 +66,9 @@ export class CharacterAnimation {
     }
   }
 
-  setDirectionChangingFrame(from: Direction, to: Direction) : void {
+  setDirectionChangingFrame(from: Direction, to: Direction, nth: number) : void {
     if (this._isEnabled) {
-      this.sprite.setFrame(this.directioinChangingFrame.get([from, to]))
+      this.sprite.setFrame(this.directioinChangingFrame.get(from).get(to)[nth])
     }
   }
 

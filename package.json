@@ -2,7 +2,7 @@
   "name": "fsbjs",
   "version": "0.0.2",
   "description": "fsbjs",
-  "main": "electron/electron.js",
+  "main": "electron/electron.ts",
   "type": "commonjs",
   "scripts": {
     "start": "yarn electron:dev",
