@@ -153,7 +153,15 @@ export enum Keys {
   Escape = 'Escape',
   PageUp = 'PageUp',
   PageDown = 'PageDown',
-  Enter = 'Enter'
+  Enter = 'Enter',
+  Delete = 'Delete',
+  Backspace = 'Backspace',
+  Tab = 'Tab',
+  CapsLock = 'CapsLock',
+  ScrollLock = 'ScrollLock',
+  PrintScreen = 'PrintScreen',
+  Pause = 'Pause',
+  End = 'End'
 
 }
 
@@ -170,8 +178,23 @@ export class Keyboard {
     [Keys.A, Keys.ArrowLeft],
     [Keys.S, Keys.ArrowDown],
     [Keys.D, Keys.ArrowRight],
+
     [Keys.Space, Keys.Enter],
-    [Keys.Numpad0, Keys.Esc]
+    [Keys.KeyX, Keys.Enter],
+    [Keys.X, Keys.Enter],
+    [Keys.End, Keys.Enter],
+
+    [Keys.Numpad0, Keys.Esc],
+    [Keys.KeyZ, Keys.Esc],
+    [Keys.Z, Keys.Esc],
+    [Keys.Backquote, Keys.Esc],
+    [Keys.Backspace, Keys.Esc],
+    [Keys.Delete, Keys.Esc],
+
+    [Keys.Backslash, Keys.KeyC],
+    [Keys.PageDown, Keys.KeyC],
+    
+    [Keys.ShiftRight, Keys.ShiftLeft],
   ])
 
   keyToDirection = new Map<Keys, Direction>([

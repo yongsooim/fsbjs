@@ -376,6 +376,11 @@ export class GridEngine {
     this.moveChar(charId, direction);
   }
 
+  directionChange(charId: string, direction: Direction): void {
+    this.moveChar(charId, direction);
+  }
+
+
   /**
    * Initiates random movement of the character with the given id. The
    * character will randomly pick one of the non-blocking directions.

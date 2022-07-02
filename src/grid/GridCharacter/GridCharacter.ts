@@ -474,7 +474,7 @@ export class GridCharacter {
     let changingDuration : number
 
     if(oppositeDirection(this.directionchangeFrom) === this.directionchangeTarget) {
-      changingDuration = 90
+      changingDuration = 80
     } else {
       changingDuration = 40
     }

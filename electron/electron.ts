@@ -36,7 +36,7 @@ function createWindow() {
   );
   // Open the DevTools.
   if (isDev) {
-    mainWindow.webContents.openDevTools({ mode: 'left', activate: false});
+    mainWindow.webContents.openDevTools();
   } else {
     mainWindow.webContents.openDevTools();
     mainWindow.webContents.reloadIgnoringCache();

@@ -31,7 +31,7 @@ export class RandomMovement implements Movement {
     this.currentMovementDirection = Direction.NONE;
     this.character
       .positionChangeStarted()
-      .pipe(takeUntil(this.character.autoMovementSet()))
+      //.pipe(takeUntil(this.character.autoMovementSet()))
       .subscribe(() => {
         this.stepsWalked++;
       });
@@ -44,7 +44,7 @@ export class RandomMovement implements Movement {
     } else {
       this.delayLeft -= delta;
       if (this.delayLeft <= 0) {
-        this.delayLeft = this.delay;
+        this.randomizeDelay()
         const dir = this.getFreeRandomDirection();
         this.stepsWalked = 0;
         this.character.move(dir);
@@ -92,5 +92,9 @@ export class RandomMovement implements Movement {
 
   private randomizeStepSize(): void {
     this.stepSize = RandomUtils.getRandomInt(this.radius) + 1;
+  }
+
+  private randomizeDelay(): void { 
+    this.delayLeft = this.delay + (Math.random() - 0.5) * 2500;
   }
 }

@@ -23,7 +23,7 @@ body {
 }
 
 :focus-visible {
-  outline: -webkit-focus-ring-color auto 1px;
+  outline: -webkit-focus-ring-color auto 0px;
 }
 
 canvas {

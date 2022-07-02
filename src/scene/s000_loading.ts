@@ -72,7 +72,7 @@ class Loading extends Phaser.Scene {
 
     this.load.on('fileprogress', function (file: Phaser.Loader.File, value: number) {
       if (value === 1) {
-        console.log(file.key, value)
+        //console.log(file.key, value)
         assetText.setText('Loading asset: ' + file.key)
       }
     })

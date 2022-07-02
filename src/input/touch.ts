@@ -6,6 +6,7 @@ class Touch {
 
   holdStart = 0
   holdTimer = 0
+  enterTimer = 0
   destroyTimer = 0
 
   touchToKeyboard = new Map<string, string>([
@@ -19,7 +20,13 @@ class Touch {
 
   init () {
     if (this.manager != null) return
+    globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
+    globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }))
+    globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Esc' }))
 
+    clearTimeout(this.destroyTimer)
+    clearTimeout(this.holdTimer)
+  
     this.manager = nipplejs.create({
       mode: 'semi',
       color: '#ffffff',
@@ -32,7 +39,7 @@ class Touch {
 
     this.manager.on('start', (event) => {
       this.holdStart = Date.now()
-      this.holdTimer = setTimeout(() => { globalThis.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' })) }, 300)
+      this.holdTimer = setTimeout(() => { globalThis.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' })) }, 200)
       clearTimeout(this.destroyTimer)
     })
 
@@ -51,25 +58,33 @@ class Touch {
 
     this.manager.on('end', () => {
       clearTimeout(this.holdTimer)
-      globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
+      if(this.lastDirection != ''){
+        globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
+      }
       globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }))
       globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Esc' }))
-      if (Date.now() - this.holdStart < 300) {
+      if (Date.now() - this.holdStart < 200 && this.lastDirection == '') {
         globalThis.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }))
-        setTimeout(() => { globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' })) }, 50)
+        this.enterTimer = setTimeout(() => { globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' })) }, 70)
       }
+      this.lastDirection = ''
 
-      this.destroyTimer = setTimeout(() => {
-        this.destroy()
-        this.init()
-      }, 3000)
+      this.destroyTimer = setTimeout(() => {this.reset()}, 3000)
     })
   }
 
-  destroy () {
+  destroy() {
+    clearTimeout(this.destroyTimer)
     clearTimeout(this.holdTimer)
-    this.manager.destroy()
-    this.manager = null
+    if(this.manager){
+      this.manager.destroy()
+      this.manager = null  
+    }
+  }
+
+  reset () {
+    this.destroy()
+    this.init()
   }
 
   wheelHandler (event: WheelEvent) {
@@ -81,7 +96,3 @@ class Touch {
 
 export const touch = new Touch()
 touch.init()
-
-document.getElementsByTagName('body')[0].addEventListener('touchstart', (event) => {
-  event.preventDefault()
-})
