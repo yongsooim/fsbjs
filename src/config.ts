@@ -45,7 +45,8 @@ export const config : Phaser.Types.Core.GameConfig = {
     scene.s000_loading,
     scene.s001_menu,
     scene.s999_testScene,
-    scene.mainScene
+    scene.mainScene,
+    scene.debugScene
   ]
   // scene: scene.s000_menu,
 }

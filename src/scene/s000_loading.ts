@@ -155,7 +155,9 @@ class Loading extends Phaser.Scene {
 
   update () {
     if (this.isReady) {
-      this.scene.start('menu')
+      //this.scene.start('menu')
+      this.scene.start('test')
+      this.scene.start('debug')
     }
   }
 }

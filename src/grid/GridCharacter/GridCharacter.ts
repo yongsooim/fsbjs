@@ -86,8 +86,8 @@ export class GridCharacter {
   /** added in fsbjs */
   isDirectionChanging = false;
   directionChangingElapsed = 0;
-  directionchangeFrom: Direction;
-  directionchangeTarget: Direction;
+  directionChangeFrom: Direction;
+  directionChangeTarget: Direction;
 
   constructor(private id: string, config: CharConfig) {
     if (typeof config.walkingAnimationMapping == "number") {
@@ -189,15 +189,15 @@ export class GridCharacter {
     if (direction == Direction.NONE) return;
     if (this.isMoving()) return;
     if (this.isDirectionChanging) return;
-    if (this.isBlockingDirection(direction)) {
+    if (this.facingDirection !== direction){
+      this.isDirectionChanging = true
+      this.directionChangingElapsed = 0;
+      this.directionChangeFrom = this.facingDirection
+      this.directionChangeTarget = direction
+    } else if (this.isBlockingDirection(direction)) {
       this.facingDirection = direction;
       this.animation.setStandingFrame(direction);
       this.directionChanged$.next(direction);
-    } if (this.facingDirection !== direction){
-      this.isDirectionChanging = true
-      this.directionChangingElapsed = 0;
-      this.directionchangeFrom = this.facingDirection
-      this.directionchangeTarget = direction
     } else {
       this.lastMovementImpulse = direction;
       this.startMoving(direction);
@@ -341,8 +341,13 @@ export class GridCharacter {
     this.animation.setIsEnabled(
       this.walkingAnimationMapping !== undefined || this.characterIndex !== -1
     );
-    this.animation.setStandingFrame(Direction.DOWN);
 
+    if(this.facingDirection !== Direction.NONE){
+      this.animation.setStandingFrame(this.facingDirection);
+    } else {
+      this.animation.setStandingFrame(Direction.DOWN);
+    }
+    
     this.updateZindex();
   }
 
@@ -473,7 +478,7 @@ export class GridCharacter {
   updateDirectionChanging (delta: number) {
     let changingDuration : number
 
-    if(oppositeDirection(this.directionchangeFrom) === this.directionchangeTarget) {
+    if(oppositeDirection(this.directionChangeFrom) === this.directionChangeTarget) {
       changingDuration = 80
     } else {
       changingDuration = 40
@@ -483,16 +488,16 @@ export class GridCharacter {
     if(this.directionChangingElapsed >= changingDuration) {
       this.isDirectionChanging = false
       this.directionChangingElapsed = 0
-      this.facingDirection = this.directionchangeTarget
+      this.facingDirection = this.directionChangeTarget
       this.animation.setStandingFrame(this.facingDirection)
-      this.directionChanged$.next(this.directionchangeTarget)
+      this.directionChanged$.next(this.directionChangeTarget)
     } else {
       if(this.directionChangingElapsed < changingDuration / 3) {
-        this.animation.setDirectionChangingFrame(this.directionchangeFrom, this.directionchangeTarget, 0)
+        this.animation.setDirectionChangingFrame(this.directionChangeFrom, this.directionChangeTarget, 0)
       } else if(this.directionChangingElapsed < changingDuration * 2 / 3) {
-        this.animation.setDirectionChangingFrame(this.directionchangeFrom, this.directionchangeTarget, 1)
+        this.animation.setDirectionChangingFrame(this.directionChangeFrom, this.directionChangeTarget, 1)
       } else if(this.directionChangingElapsed < changingDuration * 3 / 3) {
-        this.animation.setDirectionChangingFrame(this.directionchangeFrom, this.directionchangeTarget, 2)
+        this.animation.setDirectionChangingFrame(this.directionChangeFrom, this.directionChangeTarget, 2)
       }
     }
   }
