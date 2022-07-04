@@ -1,7 +1,7 @@
 import cameraUtil from '../camera/camera'
 import { Direction } from '../grid/Direction/Direction'
 
-/** Source is from Excalibur.js */
+/** Source code is based on Excalibur.js */
 
 /**
  * Enum representing physical input key codes
@@ -172,6 +172,7 @@ export class Keyboard {
   private _keys: Keys[] = [];
   private _keysUp: Keys[] = [];
   private _keysDown: Keys[] = [];
+  private _wasPressed: Keys[] = [];
 
   alias = new Map<Keys, Keys>([
     [Keys.W, Keys.ArrowUp],
@@ -193,8 +194,8 @@ export class Keyboard {
 
     [Keys.Backslash, Keys.KeyC],
     [Keys.PageDown, Keys.KeyC],
-    
-    [Keys.ShiftRight, Keys.ShiftLeft],
+
+    [Keys.ShiftRight, Keys.ShiftLeft]
   ])
 
   keyToDirection = new Map<Keys, Direction>([
@@ -264,6 +265,7 @@ export class Keyboard {
     // Reset keysDown and keysUp after update is complete
     this._keysDown.length = 0
     this._keysUp.length = 0
+    this._wasPressed.length = 0
   }
 
   /**
@@ -278,7 +280,7 @@ export class Keyboard {
    * @param key Test whether a key was just pressed
    */
   public wasPressed (key: Keys): boolean {
-    return this._keysDown.indexOf(key) > -1
+    return this._keysDown.indexOf(key) > -1 || this._wasPressed.indexOf(key) > -1
   }
 
   /**
@@ -309,6 +311,10 @@ export class Keyboard {
     } else {
       return Direction.NONE
     }
+  }
+
+  public setWasPressed (key: Keys): void {
+    this._wasPressed.push(key)
   }
 }
 

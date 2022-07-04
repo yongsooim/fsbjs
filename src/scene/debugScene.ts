@@ -4,31 +4,38 @@ import { keyboard } from '../input/keyboard'
 class DebugScene extends Phaser.Scene {
   debugSprite: Phaser.GameObjects.Sprite
   debugText: Phaser.GameObjects.Text
+  background: Phaser.GameObjects.Graphics
 
-  constructor() {
-      super('debug')
+  constructor () {
+    super('debug')
   }
 
-  create() {
-    //this.debugSprite = this.add.sprite(0, 0, 'cmiro00')
+  create () {
+    // this.debugSprite = this.add.sprite(0, 0, 'cmiro00')
     this.debugText = this.add.text(0, 0, 'Debug Scene', {
       fontFamily: 'Batang',
       fontSize: '20px',
       color: '#ffffff',
-      fontStyle: 'bold',
+      fontStyle: 'bold'
+    })
+
+    this.background = this.add.graphics({
+      fillStyle: {
+        color: 0x000000
+      }
     })
   }
 
-  update() {
-    this.updateLayout() 
+  update () {
+    this.updateLayout()
   }
 
-  updateLayout() {
+  updateLayout () {
+
     this.debugText.y = this.cameras.main.height - 30
 
     this.debugText.text = keyboard.getKeys().toString()
     this.debugText.x = this.cameras.main.width / 2 - this.debugText.text.length * 5
-
   }
 }
 

@@ -1,5 +1,5 @@
 import { GridEngine, Direction, NumberOfDirections } from '../grid/GridEngine'
-
+import Phaser from 'phaser'
 import { assetRootPath } from '../const'
 import { touch } from '../input/touch'
 import cameraUtil from '../camera/camera'
@@ -31,11 +31,11 @@ export default class TestScene extends Phaser.Scene {
   }
 
   create () {
-    //this.sound.play('vill2', { loop: true })
+    // this.sound.play('vill2', { loop: true })
 
     const pinch = this.rexGestures.add.pinch(this, { enable: true, threshold: 30 })
 
-    pinch.on('pinchstart', () => { touch.reset() } )
+    pinch.on('pinchstart', () => { touch.reset() })
     pinch.on('pinch', (dragScale: Pinch) => {
       cameraUtil.zoomBy(this, dragScale.scaleFactor)
       cameraUtil.setBoundsAndCenter(this, this.map)
@@ -58,6 +58,11 @@ export default class TestScene extends Phaser.Scene {
     this.map.createLayer('Z1 P Layer', tilesetP)
     this.map.createLayer('Z1 S Layer', [tilesetP, tilesetS])
 
+    // this.map.createLayer(1, tilesetP)
+    // this.map.createLayer(2, [tilesetP, tilesetS])
+    // this.map.createLayer(3, tilesetP)
+    // this.map.createLayer(4, [tilesetP, tilesetS])
+
     this.playerSprite = this.add.sprite(0, 0, 'cmiro00')
     this.playerSprite2 = this.add.sprite(0, 0, 'cdit100')
     this.playerSprite2.visible = false
@@ -67,7 +72,7 @@ export default class TestScene extends Phaser.Scene {
 
     this.npcSprite = this.add.sprite(0, 0, 'clmai000')
     this.npcSprite2 = this.add.sprite(0, 0, 'cman200')
-    this.npcSprite3  = this.add.sprite(0, 0, 'cman200')
+    this.npcSprite3 = this.add.sprite(0, 0, 'cman200')
     this.playerSprite.name = 'player'
 
     console.log(this.playerContainer)
@@ -123,20 +128,35 @@ export default class TestScene extends Phaser.Scene {
       collides: false,
       charLayer: 'Z0 P Layer'
     })
-    this.gridEngine.moveRandomly('npc', 1000, 4 )
-    this.gridEngine.moveRandomly('npc2', 1111 , 2)
-    this.gridEngine.moveRandomly('npc3', 975 , 3)
+    this.gridEngine.moveRandomly('npc', 1000, 4)
+    this.gridEngine.moveRandomly('npc2', 1111, 2)
+    this.gridEngine.moveRandomly('npc3', 975, 3)
 
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels, true)
     this.cameras.main.startFollow(this.playerContainer, false, 1, 1, -32, -54)
-    //this.cameras.main.startFollow(this.playerSprite, false, 1, 1, -32, -54)
-    //this.gridEngine.moveTo('npc', { x: 14, y: 20 })
+    // this.cameras.main.startFollow(this.playerSprite, false, 1, 1, -32, -54)
+    // this.gridEngine.moveTo('npc', { x: 14, y: 20 })
 
+    let textBox = this.rexUI.add.textBox({
+      x: 0,
+      y: 0,
+      width: this.cameras.main.width,
+      height: this.cameras.main.height,
+      background: this.rexUI.add.roundRectangle(0, 0, 0, 0, 0, 0x000000, 0.5),
+      text: this.add.text(0, 0, 'aslaskfjal;skfj;alskfj', {
+        fontSize: '20px',
+      }),
+      type: {
+        speed: 500
+      }
+    })
+
+    this.playerContainer.add(textBox)
   }
 
   counter = 0
   update () {
-    if(keyboard.isHeld(Keys.ShiftLeft)) {
+    if (keyboard.isHeld(Keys.ShiftLeft)) {
       this.gridEngine.setSpeed('player', 16)
       this.gridEngine.move('player', keyboard.lastDirectionHeld())
     } else {
@@ -144,8 +164,8 @@ export default class TestScene extends Phaser.Scene {
       this.gridEngine.move('player', keyboard.lastDirectionHeld())
     }
 
-    if(keyboard.wasPressed(Keys.Enter)) {
-      let text = new Phaser.GameObjects.Text(this, 0, 0, '확인', {
+    if (keyboard.wasPressed(Keys.Enter)) {
+      const text = this.add.text(0, 0, '확인', {
         fontFamily: 'Batang',
         fontSize: '15px',
         color: '#ffffff'
@@ -156,8 +176,8 @@ export default class TestScene extends Phaser.Scene {
       }, 1000)
     }
 
-    if(keyboard.wasPressed(Keys.Escape)) {
-      let text = new Phaser.GameObjects.Text(this, 30, 0, '취소', {
+    if (keyboard.wasPressed(Keys.Escape)) {
+      const text = this.add.text(0, 0, '취소', {
         fontFamily: 'Batang',
         fontSize: '15px',
         color: '#ffffff'
@@ -168,20 +188,19 @@ export default class TestScene extends Phaser.Scene {
       }, 1000)
     }
 
-    if(keyboard.wasPressed(Keys.KeyC)) {
-      //this.playerSprite = new Phaser.GameObjects.Sprite(this, 0, 0, 'cdit100')
-      //this.playerSprite = this.add.sprite(0, 0, 'cmiro00')
-      if(this.playerSprite2.visible) {
+    if (keyboard.wasPressed(Keys.KeyC)) {
+      // this.playerSprite = new Phaser.GameObjects.Sprite(this, 0, 0, 'cdit100')
+      // this.playerSprite = this.add.sprite(0, 0, 'cmiro00')
+      if (this.playerSprite2.visible) {
         this.gridEngine.setSprite('player', this.playerSprite)
         this.playerSprite.visible = true
-        this.playerSprite2.visible = false  
+        this.playerSprite2.visible = false
       } else {
         this.gridEngine.setSprite('player', this.playerSprite2)
         this.playerSprite.visible = false
-        this.playerSprite2.visible = true  
+        this.playerSprite2.visible = true
       }
     }
-
 
     if (keyboard.isHeld(Keys.Equal)) {
       cameraUtil.zoomBy(this, 1.02)
@@ -190,9 +209,9 @@ export default class TestScene extends Phaser.Scene {
       cameraUtil.zoomBy(this, 0.98)
       cameraUtil.setBoundsAndCenter(this, this.map)
     }
-    //console.log(this.playerContainer.x)
+    // console.log(this.playerContainer.x)
     keyboard.update()
   }
 }
 
-export const s999_testScene = new TestScene()
+export const testScene = new TestScene()

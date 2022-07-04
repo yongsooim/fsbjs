@@ -1,21 +1,12 @@
 import Phaser from 'phaser'
 import { assetRootPath } from '../const'
-import st01 from './st01.json'
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'
-import { tmjList } from '../map/tmjList'
-import { pngList } from '../map/pngList'
-import { fxList } from '../resource/fxList'
-import { bgmList } from '../resource/bgmList'
-import { seList } from '../resource/seList'
-import { jsonList } from '../map/jsonList'
-import { fmList } from '../resource/fmList'
-import { psList } from '../resource/psList'
-import { pcxList } from '../resource/pcxList'
-class Loading extends Phaser.Scene {
-  isReady = false
+import * as resource from '../resource/resource'
+class LoadingScene extends Phaser.Scene {
+  loadingDone = false
 
   constructor () {
-    super('s000_loading')
+    super('loading')
   }
 
   preload () {
@@ -82,19 +73,13 @@ class Loading extends Phaser.Scene {
       // loadingText.destroy();
       // percentText.destroy();
       // assetText.destroy();
-      scene.isReady = true
+      scene.loadingDone = true
     })
 
     this.loadFiles()
   }
 
   loadFiles () {
-    this.load.audio('pusan', assetRootPath + 'mp3/bgm/pusan.mp3')
-    this.load.audio('pao', assetRootPath + 'mp3/bgm/pao.mp3')
-    this.load.audio('e154', assetRootPath + 'mp3/wav_eft/e154.mp3')
-    this.load.audio('e156', assetRootPath + 'mp3/wav_eft/e156.mp3')
-    this.load.image('background', assetRootPath + 'graphics/pcxset/st00.png')
-    this.load.atlas('st01', assetRootPath + 'graphics/pcxset/st01.png', st01)
 
     this.load.scenePlugin({
       key: 'rexuiplugin',
@@ -109,41 +94,26 @@ class Loading extends Phaser.Scene {
   }
 
   loadGraphics() {
-    for (const png of fmList) {
-      this.load.image(png, assetRootPath + 'graphics/ase_fm/' + png + '.png', )
-    }
-    for (const png of psList) {
-      this.load.spritesheet(png, assetRootPath + 'graphics/ase_ps/' + png + '.png', { frameWidth: 64, frameHeight: 96 })
-    }
-    for (const png of pcxList) {
-      this.load.image(png, assetRootPath + 'graphics/pcxset/' + png + '.png')
+    for (const png of resource.fmList) { this.load.image(png, assetRootPath + 'graphics/ase_fm/' + png + '.png', ) }
+    for (const png of resource.psList) { this.load.spritesheet(png, assetRootPath + 'graphics/ase_ps/' + png + '.png', { frameWidth: 64, frameHeight: 96 })}
+    for (const png of resource.pcxList) { this.load.image(png, assetRootPath + 'graphics/pcxset/' + png + '.png')}
+    for (const atlas of resource.pcxAtlasList) { 
+      this.load.atlas(atlas + 'Atlas', assetRootPath + 'graphics/pcxset/' + atlas + '.png', assetRootPath + 'graphics/pcxset/atlas/' + atlas + '.json')
     }
   }
 
   loadMapset() {
-    for (const tmj of tmjList) {
-      this.load.tilemapTiledJSON(tmj, assetRootPath + 'mapset/tmj/' + tmj + '.tmj')
-    }
-    for (const png of pngList) {
-      this.load.image(png, assetRootPath + 'mapset/png_ext/' + png + '.png')
-    }
-    for (const json of jsonList) {
-      this.load.json(json, assetRootPath + 'mapset/json/' + json + '.json')
-    }
+    for (const tmj of resource.tmjList) { this.load.tilemapTiledJSON(tmj, assetRootPath + 'mapset/tmj/' + tmj + '.tmj')}
+    for (const png of resource.pngList) { this.load.image(png, assetRootPath + 'mapset/png_ext/' + png + '.png')}
+    for (const json of resource.jsonList) { this.load.json(json, assetRootPath + 'mapset/json/' + json + '.json')}
   }
 
   loadSound() {
     const extension = 'mp3'
     //const extension = 'wav'
-    for (const wav of fxList) {
-      this.load.audio(wav, assetRootPath + extension + '/wav_eft/' + wav + '.' + extension)
-    }
-    for (const wav of seList) {
-      this.load.audio(wav, assetRootPath + extension + '/se_event/' + wav + '.' + extension)
-    }
-    for (const wav of bgmList) {
-      this.load.audio(wav, assetRootPath + extension + '/bgm/' + wav + '.' + extension)
-    }
+    for (const wav of resource.fxList) { this.load.audio(wav, assetRootPath + extension + '/wav_eft/' + wav + '.' + extension)}
+    for (const wav of resource.seList) { this.load.audio(wav, assetRootPath + extension + '/se_event/' + wav + '.' + extension)}
+    for (const wav of resource.bgmList) { this.load.audio(wav, assetRootPath + extension + '/bgm/' + wav + '.' + extension)}
   }
 
   create () {
@@ -154,12 +124,17 @@ class Loading extends Phaser.Scene {
   }
 
   update () {
-    if (this.isReady) {
-      //this.scene.start('menu')
-      this.scene.start('test')
-      this.scene.start('debug')
+    if (this.loadingDone) {
+      const width = this.cameras.main.width
+      const height = this.cameras.main.height  
+
+      this.add.text(width / 2, height / 2 + 150, 'Press any to start', { font: '18px monospace' })
+
+      this.scene.start('menu')
+      //this.scene.start('test')
+      //this.scene.start('debug')
     }
   }
 }
 
-export const s000_loading = new Loading()
+export const loadingScene = new LoadingScene()

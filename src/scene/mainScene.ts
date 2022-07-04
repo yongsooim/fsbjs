@@ -14,13 +14,13 @@ import Phaser from 'phaser'
 import { IMainSceneData } from './IMainSceneData'
 
 class MainScene extends Phaser.Scene {
+  rexUI: RexUIPlugin
+  rexGestures: GesturesPlugin
+  gridEngine: GridEngine
   map:Phaser.Tilemaps.Tilemap
-  rexUI: RexUIPlugin // Declare scene property 'rexUI' as RexUIPlugin type
   playerContainer:Phaser.GameObjects.Container
   playerSprite:Phaser.GameObjects.Sprite
   npcSprite:Phaser.GameObjects.Sprite
-  rexGestures: GesturesPlugin
-  gridEngine: GridEngine
 
   constructor () {
     super('mainScene')

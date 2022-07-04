@@ -1,12 +1,12 @@
 import nipplejs from 'nipplejs'
 import { FsbKey } from './input'
+import { keyboard, Keys } from './keyboard'
 
 class Touch {
   manager: nipplejs.JoystickManager | null = null
 
   holdStart = 0
   holdTimer = 0
-  enterTimer = 0
   destroyTimer = 0
 
   touchToKeyboard = new Map<string, string>([
@@ -19,14 +19,14 @@ class Touch {
   lastDirection = '' // Arrow + direction
 
   init () {
-    if (this.manager != null) return
+    if (this.manager !== null) return
     globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
     globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }))
     globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Esc' }))
 
     clearTimeout(this.destroyTimer)
     clearTimeout(this.holdTimer)
-  
+
     this.manager = nipplejs.create({
       mode: 'semi',
       color: '#ffffff',
@@ -58,27 +58,27 @@ class Touch {
 
     this.manager.on('end', () => {
       clearTimeout(this.holdTimer)
-      if(this.lastDirection != ''){
+      if (this.lastDirection != '') {
         globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
       }
       globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }))
       globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Esc' }))
-      if (Date.now() - this.holdStart < 200 && this.lastDirection == '') {
+      if (Date.now() - this.holdStart < 200 && this.lastDirection === '') {
         globalThis.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }))
-        this.enterTimer = setTimeout(() => { globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' })) }, 70)
+        keyboard.setWasPressed(Keys.Enter)
       }
       this.lastDirection = ''
 
-      this.destroyTimer = setTimeout(() => {this.reset()}, 3000)
+      this.destroyTimer = setTimeout(() => { this.reset() }, 3000)
     })
   }
 
-  destroy() {
+  destroy () {
     clearTimeout(this.destroyTimer)
     clearTimeout(this.holdTimer)
-    if(this.manager){
+    if (this.manager) {
       this.manager.destroy()
-      this.manager = null  
+      this.manager = null
     }
   }
 

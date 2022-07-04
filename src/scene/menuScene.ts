@@ -1,24 +1,36 @@
 import Phaser from 'phaser'
 import { assetRootPath } from '../const'
-import st01 from './st01.json'
 import * as scene from './scene'
 import { keyboard, Keys } from '../input/keyboard'
 import { touch } from '../input/touch'
 import { FsbKey } from '../input/input'
 
-enum Button {
+enum Selectable {
   LOAD = 0,
   START = 1,
   EXIT = 2,
 }
 
 class MenuScene extends Phaser.Scene {
-  selected = Button.LOAD as number
+  private _selected = Selectable.LOAD as number
   background: Phaser.GameObjects.Image
   container: Phaser.GameObjects.Container
   loadSprite: Phaser.GameObjects.Sprite
   startSprite: Phaser.GameObjects.Sprite
   exitSprite: Phaser.GameObjects.Sprite
+
+  set selected (num : number) {
+    if (num < 0) {
+      this._selected = 2
+    } else if (num > 2) {
+      this._selected = 0
+    }
+    this._selected = num
+  }
+
+  get selected () {
+    return this._selected
+  }
 
   constructor () {
     super({ key: 'menu' })
@@ -29,7 +41,6 @@ class MenuScene extends Phaser.Scene {
     this.load.audio('e154', assetRootPath + 'mp3/wav_eft/e154.mp3')
     this.load.audio('e156', assetRootPath + 'mp3/wav_eft/e156.mp3')
     this.load.image('background', assetRootPath + 'graphics/pcxset/st00.png')
-    this.load.aseprite('st01', assetRootPath + 'graphics/pcxset/st01.png', st01)
   }
 
   create () {
@@ -41,7 +52,7 @@ class MenuScene extends Phaser.Scene {
     this.anims.create({
       key: 'load',
       frameRate: 12,
-      frames: this.anims.generateFrameNames('st01', {
+      frames: this.anims.generateFrameNames('st01Atlas', {
         prefix: 'load',
         start: 0,
         end: 2
@@ -52,7 +63,7 @@ class MenuScene extends Phaser.Scene {
     this.anims.create({
       key: 'exit',
       frameRate: 12,
-      frames: this.anims.generateFrameNames('st01', {
+      frames: this.anims.generateFrameNames('st01Atlas', {
         prefix: 'exit',
         start: 0,
         end: 2
@@ -63,7 +74,7 @@ class MenuScene extends Phaser.Scene {
     this.anims.create({
       key: 'start',
       frameRate: 12,
-      frames: this.anims.generateFrameNames('st01', {
+      frames: this.anims.generateFrameNames('st01Atlas', {
         prefix: 'start',
         start: 0,
         end: 2
@@ -116,31 +127,25 @@ class MenuScene extends Phaser.Scene {
     } else if (keyboard.wasPressed(Keys.Enter)) {
       this.sound.stopAll()
       this.sound.play('e154')
-      this.scene.start(scene.s999_testScene)
-    }
-
-    if (this.selected < 0) {
-      this.selected = 2
-    } else if (this.selected > 2) {
-      this.selected = 0
+      this.scene.start(scene.testScene)
     }
   }
 
   updateAnimation () {
     switch (this.selected) {
-    case Button.LOAD:
+    case Selectable.LOAD:
       this.loadSprite.setVisible(true)
       this.startSprite.setVisible(false)
       this.exitSprite.setVisible(false)
       break
 
-    case Button.START:
+    case Selectable.START:
       this.loadSprite.setVisible(false)
       this.startSprite.setVisible(true)
       this.exitSprite.setVisible(false)
       break
 
-    case Button.EXIT:
+    case Selectable.EXIT:
       this.loadSprite.setVisible(false)
       this.startSprite.setVisible(false)
       this.exitSprite.setVisible(true)
@@ -149,4 +154,4 @@ class MenuScene extends Phaser.Scene {
   }
 }
 
-export const s001_menu = new MenuScene()
+export const menuScene = new MenuScene()
