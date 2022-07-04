@@ -9,7 +9,7 @@ export const pcxList = [
   // 'smenu',
   // 'span04',
   'st00',
-  'st01'
+  'st01',
 // 'wharrow',
-// 'whdlgbox',
+ 'whdlgbox',
 ]

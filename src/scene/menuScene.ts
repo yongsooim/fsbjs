@@ -12,25 +12,12 @@ enum Selectable {
 }
 
 class MenuScene extends Phaser.Scene {
-  private _selected = Selectable.LOAD as number
+  selected = Selectable.LOAD as number
   background: Phaser.GameObjects.Image
   container: Phaser.GameObjects.Container
   loadSprite: Phaser.GameObjects.Sprite
   startSprite: Phaser.GameObjects.Sprite
   exitSprite: Phaser.GameObjects.Sprite
-
-  set selected (num : number) {
-    if (num < 0) {
-      this._selected = 2
-    } else if (num > 2) {
-      this._selected = 0
-    }
-    this._selected = num
-  }
-
-  get selected () {
-    return this._selected
-  }
 
   constructor () {
     super({ key: 'menu' })
@@ -127,7 +114,14 @@ class MenuScene extends Phaser.Scene {
     } else if (keyboard.wasPressed(Keys.Enter)) {
       this.sound.stopAll()
       this.sound.play('e154')
-      this.scene.start(scene.testScene)
+      this.scene.start('test')
+      this.scene.start('debug')
+    }
+
+    if (this.selected < 0) {
+      this.selected = 2
+    } else if (this.selected > 2) {
+      this.selected = 0
     }
   }
 

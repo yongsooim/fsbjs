@@ -937,22 +937,22 @@ export class GridEngine {
   }
 
   private moveChar(charId: string, direction: Direction): void {
-    this.initGuard();
-    this.unknownCharGuard(charId);
-
-    if (GlobalConfig.get().numberOfDirections === NumberOfDirections.FOUR) {
-      if (!this.gridTilemap.isIsometric() && isDiagonal(direction)) {
-        console.warn(
-          `GridEngine: Character '${charId}' can't be moved '${direction}' in 4 direction mode.`
-        );
-        return;
-      } else if (this.gridTilemap.isIsometric() && !isDiagonal(direction)) {
-        console.warn(
-          `GridEngine: Character '${charId}' can't be moved '${direction}' in 4 direction isometric mode.`
-        );
-        return;
-      }
-    }
+    //this.initGuard();
+    //this.unknownCharGuard(charId);
+//
+    //if (GlobalConfig.get().numberOfDirections === NumberOfDirections.FOUR) {
+    //  if (!this.gridTilemap.isIsometric() && isDiagonal(direction)) {
+    //    console.warn(
+    //      `GridEngine: Character '${charId}' can't be moved '${direction}' in 4 direction mode.`
+    //    );
+    //    return;
+    //  } else if (this.gridTilemap.isIsometric() && !isDiagonal(direction)) {
+    //    console.warn(
+    //      `GridEngine: Character '${charId}' can't be moved '${direction}' in 4 direction isometric mode.`
+    //    );
+    //    return;
+    //  }
+    //}
 
     this.gridCharacters.get(charId).move(direction);
   }

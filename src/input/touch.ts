@@ -21,7 +21,6 @@ class Touch {
   init () {
     if (this.manager !== null) return
     globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
-    globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }))
     globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Esc' }))
 
     clearTimeout(this.destroyTimer)
@@ -39,7 +38,7 @@ class Touch {
 
     this.manager.on('start', (event) => {
       this.holdStart = Date.now()
-      this.holdTimer = setTimeout(() => { globalThis.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' })) }, 200)
+      this.holdTimer = setTimeout(() => { globalThis.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' })) }, 250)
       clearTimeout(this.destroyTimer)
     })
 
@@ -58,17 +57,15 @@ class Touch {
 
     this.manager.on('end', () => {
       clearTimeout(this.holdTimer)
+      if (Date.now() - this.holdStart < 250 && this.lastDirection === '') {
+        keyboard.setOneTimePressed(Keys.Enter)
+      } else {
+        globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Esc' }))
+      }
       if (this.lastDirection != '') {
         globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
+        this.lastDirection = ''
       }
-      globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }))
-      globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Esc' }))
-      if (Date.now() - this.holdStart < 200 && this.lastDirection === '') {
-        globalThis.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }))
-        keyboard.setWasPressed(Keys.Enter)
-      }
-      this.lastDirection = ''
-
       this.destroyTimer = setTimeout(() => { this.reset() }, 3000)
     })
   }

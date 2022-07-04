@@ -169,10 +169,11 @@ export enum Keys {
  * Provides keyboard support for Excalibur.
  */
 export class Keyboard {
+  private _history = new Array<Keys>(20);
   private _keys: Keys[] = [];
   private _keysUp: Keys[] = [];
   private _keysDown: Keys[] = [];
-  private _wasPressed: Keys[] = [];
+  private _keysUpQue: Keys[] = [];
 
   alias = new Map<Keys, Keys>([
     [Keys.W, Keys.ArrowUp],
@@ -262,10 +263,10 @@ export class Keyboard {
   }
 
   public update () {
-    // Reset keysDown and keysUp after update is complete
     this._keysDown.length = 0
-    this._keysUp.length = 0
-    this._wasPressed.length = 0
+    this._keysUp = [...this._keysUpQue]
+    this._keysUp.forEach(key => { this._keys.splice(this._keys.indexOf(key), 1) })
+    this._keysUpQue.length = 0
   }
 
   /**
@@ -280,7 +281,7 @@ export class Keyboard {
    * @param key Test whether a key was just pressed
    */
   public wasPressed (key: Keys): boolean {
-    return this._keysDown.indexOf(key) > -1 || this._wasPressed.indexOf(key) > -1
+    return this._keysDown.indexOf(key) > -1
   }
 
   /**
@@ -313,8 +314,10 @@ export class Keyboard {
     }
   }
 
-  public setWasPressed (key: Keys): void {
-    this._wasPressed.push(key)
+  public setOneTimePressed (key: Keys): void {
+    this._keysDown.push(key)
+    this._keys.push(key)
+    this._keysUpQue.push(key)
   }
 }
 

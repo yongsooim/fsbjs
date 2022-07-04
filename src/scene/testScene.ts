@@ -9,7 +9,8 @@ import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'
 import { FsbKey, input } from '../input/input'
 import { keyboard, Keys } from '../input/keyboard'
 import mouse from '../input/mouse'
-import { timestamp } from 'rxjs'
+import TextBox from 'phaser3-rex-plugins/templates/ui/textbox/TextBox'
+import { createDlgBox } from '../ui/dialogBox'
 
 export default class TestScene extends Phaser.Scene {
   rexUI: RexUIPlugin // Declare scene property 'rexUI' as RexUIPlugin type
@@ -22,6 +23,8 @@ export default class TestScene extends Phaser.Scene {
   npcSprite3:Phaser.GameObjects.Sprite
   rexGestures: GesturesPlugin
   gridEngine: GridEngine
+  dir: Direction
+  textBox: Phaser.GameObjects.Container
 
   constructor () {
     super('test')
@@ -31,8 +34,6 @@ export default class TestScene extends Phaser.Scene {
   }
 
   create () {
-    // this.sound.play('vill2', { loop: true })
-
     const pinch = this.rexGestures.add.pinch(this, { enable: true, threshold: 30 })
 
     pinch.on('pinchstart', () => { touch.reset() })
@@ -74,8 +75,6 @@ export default class TestScene extends Phaser.Scene {
     this.npcSprite2 = this.add.sprite(0, 0, 'cman200')
     this.npcSprite3 = this.add.sprite(0, 0, 'cman200')
     this.playerSprite.name = 'player'
-
-    console.log(this.playerContainer)
 
     this.gridEngine.create(this.map, {
       numberOfDirections: NumberOfDirections.FOUR,
@@ -137,32 +136,28 @@ export default class TestScene extends Phaser.Scene {
     // this.cameras.main.startFollow(this.playerSprite, false, 1, 1, -32, -54)
     // this.gridEngine.moveTo('npc', { x: 14, y: 20 })
 
-    let textBox = this.rexUI.add.textBox({
-      x: 0,
-      y: 0,
-      width: this.cameras.main.width,
-      height: this.cameras.main.height,
-      background: this.rexUI.add.roundRectangle(0, 0, 0, 0, 0, 0x000000, 0.5),
-      text: this.add.text(0, 0, 'aslaskfjal;skfj;alskfj', {
-        fontSize: '20px',
-      }),
-      type: {
-        speed: 500
-      }
-    })
+    //this.playerContainer.add(this.textBox)
+    this.textBox = createDlgBox(this)
 
-    this.playerContainer.add(textBox)
+    
+    //this.playerContainer.add(this.textBox)
+
   }
 
   counter = 0
   update () {
-    if (keyboard.isHeld(Keys.ShiftLeft)) {
-      this.gridEngine.setSpeed('player', 16)
-      this.gridEngine.move('player', keyboard.lastDirectionHeld())
-    } else {
-      this.gridEngine.setSpeed('player', 8)
-      this.gridEngine.move('player', keyboard.lastDirectionHeld())
+    this.textBox.x = this.playerContainer.x
+    this.textBox.y = this.playerContainer.y - 30
+    this.dir = keyboard.lastDirectionHeld()
+    if (this.dir != Direction.NONE) {
+      if (keyboard.isHeld(Keys.ShiftLeft)) {
+        this.gridEngine.setSpeed('player', 16)
+      } else {
+        this.gridEngine.setSpeed('player', 8)
+      }  
+      this.gridEngine.move('player', this.dir)
     }
+
 
     if (keyboard.wasPressed(Keys.Enter)) {
       const text = this.add.text(0, 0, '확인', {
@@ -177,7 +172,7 @@ export default class TestScene extends Phaser.Scene {
     }
 
     if (keyboard.wasPressed(Keys.Escape)) {
-      const text = this.add.text(0, 0, '취소', {
+      const text = this.add.text(30, 0, '취소', {
         fontFamily: 'Batang',
         fontSize: '15px',
         color: '#ffffff'
@@ -209,7 +204,6 @@ export default class TestScene extends Phaser.Scene {
       cameraUtil.zoomBy(this, 0.98)
       cameraUtil.setBoundsAndCenter(this, this.map)
     }
-    // console.log(this.playerContainer.x)
     keyboard.update()
   }
 }

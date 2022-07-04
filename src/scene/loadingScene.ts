@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import { assetRootPath } from '../const'
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'
 import * as resource from '../resource/resource'
+import { keyboard } from '../input/keyboard'
 class LoadingScene extends Phaser.Scene {
   loadingDone = false
 
@@ -128,9 +129,15 @@ class LoadingScene extends Phaser.Scene {
       const width = this.cameras.main.width
       const height = this.cameras.main.height  
 
-      this.add.text(width / 2, height / 2 + 150, 'Press any to start', { font: '18px monospace' })
+      this.add.text(width / 2, height / 2 , 'Press any to start', { font: '18px monospace' })
 
-      this.scene.start('menu')
+      if(keyboard.getKeys().length != 0) {
+        keyboard.update()
+        //this.scene.start('menu')
+        this.scene.start('test')
+        this.scene.start('debug')
+      }
+      keyboard.update()
       //this.scene.start('test')
       //this.scene.start('debug')
     }
