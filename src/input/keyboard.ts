@@ -169,7 +169,7 @@ export enum Keys {
  * Provides keyboard support for Excalibur.
  */
 export class Keyboard {
-  private _history = new Array<Keys>(20);
+  history = new Array<Keys>(20);
   private _keys: Keys[] = [];
   private _keysUp: Keys[] = [];
   private _keysDown: Keys[] = [];
@@ -250,7 +250,12 @@ export class Keyboard {
 
       // key down is on window because canvas cannot have focus
       global.addEventListener('keydown', (ev: KeyboardEvent) => {
+        if (ev.repeat) return;
+
         let code = ev.code as Keys
+        this.history.shift()
+        this.history.push(code)
+
 
         if (this.alias.has(code)) { code = this.alias.get(code) as Keys }
 

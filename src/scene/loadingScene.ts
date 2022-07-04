@@ -131,7 +131,8 @@ class LoadingScene extends Phaser.Scene {
 
       this.add.text(width / 2, height / 2 , 'Press any to start', { font: '18px monospace' })
 
-      if(keyboard.getKeys().length != 0) {
+      //if(keyboard.getKeys().length != 0) {
+      if(true) {
         keyboard.update()
         //this.scene.start('menu')
         this.scene.start('test')
