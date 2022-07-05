@@ -10,7 +10,7 @@ import { FsbKey, input } from '../input/input'
 import { keyboard, Keys } from '../input/keyboard'
 import mouse from '../input/mouse'
 import TextBox from 'phaser3-rex-plugins/templates/ui/textbox/TextBox'
-import { createDlgBox } from '../ui/dialogBox'
+import { createDlgBox, createTextBox } from '../ui/dialogBox'
 
 export default class TestScene extends Phaser.Scene {
   rexUI: RexUIPlugin // Declare scene property 'rexUI' as RexUIPlugin type
@@ -25,6 +25,7 @@ export default class TestScene extends Phaser.Scene {
   gridEngine: GridEngine
   dir: Direction
   textBox: Phaser.GameObjects.Container
+  dlgBox: RexUIPlugin.TextBox
 
   constructor () {
     super('test')
@@ -139,7 +140,12 @@ export default class TestScene extends Phaser.Scene {
     //this.playerContainer.add(this.textBox)
     this.textBox = createDlgBox(this)
 
-    
+    this.dlgBox = createTextBox(this, 100, 500, {
+      wrapWidth: 500,
+      fixedWidth: 500,
+      fixedHeight: 65
+    }).start('dialog box test............', 50)
+
     //this.playerContainer.add(this.textBox)
 
   }
@@ -148,6 +154,9 @@ export default class TestScene extends Phaser.Scene {
   update () {
     this.textBox.x = this.playerContainer.x
     this.textBox.y = this.playerContainer.y - 30
+
+    this.dlgBox.setPosition(this.playerContainer.x, this.playerContainer.y  - 60)
+
     this.dir = keyboard.lastDirectionHeld()
     if (this.dir != Direction.NONE) {
       if (keyboard.isHeld(Keys.ShiftLeft)) {

@@ -1,7 +1,7 @@
 import cameraUtil from '../camera/camera'
 import { Direction } from '../grid/Direction/Direction'
 
-/** Source code is based on Excalibur.js */
+/** LICENSE : Source code is based on Excalibur.js by Erik Onarheim BSD 2-Clause License */
 
 /**
  * Enum representing physical input key codes
@@ -169,11 +169,15 @@ export enum Keys {
  * Provides keyboard support for Excalibur.
  */
 export class Keyboard {
-  history = new Array<Keys>(20);
+  history = ''; // for cheat code
   private _keys: Keys[] = [];
   private _keysUp: Keys[] = [];
   private _keysDown: Keys[] = [];
   private _keysUpQue: Keys[] = [];
+  private _cheatCodeRegexList = [
+    /ilovebanana$/i,
+    /richisrich$/i,
+  ]
 
   alias = new Map<Keys, Keys>([
     [Keys.W, Keys.ArrowUp],
@@ -253,10 +257,25 @@ export class Keyboard {
         if (ev.repeat) return;
 
         let code = ev.code as Keys
-        this.history.shift()
-        this.history.push(code)
 
+        /** check for cheat code input */
+        if(code === Keys.Enter) {
+          this._cheatCodeRegexList.forEach((regex, index) => {
+            if(this.history.length < 20 && regex.test(this.history)) {
+              console.log(`cheat no.${index} ${regex} activated`)
+            }
+          })
+          this.history = ''
+        } else if (ev.key.length !== 1) {
+          this.history = ''
+        } else {
+          this.history += ev.key
+          if(this.history.length > 50) {
+            this.history = this.history.substring(30)
+          }
+        }
 
+        // alias key mapping
         if (this.alias.has(code)) { code = this.alias.get(code) as Keys }
 
         if (this._keys.indexOf(code) === -1) {

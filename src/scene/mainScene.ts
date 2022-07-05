@@ -13,7 +13,7 @@ import mouse from '../input/mouse'
 import Phaser from 'phaser'
 import { IMainSceneData } from './IMainSceneData'
 
-class MainScene extends Phaser.Scene {
+export class MainScene extends Phaser.Scene {
   rexUI: RexUIPlugin
   rexGestures: GesturesPlugin
   gridEngine: GridEngine

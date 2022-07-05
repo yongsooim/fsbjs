@@ -19,7 +19,7 @@ class CameraUtil {
     }
   }
 
-  setBoundsAndCenter (scene:Phaser.Scene, map: Phaser.Tilemaps.Tilemap) {
+  setBoundsAndCenter (scene: Phaser.Scene, map: Phaser.Tilemaps.Tilemap) {
     const screenWidth = scene.game.canvas.width / scene.cameras.main.zoom
     const screenHeight = scene.game.canvas.height / scene.cameras.main.zoom
     const mapWidth = map.widthInPixels
