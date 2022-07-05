@@ -254,7 +254,7 @@ export class Keyboard {
 
       // key down is on window because canvas cannot have focus
       global.addEventListener('keydown', (ev: KeyboardEvent) => {
-        if (ev.repeat) return;
+        //if (ev.repeat) return;
 
         let code = ev.code as Keys
 

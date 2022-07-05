@@ -11,5 +11,6 @@ export const pcxList = [
   'st00',
   'st01',
 // 'wharrow',
- 'whdlgbox',
+'whdlgbox',
+'whdlgbox_temp',
 ]

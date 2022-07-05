@@ -3,6 +3,7 @@ import { GridEngine } from './grid/GridEngine'
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js'
 import * as scene from './scene/scene'
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'
+import NinePatch2Plugin from 'phaser3-rex-plugins/plugins/ninepatch2-plugin.js';
 
 export const config : Phaser.Types.Core.GameConfig = {
   // fps: {
@@ -21,6 +22,11 @@ export const config : Phaser.Types.Core.GameConfig = {
   parent: 'game',
 
   plugins: {
+    global: [{
+      key: 'rexNinePatch2Plugin',
+      plugin: NinePatch2Plugin,
+      start: true
+    }],
     scene: [
       {
         key: 'rexUI',

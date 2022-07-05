@@ -10,7 +10,7 @@ import { FsbKey, input } from '../input/input'
 import { keyboard, Keys } from '../input/keyboard'
 import mouse from '../input/mouse'
 import TextBox from 'phaser3-rex-plugins/templates/ui/textbox/TextBox'
-import { createDlgBox, createTextBox } from '../ui/dialogBox'
+import { createTextBox } from '../ui/dialogBox'
 
 export default class TestScene extends Phaser.Scene {
   rexUI: RexUIPlugin // Declare scene property 'rexUI' as RexUIPlugin type
@@ -137,25 +137,13 @@ export default class TestScene extends Phaser.Scene {
     // this.cameras.main.startFollow(this.playerSprite, false, 1, 1, -32, -54)
     // this.gridEngine.moveTo('npc', { x: 14, y: 20 })
 
-    //this.playerContainer.add(this.textBox)
-    this.textBox = createDlgBox(this)
 
-    this.dlgBox = createTextBox(this, 100, 500, {
-      wrapWidth: 500,
-      fixedWidth: 500,
-      fixedHeight: 65
-    }).start('dialog box test............', 50)
-
-    //this.playerContainer.add(this.textBox)
-
+    this.dlgBox = createTextBox(this, 0, 0, 16 * 8, 16 * 8, 16 * 4).start('[shadow]대화상자 테스트\n다섯손가락마을\n미로공주[/shadow]', 100)
   }
 
   counter = 0
   update () {
-    this.textBox.x = this.playerContainer.x
-    this.textBox.y = this.playerContainer.y - 30
-
-    this.dlgBox.setPosition(this.playerContainer.x, this.playerContainer.y  - 60)
+    this.dlgBox.setPosition(this.playerContainer.x - 50, this.playerContainer.y)
 
     this.dir = keyboard.lastDirectionHeld()
     if (this.dir != Direction.NONE) {

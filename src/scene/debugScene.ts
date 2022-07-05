@@ -13,14 +13,14 @@ class DebugScene extends Phaser.Scene {
 
   create () {
     // this.debugSprite = this.add.sprite(0, 0, 'cmiro00')
-    this.debugText = this.add.text(0, 0, 'Debug Scene', {
+    this.debugText = this.add.text(this.cameras.main.width/2, 0, 'Debug UI', {
       fontFamily: 'Batang',
       fontSize: '15px',
       color: '#ffffff',
       fontStyle: 'bold'
     })
 
-    this.debugText2 = this.add.text(0, 0, 'Debug Scene', {
+    this.debugText2 = this.add.text(0, 0, '', {
       fontFamily: 'Batang',
       fontSize: '15px',
       color: '#ffffff',
