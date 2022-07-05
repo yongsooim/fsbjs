@@ -23,7 +23,7 @@ export let createTextBox = function (scene: SceneWithRexUI, x: number, y: number
       columns: [16, 16, 16],
       rows: [16, 16, 16],
       stretchMode: 'repeat'
-    }).setAlpha(0.7).setDepth(9999).setTint(0xFF684E)
+    }).setAlpha(0.8).setDepth(100).setTint(0xFF684E)
 
     scene.add.existing(ninePatch)
 
