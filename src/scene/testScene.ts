@@ -138,7 +138,7 @@ export default class TestScene extends Phaser.Scene {
     // this.gridEngine.moveTo('npc', { x: 14, y: 20 })
 
 
-    this.dlgBox = createTextBox(this, 0, 0, 16 * 8, 16 * 8, 16 * 4).start('[shadow]대화상자 테스트\n다섯손가락마을\n미로공주[/shadow]', 100)
+    this.dlgBox = createTextBox(this, 0, 0, 16 * 8, 8, 4).start('[shadow]대화상자 테스트\n다섯손가락마을\n미로공주[/shadow]', 100)
   }
 
   counter = 0
@@ -200,6 +200,10 @@ export default class TestScene extends Phaser.Scene {
     } else if (keyboard.isHeld(Keys.Minus)) {
       cameraUtil.zoomBy(this, 0.98)
       cameraUtil.setBoundsAndCenter(this, this.map)
+    }
+
+    if (keyboard.wasPressed(Keys.Enter)) {
+      console.log(this.gridEngine.getCharactersAt(this.gridEngine.getFacingPosition('player'), 'Z0 P Layer'))
     }
     keyboard.update()
   }

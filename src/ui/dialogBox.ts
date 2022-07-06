@@ -14,11 +14,9 @@ const COLOR_PRIMARY = 0x4e342e
 const COLOR_LIGHT = 0x7b5e57
 const COLOR_DARK = 0x260e04
 
-export let createTextBox = function (scene: SceneWithRexUI, x: number, y: number, wrapWidth: number, fixedWidth: number, fixedHeight: number) {
-    //const background = scene.add.sprite(0, 0, 'whdlgboxAtlas', 'center')
-    //background.alpha = 0.7
-
-    const ninePatch = new NinePatch2(scene, x, y, fixedWidth, fixedHeight, {
+export let createTextBox = function (scene: SceneWithRexUI, x: number, y: number, wrapWidth: number, fixedWidth16: number, fixedHeight16: number) {
+  
+    const ninePatch = new NinePatch2(scene, x, y, fixedWidth16 * 16, fixedHeight16 * 16, {
       key: 'whdlgbox_temp',
       columns: [16, 16, 16],
       rows: [16, 16, 16],
@@ -33,19 +31,12 @@ export let createTextBox = function (scene: SceneWithRexUI, x: number, y: number
  
      background: ninePatch,
 
-     text: getBBcodeText(scene, wrapWidth, fixedWidth, fixedHeight),
+     text: getBBcodeText(scene, wrapWidth, fixedWidth16, fixedHeight16),
      //text: getBuiltInText(scene, wrapWidth, fixedWidth, fixedHeight),
  
-     
      action: scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
  
-     space: {
-       left: 16,
-       right: 16,
-       top: 16,
-       bottom: 16,
-       text: 16
-     }
+     space: { left: 16, right: 16, top: 16, bottom: 16, text: 16 }
    })
      .setOrigin(0, 1)
      .layout()

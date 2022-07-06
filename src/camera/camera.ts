@@ -5,8 +5,14 @@ class CameraUtil {
   minZoom = 0.7
   zoomTable = []
 
-  zoomTo (scene: Phaser.Scene, scale: number) {
-    scene.cameras.main.zoom = scale
+  zoomTo (scene: Phaser.Scene, zoomTarget: number) {
+    if(zoomTarget > this.maxZoom) {
+      zoomTarget = this.maxZoom
+    } else if (zoomTarget < this.minZoom) {
+      zoomTarget = this.minZoom
+    }   
+    scene.cameras.main.zoom = zoomTarget
+    
   }
 
   zoomBy (scene: Phaser.Scene, scale: number) {

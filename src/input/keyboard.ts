@@ -174,34 +174,36 @@ export class Keyboard {
   private _keysUp: Keys[] = [];
   private _keysDown: Keys[] = [];
   private _keysUpQue: Keys[] = [];
-  private _cheatCodeList = new Map<string, string>([
-['chikichakacho'  , ''] , // 모든 기술 습득-한번 적용시키면 해제할 수 없다.,
-['ilovebanana'    , ''] , // 경험치 100만 얻음.-전투 한번당 한번씩만 가능하다.[그 이후에 치면 안먹힘], 한번 적용시키면 해제할 수 없다.,
-['richisrich'     , ''] , // 돈 100,000을 얻음-한번 적용시킨 후에도 계속 칠 수 있다.,
-['gundamisgundam' , ''] , // 모빌슈츠, 뉴타입의 증서, 빔실드, 빔샤벨 10개씻 얻음-한번 적용시킨 후에도 계속 칠 수 있다.,
-['mewmewmew'      , ''] , // 든 보온병, 변신 옵션 세트, 변신 풀 세트를 얻음-한번 적용시킨 후에도 계속 칠 수 있다.,
-['supersupersuper', ''] , // 전투시 상태이상 완전방어, 무적, 공격력, 방어력 상승-한번 적용시키고난후 다시 치면 해제된다.,
-['chikicho'       , ''] , // 황금사과 10개 얻음(읽으면 치키쵸)-한번 적용시킨 후에도 계속 칠 수 있다.,
-['timeismoney'    , ''] , // 플레이 시간 표시-한번 적용시킨 후에도 계속 칠 수 있다.,
-['tututu'         , ''] , // 보물상자 얻은 수 표시-한번 적용시키고난후 다시 치면 해제된다.,
-['richaroma'      , ''] , // 스컹크의속옷(적들이 나타나지 않음)-한번 적용시킨 후에도 계속 칠 수 있다.,
-['killmenow'      , ''] , // 몬스터의수 증가-한번 적용시킨 후에도 계속 칠 수 있다.,
-['brucelee'       , ''] , // 여의 쌍절곤-한번 적용시킨 후에도 계속 칠 수 있다.,
-['excalibur'      , ''] , // 소닉엣지-한번 적용시킨 후에도 계속 칠 수 있다.,
-['ehdqkdqnfvo'    , ''] , // 만법공천(쓰기 어려우시면 '동방불패'라고 한번만 타자 쳐보시면 됨)-한번 적용시킨 후에도 계속 칠 수 있다.,
-['oinkoinkoink'   , ''] , // 핸드캐논-한번 적용시킨 후에도 계속 칠 수 있다.,
-['sledgehammer'   , ''] , // 쿼트 뽁뽁기-한번 적용시킨 후에도 계속 칠 수 있다.,
-['skywalker'      , ''] , // 태극검-한번 적용시킨 후에도 계속 칠 수 있다.,
-['stevevai'       , ''] , // 명인의 기타-한번 적용시킨 후에도 계속 칠 수 있다.,
-['williamtell'    , ''] , // 인챈트 보우-한번 적용시킨 후에도 계속 칠 수 있다.,
-['terminator'     , ''] , // 블레이드 라이플-한번 적용시킨 후에도 계속 칠 수 있다.,
-['asyourwish'     , ''] , // 예스마이 로드-한번 적용시킨 후에도 계속 칠 수 있다.,
-['kichmyass'      , ''] , // 적이 항상 뒤쪽에서 나타난다(적이 먼저 공격)-한번 적용시키고난후 다시 치면 해제된다.,
-['gotcha'         , ''] , // 아군이 선제공격을 한다(먼저공격)-한번 적용시키고난후 다시 치면 해제된다.,
-['ilovewide'      , ''] , // 항상 와이드(wide)로 화면을 본다.(800 600유지)-한번 적용시키고난후 다시 치면 해제된다.,
-['ihatewide'      , ''] , // 와이드(wide)로 보여지지 않는다(640 480유지)-한번 적용시키고난후 다시 치면 해제된다.,
-['givemedrug'     , ''] , //  캅셀 치트입니다. -한번 적용시킨 후에도 계속 칠 수 있다.,
-  ])
+  private _cheatCodes = [
+    'ilovebanana'     , // 경험치 100만 얻음.-전투 한번당 한번씩만 가능하다.[그 이후에 치면 안먹힘], 한번 적용시키면 해제할 수 없다.
+    'richisrich'      , // 돈 100,000을 얻음-한번 적용시킨 후에도 계속 칠 수 있다.
+    'givemedrug'      , //  캅셀 치트입니다. -한번 적용시킨 후에도 계속 칠 수 있다.
+    'chikichakacho'   , // 모든 기술 습득-한번 적용시키면 해제할 수 없다.
+    'timeismoney'     , // 플레이 시간 표시-한번 적용시킨 후에도 계속 칠 수 있다.
+    'chikicho'        , // 황금사과 10개 얻음(읽으면 치키쵸)-한번 적용시킨 후에도 계속 칠 수 있다.
+    'supersupersuper' , // 전투시 상태이상 완전방어, 무적, 공격력, 방어력 상승-한번 적용시키고난후 다시 치면 해제된다.
+    'gundamisgundam'  , // 모빌슈츠, 뉴타입의 증서, 빔실드, 빔샤벨 10개씻 얻음-한번 적용시킨 후에도 계속 칠 수 있다.
+    'tututu'          , // 보물상자 얻은 수 표시-한번 적용시키고난후 다시 치면 해제된다.
+    'mewmewmew'       , // 든 보온병, 변신 옵션 세트, 변신 풀 세트를 얻음-한번 적용시킨 후에도 계속 칠 수 있다.
+    'richaroma'       , // 스컹크의속옷(적들이 나타나지 않음)-한번 적용시킨 후에도 계속 칠 수 있다.
+    'killmenow'       , // 몬스터의수 증가-한번 적용시킨 후에도 계속 칠 수 있다.
+    'brucelee'        , // 여의 쌍절곤-한번 적용시킨 후에도 계속 칠 수 있다.
+    'excalibur'       , // 소닉엣지-한번 적용시킨 후에도 계속 칠 수 있다.
+    'ehdqkdqnfvo'     , // 만법공천(쓰기 어려우시면 '동방불패'라고 한번만 타자 쳐보시면 됨)-한번 적용시킨 후에도 계속 칠 수 있다.
+    'oinkoinkoink'    , // 핸드캐논-한번 적용시킨 후에도 계속 칠 수 있다.
+    'sledgehammer'    , // 쿼트 뽁뽁기-한번 적용시킨 후에도 계속 칠 수 있다.
+    'skywalker'       , // 태극검-한번 적용시킨 후에도 계속 칠 수 있다.
+    'stevevai'        , // 명인의 기타-한번 적용시킨 후에도 계속 칠 수 있다.
+    'williamtell'     , // 인챈트 보우-한번 적용시킨 후에도 계속 칠 수 있다.
+    'terminator'      , // 블레이드 라이플-한번 적용시킨 후에도 계속 칠 수 있다.
+    'asyourwish'      , // 예스마이 로드-한번 적용시킨 후에도 계속 칠 수 있다.
+    'kichmyass'       , // 적이 항상 뒤쪽에서 나타난다(적이 먼저 공격)-한번 적용시키고난후 다시 치면 해제된다.
+    'gotcha'          , // 아군이 선제공격을 한다(먼저공격)-한번 적용시키고난후 다시 치면 해제된다.
+    'ilovewide'       , // 항상 와이드(wide)로 화면을 본다.(800 600유지)-한번 적용시키고난후 다시 치면 해제된다.
+    'ihatewide'       , // 와이드(wide)로 보여지지 않는다(640 480유지)-한번 적용시키고난후 다시 치면 해제된다.
+  ]  // min length : 6, max length : 15
+  private _cheatMinLength = this._cheatCodes.reduce((previous, current) => previous.length <= current.length ? previous : current).length
+  private _cheatMaxLength = this._cheatCodes.reduce((previous, current) => previous.length >= current.length ? previous : current).length
 
   alias = new Map<Keys, Keys>([
     [Keys.W, Keys.ArrowUp],
@@ -284,11 +286,17 @@ export class Keyboard {
 
         /** check for cheat code input */
         if(code === Keys.Enter) {
-          if(this._cheatCodeList.has(this.history)) {
-            console.log('cheat code enabled : ' + this._cheatCodeList.get(this.history))
+          if(this.history.length >= this._cheatMinLength) {
+            for(let i = 0 ; i <= this._cheatCodes.length ; i++) {
+              if(this.history.endsWith(this._cheatCodes[i])) {
+                console.log(this._cheatCodes[i] + ' activated')
+                break
+              }
+            }
           }
           this.history = ''
-        } else if (ev.key.length !== 1) {
+        } else if (this.history.length !== 0 && ev.key.length !== 1) {
+          // clearing history for non alphanumeric key
           this.history = ''
         } else {
           this.history += ev.key
