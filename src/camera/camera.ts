@@ -1,8 +1,8 @@
 import Phaser from 'phaser'
 
 class CameraUtil {
-  maxZoom = 5
-  minZoom = 0.7
+  maxZoom = 4
+  minZoom = 0.85
   zoomTable = []
 
   zoomTo (scene: Phaser.Scene, zoomTarget: number) {

@@ -16,23 +16,13 @@ const COLOR_DARK = 0x260e04
 
 export let createTextBox = function (scene: SceneWithRexUI, x: number, y: number, wrapWidth: number, fixedWidth16: number, fixedHeight16: number) {
   
-    const ninePatch = new NinePatch2(scene, x, y, fixedWidth16 * 16, fixedHeight16 * 16, {
-      key: 'whdlgbox_temp',
-      columns: [16, 16, 16],
-      rows: [16, 16, 16],
-      stretchMode: 'repeat'
-    }).setAlpha(0.8).setDepth(100).setTint(0xFF684E)
-
-    scene.add.existing(ninePatch)
-
     const textBox = scene.rexUI.add.textBox({
      x: x,
      y: y,
  
-     background: ninePatch,
+     background: getBubble(scene, fixedWidth16, fixedHeight16),
 
-     text: getBBcodeText(scene, wrapWidth, fixedWidth16, fixedHeight16),
-     //text: getBuiltInText(scene, wrapWidth, fixedWidth, fixedHeight),
+     text: getTagText(scene, wrapWidth, fixedWidth16 * 16, fixedHeight16 * 16),
  
      action: scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
  
@@ -42,7 +32,6 @@ export let createTextBox = function (scene: SceneWithRexUI, x: number, y: number
      .layout()
  
    textBox
-     .setInteractive()
      .on('pointerdown', function () {
        const icon = this.getElement('action').setVisible(false)
        this.resetChildVisibleState(icon)
@@ -77,37 +66,65 @@ export let createTextBox = function (scene: SceneWithRexUI, x: number, y: number
    return textBox
  }
  
- const getBuiltInText = function (scene: Phaser.Scene, wrapWidth: number, fixedWidth: number, fixedHeight: number) {
-   return scene.add.text(0, 0, '', {
-     fontSize: '15px',
-     wordWrap: {
-       width: wrapWidth
-     },
-     maxLines: 3
-   })
-     .setFixedSize(fixedWidth, fixedHeight)
- }
- 
- let getBBcodeText = function (scene: SceneWithRexUI, wrapWidth: number, fixedWidth: number, fixedHeight: number) {
-   return scene.rexUI.add.BBCodeText(0, 0, '', {
-     fixedWidth: fixedWidth,
-     fixedHeight: fixedHeight,
-     fontSize: '15px',
-     fontFamily: 'Dotumche',
-     fontStyle: '',
-    color: '#E4C6B1',
-     shadow: {
-        color: 0x000000,
-        blur: 2,
-        offsetX: 1,
-        offsetY: 1,
+ let getTagText = function (scene: SceneWithRexUI, wrapWidth: number, fixedWidth: number, fixedHeight: number) {
+  return scene.rexUI.add.tagText(0, 0, '', {
+    tags: {
+      'tag0': {
+        fontSize: '14px',
+        fontFamily: 'Dotumche',
+        color: '#F8E6D1',
+        stroke: {
+          color: '#000000',
+          thickness: 0,
+        },
+        shadow: {
+          color: '#000000',
+          blur: 1,
+          offsetX: 2,
+          offsetY: 2,
+        }
+        
       },
-     wrap: {
-       mode: 'char',
-       width: wrapWidth
+      'tag1': {
+        fontSize: '16px',
+        fontFamily: '돋움체',
+        stroke: {
+          color: '#FFFFFF',
+          thickness: 1,
+        }
+      }
+
+    },
+    fixedWidth: fixedWidth,
+    fixedHeight: fixedHeight,
+    fontStyle: 'bold',
+    resolution: 1,
+    color: '#FFFFFF',
+    shadow: {
+       color: 0x000000,
+       blur: 1,
+       offsetX: 1,
+       offsetY: 1,
      },
-     maxLines: 5,
-     lineSpacing: 10,
-   })
- }
- 
+    wrap: {
+      mode: 'char',
+      width: wrapWidth
+    },
+    maxLines: 5,
+    lineSpacing: 8,
+    padding:{ top: 2 }
+  })
+}
+
+function getBubble(scene: Phaser.Scene, fixedWidth16: number, fixedHeight16: number) {
+  const ninePatch = new NinePatch2(scene, 0, 0, fixedWidth16 * 16, fixedHeight16 * 16, {
+    key: 'whdlgbox_temp',
+    columns: [16, 16, 16],
+    rows: [16, 16, 16],
+    stretchMode: 'repeat'
+  }).setAlpha(0.7).setDepth(100).setTint(0xCF484E)
+
+  scene.add.existing(ninePatch)
+
+  return ninePatch
+}

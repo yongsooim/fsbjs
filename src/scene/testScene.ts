@@ -35,6 +35,7 @@ export default class TestScene extends Phaser.Scene {
   }
 
   create () {
+    this.sound.play('vill2', {loop:true})
     const pinch = this.rexGestures.add.pinch(this, { enable: true, threshold: 30 })
 
     pinch.on('pinchstart', () => { touch.reset() })
@@ -138,7 +139,10 @@ export default class TestScene extends Phaser.Scene {
     // this.gridEngine.moveTo('npc', { x: 14, y: 20 })
 
 
-    this.dlgBox = createTextBox(this, 0, 0, 16 * 8, 8, 4).start('[shadow]대화상자 테스트\n다섯손가락마을\n미로공주[/shadow]', 100)
+    //this.dlgBox = createTextBox(this, 0, 0, 16 * 8, 8, 5).start('[stroke]대화상자[/stroke] [b][shadow]테스트[/shadow][/b]\n[shadow]다섯손가락마을[/shadow]\n[stroke][b]미로공주[/b][/stroke]', 100)
+    this.dlgBox = createTextBox(this, 0, 0, 16 * 8, 10, 4).start('<class="tag0">대화상자 테스트\n다섯손가락마을 \n미로공주</class>', 100)
+    //this.dlgBox = createTextBox(this, 0, 0, 16 *12, 12, 5).start('<class="tag0">저도 자세히는 몰라요!\n아무튼\n거대한 알이죠.</class>', 100)
+
   }
 
   counter = 0
@@ -207,6 +211,7 @@ export default class TestScene extends Phaser.Scene {
     }
     keyboard.update()
   }
+
 }
 
 export const testScene = new TestScene()

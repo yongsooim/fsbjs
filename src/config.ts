@@ -4,6 +4,8 @@ import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js'
 import * as scene from './scene/scene'
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'
 import NinePatch2Plugin from 'phaser3-rex-plugins/plugins/ninepatch2-plugin.js';
+import TagTextPlugin from 'phaser3-rex-plugins/plugins/tagtext-plugin.js';
+import { screenConst } from './const'
 
 export const config : Phaser.Types.Core.GameConfig = {
   // fps: {
@@ -17,15 +19,19 @@ export const config : Phaser.Types.Core.GameConfig = {
   antialiasGL: true,
 
   type: Phaser.AUTO, // Phaser will decide how to render our game (WebGL or Canvas)
-  width: 800,
-  height: 600,
+  width: screenConst.width,
+  height: screenConst.height,
   parent: 'game',
-
   plugins: {
-    global: [{
+    global: [
+    {
       key: 'rexNinePatch2Plugin',
       plugin: NinePatch2Plugin,
       start: true
+    },  
+    {key: 'rexTagTextPlugin',
+    plugin: TagTextPlugin,
+    start: true
     }],
     scene: [
       {

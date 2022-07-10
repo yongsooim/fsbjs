@@ -280,7 +280,12 @@ export class Keyboard {
 
       // key down is on window because canvas cannot have focus
       global.addEventListener('keydown', (ev: KeyboardEvent) => {
-        //if (ev.repeat) return;
+        if (ev.repeat) return;
+
+        if(this.keyToDirection.has(ev.code as Keys)) {
+          ev.stopPropagation();
+          ev.preventDefault();
+        }
 
         let code = ev.code as Keys
 
@@ -374,5 +379,6 @@ export class Keyboard {
     this._keysUpQue.push(key)
   }
 }
+
 
 export const keyboard = new Keyboard()

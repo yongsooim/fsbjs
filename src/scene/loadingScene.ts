@@ -134,9 +134,9 @@ class LoadingScene extends Phaser.Scene {
       //if(keyboard.getKeys().length != 0) {
       if(true) {
         keyboard.update()
-        //this.scene.start('menu')
-        this.scene.start('test')
-        this.scene.start('debug')
+        this.scene.start('menu')
+        //this.scene.start('test')
+        //this.scene.start('debug')
       }
       keyboard.update()
       //this.scene.start('test')
