@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "description": "fsbjs",
   "main": "electron/electron.ts",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "start": "yarn electron:dev",
     "build": "yarn app:build",
@@ -27,7 +27,7 @@
     "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
-    "electron": "^22.0.0",
+    "electron": "^23.0.0",
     "electron-builder": "^23.6.0",
     "eslint": "^8.29.0",
     "eslint-config-standard": "^17.0.0",
@@ -36,7 +36,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "rxjs": "^7.6.0",
     "typescript": "^4.9.4",
-    "vite": "^4.0.4",
+    "vite": "^4.1.1",
     "vite-plugin-cross-origin-isolation": "^0.1.6",
     "vite-plugin-rsw": "^2.0.11",
     "vite-plugin-static-copy": "^0.12.0",
@@ -50,7 +50,7 @@
     "is-mobile": "^3.1.1",
     "nipplejs": "^0.10.0",
     "phaser": "^3.55.2",
-    "phaser3-rex-plugins": "^1.1.79"
+    "phaser3-rex-plugins": "^1.1.80"
   },
   "build": {
     "appId": "fsbjs",

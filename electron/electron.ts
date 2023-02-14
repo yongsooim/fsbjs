@@ -1,5 +1,5 @@
-const path = require("path");
-const { app, powerSaveBlocker, BrowserWindow, session } = require("electron");
+import path from "path";
+import { app, powerSaveBlocker, BrowserWindow, session } from "electron";
 
 app.commandLine.appendSwitch ("disable-http-cache");
 app.commandLine.appendSwitch("disable-http-cache");
