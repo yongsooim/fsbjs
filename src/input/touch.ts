@@ -20,8 +20,8 @@ class Touch {
 
   init () {
     if (this.manager !== null) return
-    globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
-    globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Esc' }))
+    //globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: this.lastDirection }))
+    //globalThis.dispatchEvent(new KeyboardEvent('keyup', { code: 'Esc' }))
 
     clearTimeout(this.destroyTimer)
     clearTimeout(this.holdTimer)
@@ -73,7 +73,7 @@ class Touch {
   destroy () {
     clearTimeout(this.destroyTimer)
     clearTimeout(this.holdTimer)
-    if (this.manager) {
+    if (this.manager) { 
       this.manager.destroy()
       this.manager = null
     }

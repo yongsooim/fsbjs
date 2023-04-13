@@ -46,6 +46,18 @@ export class GridTilemap {
     return this.charBlockCache.getCharactersAt(position, layer);
   }
 
+  isBlockingForNpc(
+    charLayer: string | undefined,
+    pos: Vector2,
+    collisionGroups: string[],
+    direction?: Direction
+  ): boolean {
+    return (
+      this.hasBlockingTileForNpc(charLayer, pos, direction) ||
+      this.hasBlockingChar(pos, charLayer, collisionGroups)
+    );
+  }
+
   isBlocking(
     charLayer: string | undefined,
     pos: Vector2,
@@ -58,11 +70,57 @@ export class GridTilemap {
     );
   }
 
+  hasBlockingTileForNpc(
+    charLayer: string | undefined,
+    pos: Vector2,
+    direction?: Direction
+  ): boolean {
+    /** added for FSB collision check */
+    let currentMoveLayer = ''
+    if(charLayer.startsWith('Z0')) {
+      currentMoveLayer = 'Z0 Move'
+    } else {
+      currentMoveLayer = 'Z1 Move'
+    }
+
+    if(this.tilemap.getLayer(currentMoveLayer).data[pos.y][pos.x].index !== 2001) {
+      return true
+    } else {
+      return false
+    };
+
+    if (this.hasNoTile(pos, charLayer)) return true;
+    return this.getCollisionRelevantLayers(charLayer).some((layer) =>
+      this.isLayerBlockingAt(layer, pos, direction)
+    );
+  }
+
   hasBlockingTile(
     charLayer: string | undefined,
     pos: Vector2,
     direction?: Direction
   ): boolean {
+    /** added for FSB collision check */
+    let currentMoveLayer = ''
+    if(charLayer.startsWith('Z0')) {
+      currentMoveLayer = 'Z0 Move'
+    } else {
+      currentMoveLayer = 'Z1 Move'
+    }
+
+    switch(this.tilemap.getLayer(currentMoveLayer).data[pos.y][pos.x].index) { 
+      case 2001:
+        return false
+
+      case 2001 + 0x34:
+      case 2001 + 0x39:
+      case 2001 + 0x3C:
+      case 2001 + 0x3D:
+        return false
+    }
+
+    return true
+
     if (this.hasNoTile(pos, charLayer)) return true;
     return this.getCollisionRelevantLayers(charLayer).some((layer) =>
       this.isLayerBlockingAt(layer, pos, direction)

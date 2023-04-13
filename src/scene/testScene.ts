@@ -11,6 +11,9 @@ import { keyboard, Keys } from '../input/keyboard'
 import mouse from '../input/mouse'
 import TextBox from 'phaser3-rex-plugins/templates/ui/textbox/TextBox'
 import { createTextBox } from '../ui/dialogBox'
+import timer from '../global/timer'
+import { Vector2 } from '../grid/Utils/Vector2/Vector2'
+import { LayerPosition } from '../grid/Pathfinding/ShortestPathAlgorithm'
 
 export default class TestScene extends Phaser.Scene {
   rexUI: RexUIPlugin // Declare scene property 'rexUI' as RexUIPlugin type
@@ -18,6 +21,7 @@ export default class TestScene extends Phaser.Scene {
   playerContainer:Phaser.GameObjects.Container
   playerSprite:Phaser.GameObjects.Sprite
   playerSprite2:Phaser.GameObjects.Sprite
+  npcContainer:Phaser.GameObjects.Container
   npcSprite:Phaser.GameObjects.Sprite
   npcSprite2:Phaser.GameObjects.Sprite
   npcSprite3:Phaser.GameObjects.Sprite
@@ -53,45 +57,48 @@ export default class TestScene extends Phaser.Scene {
     this.map = this.make.tilemap({ key: '0022_tfi0___' })
 
     // add the tileset image we are using
-    const tilesetP = this.map.addTilesetImage('tfi0___p', 'tfi0___p', 64, 48, 1, 2)
-    const tilesetS = this.map.addTilesetImage('tfi0___s', 'tfi0___s', 64, 48, 1, 2, 1001)
+    const tilesetZ0P = this.map.addTilesetImage('tfi0___p', 'tfi0___p', 64, 48, 1, 2)
+    const tilesetZ0S = this.map.addTilesetImage('tfi0___s', 'tfi0___s', 64, 48, 1, 2, 1001)
 
-    this.map.createLayer('Z0 P Layer', tilesetP)
-    this.map.createLayer('Z0 S Layer', [tilesetP, tilesetS])
-    this.map.createLayer('Z1 P Layer', tilesetP)
-    this.map.createLayer('Z1 S Layer', [tilesetP, tilesetS])
+    const moveTileset = this.map.addTilesetImage('moveTileset', 'moveTileset', 64, 48, 0, 0, 2001)
 
-    // this.map.createLayer(1, tilesetP)
-    // this.map.createLayer(2, [tilesetP, tilesetS])
-    // this.map.createLayer(3, tilesetP)
-    // this.map.createLayer(4, [tilesetP, tilesetS])
+    this.map.createLayer('Z0 P Layer', tilesetZ0P)
+    this.map.createLayer('Z0 S Layer', [tilesetZ0P, tilesetZ0S])
+    
+    this.map.createLayer('Z1 P Layer', tilesetZ0S)
+    this.map.createLayer('Z1 S Layer', [tilesetZ0S, tilesetZ0S])
 
-    this.playerSprite = this.add.sprite(0, 0, 'cmiro00')
-    this.playerSprite2 = this.add.sprite(0, 0, 'cdit100')
-    this.playerSprite2.visible = false
-    this.playerContainer = this.add.container(0, 0)
-    this.playerContainer.add(this.playerSprite)
-    this.playerContainer.add(this.playerSprite2)
+    this.map.createLayer('Z0 Move', moveTileset).setVisible(false)
+    this.map.createLayer('Z1 Move', moveTileset).setVisible(false)
+
+    this.playerSprite2 = this.add.sprite(0, 0, 'cdit100').setVisible(false)
 
     this.npcSprite = this.add.sprite(0, 0, 'clmai000')
     this.npcSprite2 = this.add.sprite(0, 0, 'cman200')
     this.npcSprite3 = this.add.sprite(0, 0, 'cman200')
+
+    this.playerSprite = this.add.sprite(0, 0, 'cmiro00')
+    this.playerContainer = this.add.container(0, 0).add(this.playerSprite).add(this.playerSprite2)
+
     this.playerSprite.name = 'player'
 
+    this.npcContainer = this.add.container(0, 0).add(this.npcSprite)
+
     this.gridEngine.create(this.map, {
+      layerOverlay: true,
       numberOfDirections: NumberOfDirections.FOUR,
       characters: [
         {
           id: 'player',
           sprite: this.playerSprite,
           walkingAnimationMapping: 0,
-          startPosition: { x: 10, y: 19 },
+          startPosition: { x: 22, y: 22 },
           speed: 8,
           offsetX: 0,
           offsetY: -6,
-          collides: false,
+          collides: true,
           container: this.playerContainer,
-          charLayer: 'Z0 P Layer'
+          charLayer: 'Z1 P Layer'
         },
         {
           id: 'npc',
@@ -101,7 +108,8 @@ export default class TestScene extends Phaser.Scene {
           speed: 2,
           offsetX: 0,
           offsetY: 0,
-          collides: false,
+          collides: true,
+          container: this.npcContainer,
           charLayer: 'Z0 P Layer'
         },
         {
@@ -112,7 +120,7 @@ export default class TestScene extends Phaser.Scene {
           speed: 4,
           offsetX: 0,
           offsetY: 0,
-          collides: false,
+          collides: true,
           charLayer: 'Z0 P Layer'
         }
       ]
@@ -122,16 +130,18 @@ export default class TestScene extends Phaser.Scene {
       id: 'npc3',
       sprite: this.npcSprite3,
       walkingAnimationMapping: 0,
-      startPosition: { x: 10, y: 17 },
+      startPosition: { x: 10, y: 19 },
       speed: 4,
       offsetX: 0,
       offsetY: 0,
-      collides: false,
+      collides: true,
       charLayer: 'Z0 P Layer'
     })
     this.gridEngine.moveRandomly('npc', 1000, 4)
     this.gridEngine.moveRandomly('npc2', 1111, 2)
     this.gridEngine.moveRandomly('npc3', 975, 3)
+
+    this.cameras.main.roundPixels = false
 
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels, true)
     this.cameras.main.startFollow(this.playerContainer, false, 1, 1, -32, -54)
@@ -143,10 +153,39 @@ export default class TestScene extends Phaser.Scene {
     this.dlgBox = createTextBox(this, 0, 0, 16 * 8, 10, 4).start('<class="tag0">대화상자 테스트\n다섯손가락마을 \n미로공주</class>', 100)
     //this.dlgBox = createTextBox(this, 0, 0, 16 *12, 12, 5).start('<class="tag0">저도 자세히는 몰라요!\n아무튼\n거대한 알이죠.</class>', 100)
 
+
+    this.gridEngine
+    .positionChangeFinished()
+    .subscribe(({ charId, exitTile, enterTile, enterLayer }) => {
+      if(charId != 'player') return
+      let player = this.gridEngine.gridCharacters.get('player')
+      const dir = player.getFacingDirection()
+      let currentMoveLayer = enterLayer.startsWith('Z0') ? 'Z0 Move' : 'Z1 Move'
+      
+      switch(this.map.getLayer(currentMoveLayer).data[enterTile.y][enterTile.x].index) {
+        case 2001 + 0x3D:
+          switch (dir) {
+            case Direction.UP:
+              //player.setTilePosition({ position: new Vector2(enterTile.x, enterTile.y), layer: 'Z0 P Layer' })
+              player.setLayer('Z0 P Layer')
+              break;
+
+            case Direction.DOWN:
+              player.setLayer('Z1 P Layer')
+          
+              break;
+          }
+        break;
+      }
+      
+    });
   }
 
   counter = 0
-  update () {
+  update (time: number, delta: number) {
+    timer.raf(time, delta);
+    console.log(this.playerContainer.depth)
+
     this.dlgBox.setPosition(this.playerContainer.x - 50, this.playerContainer.y)
 
     this.dir = keyboard.lastDirectionHeld()
@@ -185,8 +224,6 @@ export default class TestScene extends Phaser.Scene {
     }
 
     if (keyboard.wasPressed(Keys.KeyC)) {
-      // this.playerSprite = new Phaser.GameObjects.Sprite(this, 0, 0, 'cdit100')
-      // this.playerSprite = this.add.sprite(0, 0, 'cmiro00')
       if (this.playerSprite2.visible) {
         this.gridEngine.setSprite('player', this.playerSprite)
         this.playerSprite.visible = true
@@ -207,7 +244,8 @@ export default class TestScene extends Phaser.Scene {
     }
 
     if (keyboard.wasPressed(Keys.Enter)) {
-      console.log(this.gridEngine.getCharactersAt(this.gridEngine.getFacingPosition('player'), 'Z0 P Layer'))
+      //console.log(this.gridEngine.getCharactersAt(this.gridEngine.getFacingPosition('player'), 'Z0 P Layer'))
+      console.log(this.gridEngine.getPosition('player') )
     }
     keyboard.update()
   }

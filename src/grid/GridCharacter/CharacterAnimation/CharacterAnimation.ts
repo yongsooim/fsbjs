@@ -7,6 +7,7 @@ export class CharacterAnimation {
   private static readonly FRAMES_CHAR_COL = 4;
   private lastFootLeft = false;
   private directionToFrameRow: { [key in Direction]?: number } = {
+    [Direction.NONE]: 1,
     [Direction.UP]: 0,
     [Direction.DOWN]: 1,
     [Direction.LEFT]: 2,
@@ -54,9 +55,9 @@ export class CharacterAnimation {
     return this._isEnabled;
   }
 
-  updateCharacterFrame( movementDirection: Direction, hasWalkedQuarterATile: number): void {
+  updateCharacterFrame( movementDirection: Direction, hasWalkedQuarterOfTile: number): void {
     if (this._isEnabled) {
-      this.setWalkingFrame(movementDirection, hasWalkedQuarterATile );
+      this.setWalkingFrame(movementDirection, hasWalkedQuarterOfTile );
     }
   }
 

@@ -155,6 +155,11 @@ export class GridCharacter {
     }
   }
 
+  setLayer(layer: string): void {
+    this.gameObject().setDepth(this.tilemap.getDepthOfCharLayer(layer) + this.getPaddedPixelDepth());
+    this.updateZindex();
+  }
+
   setTilePosition(tilePosition: LayerPosition): void {
     if (this.isMoving()) {
       this.movementStopped$.next(this.movementDirection);
@@ -194,7 +199,7 @@ export class GridCharacter {
       this.directionChangingElapsed = 0;
       this.directionChangeFrom = this.facingDirection
       this.directionChangeTarget = direction
-    } else if (this.isBlockingDirection(direction)) {
+    } else if (this.id == 'player' ? this.isBlockingDirection(direction) : this.isBlockingDirectionForNpc(direction)) {
       this.facingDirection = direction;
       this.animation.setStandingFrame(direction);
       this.directionChanged$.next(direction);
@@ -241,6 +246,33 @@ export class GridCharacter {
     if (
       this.collidesWithTilesInternal &&
       this.tilemap.hasBlockingTile(
+        layerInDirection,
+        tilePosInDir,
+        oppositeDirection(direction)
+      )
+    ) {
+      return true;
+    }
+
+    return this.tilemap.hasBlockingChar(
+      tilePosInDir,
+      layerInDirection,
+      this.getCollisionGroups()
+    );
+  }
+
+  isBlockingDirectionForNpc(direction: Direction): boolean {
+    if (direction == Direction.NONE) return false;
+
+    const tilePosInDir = this.tilePosInDirection(direction);
+
+    const layerInDirection =
+      this.tilemap.getTransition(tilePosInDir, this.nextTilePos.layer) ||
+      this.nextTilePos.layer;
+
+    if (
+      this.collidesWithTilesInternal &&
+      this.tilemap.hasBlockingTileForNpc(
         layerInDirection,
         tilePosInDir,
         oppositeDirection(direction)
@@ -539,7 +571,7 @@ export class GridCharacter {
   private shouldContinueMoving(): boolean {
     return (
       this.lastMovementImpulse !== Direction.NONE &&
-      !this.isBlockingDirection(this.lastMovementImpulse)
+      !(this.id=='player'?this.isBlockingDirection(this.lastMovementImpulse):this.isBlockingDirectionForNpc(this.movementDirection))
     );
   }
 
@@ -556,7 +588,7 @@ export class GridCharacter {
     this.tileSizePixelsWalked = this.tileSizePixelsWalked.add(speed.abs());
     this.animation.updateCharacterFrame(
       this.movementDirection,
-      this.hasWalkedQuarterATile()
+      this.hasWalkedQuarterOfTile()
     );
     this.tileSizePixelsWalked = this.tileSizePixelsWalked.modulo(
       this.tilemap.getTileDistance(this.movementDirection)
@@ -574,7 +606,7 @@ export class GridCharacter {
     this.fire(this.positionChangeFinished$, exitTile, enterTile);
   }
 
-  private hasWalkedQuarterATile(): number {
+  private hasWalkedQuarterOfTile(): number {
     if(this.tileSizePixelsWalked.x > 48 || 
       this.tileSizePixelsWalked.y > 36) {
       return 3;

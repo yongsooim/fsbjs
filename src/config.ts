@@ -7,32 +7,45 @@ import NinePatch2Plugin from 'phaser3-rex-plugins/plugins/ninepatch2-plugin.js';
 import TagTextPlugin from 'phaser3-rex-plugins/plugins/tagtext-plugin.js';
 import { screenConst } from './const'
 
-export const config : Phaser.Types.Core.GameConfig = {
-  // fps: {
-  //  target: 60,
-  //  forceSetTimeOut: true,
-  //  smoothStep: true,
-  //  deltaHistory: 600
-  // },
-  roundPixels: false,
+export const config: Phaser.Types.Core.GameConfig = {
+  fps: {
+    target: 60,
+    //  forceSetTimeOut: true,
+    smoothStep: true,
+    //  deltaHistory: 600
+  },
+  roundPixels: true,
   antialias: true,
   antialiasGL: true,
+  powerPreference: 'high-performance',
+  autoFocus: true,
 
-  type: Phaser.AUTO, // Phaser will decide how to render our game (WebGL or Canvas)
+  type: Phaser.WEBGL, // Phaser will decide how to render our game (WebGL or Canvas)
   width: screenConst.width,
   height: screenConst.height,
   parent: 'game',
+
+
+  banner: false,
+  scene: [
+    scene.loadingScene,
+    scene.testScene,
+    scene.menuScene,
+    scene.mainScene,
+    scene.debugScene
+  ],
   plugins: {
     global: [
-    {
-      key: 'rexNinePatch2Plugin',
-      plugin: NinePatch2Plugin,
-      start: true
-    },  
-    {key: 'rexTagTextPlugin',
-    plugin: TagTextPlugin,
-    start: true
-    }],
+      {
+        key: 'rexNinePatch2Plugin',
+        plugin: NinePatch2Plugin,
+        start: true
+      },
+      {
+        key: 'rexTagTextPlugin',
+        plugin: TagTextPlugin,
+        start: true
+      }],
     scene: [
       {
         key: 'rexUI',
@@ -52,13 +65,4 @@ export const config : Phaser.Types.Core.GameConfig = {
     ]
 
   },
-  banner: false,
-  scene: [
-    scene.loadingScene,
-    scene.testScene,
-    scene.menuScene,
-    scene.mainScene,
-    scene.debugScene
-  ]
-  // scene: scene.s000_menu,
 }

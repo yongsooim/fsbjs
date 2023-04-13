@@ -107,6 +107,7 @@ class LoadingScene extends Phaser.Scene {
     for (const tmj of resource.tmjList) { this.load.tilemapTiledJSON(tmj, assetRootPath + 'mapset/tmj/' + tmj + '.tmj')}
     for (const png of resource.pngList) { this.load.image(png, assetRootPath + 'mapset/png_ext/' + png + '.png')}
     for (const json of resource.jsonList) { this.load.json(json, assetRootPath + 'mapset/json/' + json + '.json')}
+    this.load.image('moveTileset', assetRootPath + 'mapset/png/moveTileset.png')
   }
 
   loadSound() {

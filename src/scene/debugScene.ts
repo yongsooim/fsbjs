@@ -51,10 +51,10 @@ class DebugScene extends Phaser.Scene {
   cheatActivated(cheatNo: number) {
     switch (cheatNo) {
       case 0 :
-        let text = this.add.text(this.cameras.main.width/2, this.cameras.main.height/2, 'Cheat 0', { fontFamily: 'Batang', fontSize: '15px', color: '#ffffff',})
+        let text = this.add.text(this.cameras.main.width/2, this.cameras.main.height - 100, 'Cheat 0', { fontFamily: 'Batang', fontSize: '20px', color: '#ffffff', fontStyle: 'bold' })
         setTimeout(() => {
           text.destroy()
-        }, 1000)
+        }, 3000)
         break
     }    
   }

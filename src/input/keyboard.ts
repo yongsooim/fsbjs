@@ -1,5 +1,6 @@
 import cameraUtil from '../camera/camera'
 import { Direction } from '../grid/Direction/Direction'
+import { debugScene } from '../scene/debugScene';
 
 /** LICENSE : Source code is based on Excalibur.js by Erik Onarheim BSD 2-Clause License */
 
@@ -295,6 +296,7 @@ export class Keyboard {
             for(let i = 0 ; i <= this._cheatCodes.length ; i++) {
               if(this.history.endsWith(this._cheatCodes[i])) {
                 console.log(this._cheatCodes[i] + ' activated')
+                debugScene.cheatActivated(0)
                 break
               }
             }

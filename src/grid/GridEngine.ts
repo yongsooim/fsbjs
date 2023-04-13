@@ -239,8 +239,8 @@ export enum CharacterShiftAction {
 }
 
 export class GridEngine {
-  private gridCharacters: Map<string, GridCharacter>;
-  private gridTilemap: GridTilemap;
+  public gridCharacters: Map<string, GridCharacter>;
+  public gridTilemap: GridTilemap;
   private isCreated = false;
   private movementStopped$: Subject<{ charId: string; direction: Direction }>;
   private movementStarted$: Subject<{ charId: string; direction: Direction }>;
