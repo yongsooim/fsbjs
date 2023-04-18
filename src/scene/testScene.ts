@@ -62,14 +62,16 @@ export default class TestScene extends Phaser.Scene {
 
     const moveTileset = this.map.addTilesetImage('moveTileset', 'moveTileset', 64, 48, 0, 0, 2001)
 
-    this.map.createLayer('Z0 P Layer', tilesetZ0P)
-    this.map.createLayer('Z0 S Layer', [tilesetZ0P, tilesetZ0S])
+    this.map.createLayer('Z0 P Layer', tilesetZ0P).setDepth(1)
+    this.map.createLayer('Z0 S Layer', [tilesetZ0P, tilesetZ0S]).setDepth(2)
     
-    this.map.createLayer('Z1 P Layer', tilesetZ0S)
-    this.map.createLayer('Z1 S Layer', [tilesetZ0S, tilesetZ0S])
+    this.map.createLayer('Z1 P Layer', tilesetZ0S).setDepth(3)
+    this.map.createLayer('Z1 S Layer', [tilesetZ0S, tilesetZ0S]).setDepth(10)
 
     this.map.createLayer('Z0 Move', moveTileset).setVisible(false)
     this.map.createLayer('Z1 Move', moveTileset).setVisible(false)
+
+    
 
     this.playerSprite2 = this.add.sprite(0, 0, 'cdit100').setVisible(false)
 
@@ -85,7 +87,7 @@ export default class TestScene extends Phaser.Scene {
     this.npcContainer = this.add.container(0, 0).add(this.npcSprite)
 
     this.gridEngine.create(this.map, {
-      layerOverlay: true,
+      //layerOverlay: true,
       numberOfDirections: NumberOfDirections.FOUR,
       characters: [
         {
@@ -185,6 +187,10 @@ export default class TestScene extends Phaser.Scene {
   update (time: number, delta: number) {
     timer.raf(time, delta);
     console.log(this.playerContainer.depth)
+
+    console.log(this.map.getLayer('Z1 S Layer').tilemapLayer.depth)
+    this.map.getLayer('Z1 S Layer').tilemapLayer.setDepth(300)
+    this.map.getLayer('Z1 S Layer').tilemapLayer.setVisible(true)
 
     this.dlgBox.setPosition(this.playerContainer.x - 50, this.playerContainer.y)
 
