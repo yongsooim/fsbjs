@@ -20,7 +20,7 @@ export let createTextBox = function (scene: SceneWithRexUI, x: number, y: number
     x: x,
     y: y,
 
-    //background: getBubble(scene, fixedWidth16, fixedHeight16),
+    background: getBubble(scene, fixedWidth16, fixedHeight16),
     text: getTagText(scene, wrapWidth, fixedWidth16 * 16, fixedHeight16 * 16),
 
     action: scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
@@ -72,6 +72,7 @@ let getTagText = function (scene: SceneWithRexUI, wrapWidth: number, fixedWidth:
         fontSize: '14px',
         fontFamily: 'Dotumche',
         color: '#F8E6D1',
+        fontStyle: 'bold',
         stroke: {
           color: '#000000',
           thickness: 0,

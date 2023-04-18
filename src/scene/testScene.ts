@@ -186,9 +186,8 @@ export default class TestScene extends Phaser.Scene {
   counter = 0
   update (time: number, delta: number) {
     timer.raf(time, delta);
-    console.log(this.playerContainer.depth)
-
-    console.log(this.map.getLayer('Z1 S Layer').tilemapLayer.depth)
+    //console.log(this.playerContainer.depth)
+    //console.log(this.map.getLayer('Z1 S Layer').tilemapLayer.depth)
     this.map.getLayer('Z1 S Layer').tilemapLayer.setDepth(300)
     this.map.getLayer('Z1 S Layer').tilemapLayer.setVisible(true)
 
@@ -251,7 +250,7 @@ export default class TestScene extends Phaser.Scene {
 
     if (keyboard.wasPressed(Keys.Enter)) {
       //console.log(this.gridEngine.getCharactersAt(this.gridEngine.getFacingPosition('player'), 'Z0 P Layer'))
-      console.log(this.gridEngine.getPosition('player') )
+      //console.log(this.gridEngine.getPosition('player') )
     }
     keyboard.update()
   }
