@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { assetRootPath } from '../const'
+import { assetBaseUrl } from '../const'
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js'
 import * as resource from '../resource/resource'
 import { keyboard } from '../input/keyboard'
@@ -20,7 +20,8 @@ class LoadingScene extends Phaser.Scene {
     progressBox.fillStyle(0x222222, 0.8)
     progressBox.fillRect((width - 270 ) / 2, (height - 50)  / 2, 320, 50)
 
-    this.load.image('logo', assetRootPath + 'graphics/pcxset/logo.png')
+    this.load.baseURL = assetBaseUrl
+    this.load.image('logo', 'graphics/pcxset/logo.png')
     const loadingText = this.make.text({
       x: width / 2,
       y: height / 2 + 50,
@@ -95,27 +96,27 @@ class LoadingScene extends Phaser.Scene {
   }
 
   loadGraphics() {
-    for (const png of resource.fmList) { this.load.image(png, assetRootPath + 'graphics/ase_fm/' + png + '.png', ) }
-    for (const png of resource.psList) { this.load.spritesheet(png, assetRootPath + 'graphics/ase_ps/' + png + '.png', { frameWidth: 64, frameHeight: 96 })}
-    for (const png of resource.pcxList) { this.load.image(png, assetRootPath + 'graphics/pcxset/' + png + '.png')}
+    for (const png of resource.fmList) { this.load.image(png, 'graphics/ase_fm/' + png + '.png', ) }
+    for (const png of resource.psList) { this.load.spritesheet(png, 'graphics/ase_ps/' + png + '.png', { frameWidth: 64, frameHeight: 96 })}
+    for (const png of resource.pcxList) { this.load.image(png, 'graphics/pcxset/' + png + '.png')}
     for (const atlas of resource.pcxAtlasList) { 
-      this.load.atlas(atlas + 'Atlas', assetRootPath + 'graphics/pcxset/' + atlas + '.png', assetRootPath + 'graphics/pcxset/atlas/' + atlas + '.json')
+      this.load.atlas(atlas + 'Atlas', 'graphics/pcxset/' + atlas + '.png', 'graphics/pcxset/atlas/' + atlas + '.json')
     }
   }
 
   loadMapset() {
-    for (const tmj of resource.tmjList) { this.load.tilemapTiledJSON(tmj, assetRootPath + 'mapset/tmj/' + tmj + '.tmj')}
-    for (const png of resource.pngList) { this.load.image(png, assetRootPath + 'mapset/png_ext/' + png + '.png')}
-    for (const json of resource.jsonList) { this.load.json(json, assetRootPath + 'mapset/json/' + json + '.json')}
-    this.load.image('moveTileset', assetRootPath + 'mapset/png/moveTileset.png')
+    for (const tmj of resource.tmjList) { this.load.tilemapTiledJSON(tmj, 'mapset/tmj/' + tmj + '.tmj')}
+    for (const png of resource.pngList) { this.load.image(png, 'mapset/png_ext/' + png + '.png')}
+    for (const json of resource.jsonList) { this.load.json(json, 'mapset/json/' + json + '.json')}
+    this.load.image('moveTileset', 'mapset/png/moveTileset.png')
   }
 
   loadSound() {
     const extension = 'mp3'
     //const extension = 'wav'
-    for (const wav of resource.fxList) { this.load.audio(wav, assetRootPath + extension + '/wav_eft/' + wav + '.' + extension)}
-    for (const wav of resource.seList) { this.load.audio(wav, assetRootPath + extension + '/se_event/' + wav + '.' + extension)}
-    for (const wav of resource.bgmList) { this.load.audio(wav, assetRootPath + extension + '/bgm/' + wav + '.' + extension)}
+    for (const wav of resource.fxList) { this.load.audio(wav, extension + '/wav_eft/' + wav + '.' + extension)}
+    for (const wav of resource.seList) { this.load.audio(wav, extension + '/se_event/' + wav + '.' + extension)}
+    for (const wav of resource.bgmList) { this.load.audio(wav, extension + '/bgm/' + wav + '.' + extension)}
   }
 
   create () {

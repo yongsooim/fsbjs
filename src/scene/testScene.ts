@@ -1,6 +1,6 @@
 import { GridEngine, Direction, NumberOfDirections } from '../grid/GridEngine'
 import Phaser from 'phaser'
-import { assetRootPath } from '../const'
+import { assetBaseUrl } from '../const'
 import { touch } from '../input/touch'
 import cameraUtil from '../camera/camera'
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js'
@@ -155,11 +155,16 @@ export default class TestScene extends Phaser.Scene {
     this.dlgBox = createTextBox(this, 0, 0, 16 * 8, 10, 4).start('<class="tag0">대화상자 테스트\n다섯손가락마을 \n미로공주</class>', 100)
     //this.dlgBox = createTextBox(this, 0, 0, 16 *12, 12, 5).start('<class="tag0">저도 자세히는 몰라요!\n아무튼\n거대한 알이죠.</class>', 100)
 
+    this.gridEngine.setTransition({x: 22, y: 19},'Z1 P Layer', 'Z0 P Layer')
+    this.gridEngine.setTransition({x: 22, y: 19},'Z0 P Layer', 'Z1 P Layer')
+    this.gridEngine.setTransition({x: 23, y: 19},'Z0 P Layer', 'Z1 P Layer')
+    this.gridEngine.setTransition({x: 23, y: 19},'Z1 P Layer', 'Z0 P Layer')
 
     this.gridEngine
     .positionChangeFinished()
     .subscribe(({ charId, exitTile, enterTile, enterLayer }) => {
       if(charId != 'player') return
+      console.log(enterLayer)
       let player = this.gridEngine.gridCharacters.get('player')
       const dir = player.getFacingDirection()
       let currentMoveLayer = enterLayer.startsWith('Z0') ? 'Z0 Move' : 'Z1 Move'
@@ -168,8 +173,8 @@ export default class TestScene extends Phaser.Scene {
         case 2001 + 0x3D:
           switch (dir) {
             case Direction.UP:
+              //console.log(player.getTilePos())
               //player.setTilePosition({ position: new Vector2(enterTile.x, enterTile.y), layer: 'Z0 P Layer' })
-              player.setLayer('Z0 P Layer')
               break;
 
             case Direction.DOWN:
@@ -182,6 +187,7 @@ export default class TestScene extends Phaser.Scene {
       
     });
   }
+
 
   counter = 0
   update (time: number, delta: number) {

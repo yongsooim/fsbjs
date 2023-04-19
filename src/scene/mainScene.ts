@@ -1,6 +1,6 @@
 import { GridEngine, Direction, NumberOfDirections } from '../grid/GridEngine'
 
-import { assetRootPath } from '../const'
+import { assetBaseUrl } from '../const'
 import { touch } from '../input/touch'
 import cameraUtil from '../camera/camera'
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js'

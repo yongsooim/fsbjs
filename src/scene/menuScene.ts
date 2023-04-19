@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { assetRootPath } from '../const'
+import { assetBaseUrl } from '../const'
 import * as scene from './scene'
 import { keyboard, Keys } from '../input/keyboard'
 import { touch } from '../input/touch'
@@ -24,10 +24,11 @@ class MenuScene extends Phaser.Scene {
   }
 
   preload () {
-    this.load.audio('pusan', assetRootPath + 'mp3/bgm/pusan.mp3')
-    this.load.audio('e154', assetRootPath + 'mp3/wav_eft/e154.mp3')
-    this.load.audio('e156', assetRootPath + 'mp3/wav_eft/e156.mp3')
-    this.load.image('background', assetRootPath + 'graphics/pcxset/st00.png')
+    this.load.baseURL = assetBaseUrl
+    this.load.audio('pusan', 'mp3/bgm/pusan.mp3')
+    this.load.audio('e154', 'mp3/wav_eft/e154.mp3')
+    this.load.audio('e156', 'mp3/wav_eft/e156.mp3')
+    this.load.image('background', 'graphics/pcxset/st00.png')
   }
 
   create () {

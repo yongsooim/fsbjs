@@ -20,11 +20,10 @@ export const config: Phaser.Types.Core.GameConfig = {
   powerPreference: 'high-performance',
   autoFocus: true,
 
-  type: Phaser.WEBGL, // Phaser will decide how to render our game (WebGL or Canvas)
+  type: Phaser.AUTO,
   width: screenConst.width,
   height: screenConst.height,
   parent: 'game',
-
 
   banner: false,
   scene: [
