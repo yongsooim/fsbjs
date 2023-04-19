@@ -17,29 +17,29 @@ import { LayerPosition } from '../grid/Pathfinding/ShortestPathAlgorithm'
 
 export default class TestScene extends Phaser.Scene {
   rexUI: RexUIPlugin // Declare scene property 'rexUI' as RexUIPlugin type
-  map:Phaser.Tilemaps.Tilemap
-  playerContainer:Phaser.GameObjects.Container
-  playerSprite:Phaser.GameObjects.Sprite
-  playerSprite2:Phaser.GameObjects.Sprite
-  npcContainer:Phaser.GameObjects.Container
-  npcSprite:Phaser.GameObjects.Sprite
-  npcSprite2:Phaser.GameObjects.Sprite
-  npcSprite3:Phaser.GameObjects.Sprite
+  map: Phaser.Tilemaps.Tilemap
+  playerContainer: Phaser.GameObjects.Container
+  playerSprite: Phaser.GameObjects.Sprite
+  playerSprite2: Phaser.GameObjects.Sprite
+  npcContainer: Phaser.GameObjects.Container
+  npcSprite: Phaser.GameObjects.Sprite
+  npcSprite2: Phaser.GameObjects.Sprite
+  npcSprite3: Phaser.GameObjects.Sprite
   rexGestures: GesturesPlugin
   gridEngine: GridEngine
   dir: Direction
   textBox: Phaser.GameObjects.Container
   dlgBox: RexUIPlugin.TextBox
 
-  constructor () {
+  constructor() {
     super('test')
   }
 
-  preload () {
+  preload() {
   }
 
-  create () {
-    this.sound.play('vill2', {loop:true})
+  create() {
+    this.sound.play('vill2', { loop: true })
     const pinch = this.rexGestures.add.pinch(this, { enable: true, threshold: 30 })
 
     pinch.on('pinchstart', () => { touch.reset() })
@@ -64,14 +64,14 @@ export default class TestScene extends Phaser.Scene {
 
     this.map.createLayer('Z0 P Layer', tilesetZ0P).setDepth(1)
     this.map.createLayer('Z0 S Layer', [tilesetZ0P, tilesetZ0S]).setDepth(2)
-    
+
     this.map.createLayer('Z1 P Layer', tilesetZ0S).setDepth(3)
     this.map.createLayer('Z1 S Layer', [tilesetZ0S, tilesetZ0S]).setDepth(10)
 
     this.map.createLayer('Z0 Move', moveTileset).setVisible(false)
     this.map.createLayer('Z1 Move', moveTileset).setVisible(false)
 
-    
+
 
     this.playerSprite2 = this.add.sprite(0, 0, 'cdit100').setVisible(false)
 
@@ -155,42 +155,61 @@ export default class TestScene extends Phaser.Scene {
     this.dlgBox = createTextBox(this, 0, 0, 16 * 8, 10, 4).start('<class="tag0">대화상자 테스트\n다섯손가락마을 \n미로공주</class>', 100)
     //this.dlgBox = createTextBox(this, 0, 0, 16 *12, 12, 5).start('<class="tag0">저도 자세히는 몰라요!\n아무튼\n거대한 알이죠.</class>', 100)
 
-    this.gridEngine.setTransition({x: 22, y: 19},'Z1 P Layer', 'Z0 P Layer')
-    this.gridEngine.setTransition({x: 22, y: 19},'Z0 P Layer', 'Z1 P Layer')
-    this.gridEngine.setTransition({x: 23, y: 19},'Z0 P Layer', 'Z1 P Layer')
-    this.gridEngine.setTransition({x: 23, y: 19},'Z1 P Layer', 'Z0 P Layer')
+    console.log(this.map.getLayer('Z0 Move').width)
 
-    this.gridEngine
-    .positionChangeFinished()
-    .subscribe(({ charId, exitTile, enterTile, enterLayer }) => {
-      if(charId != 'player') return
-      console.log(enterLayer)
-      let player = this.gridEngine.gridCharacters.get('player')
-      const dir = player.getFacingDirection()
-      let currentMoveLayer = enterLayer.startsWith('Z0') ? 'Z0 Move' : 'Z1 Move'
-      
-      switch(this.map.getLayer(currentMoveLayer).data[enterTile.y][enterTile.x].index) {
-        case 2001 + 0x3D:
-          switch (dir) {
-            case Direction.UP:
-              //console.log(player.getTilePos())
-              //player.setTilePosition({ position: new Vector2(enterTile.x, enterTile.y), layer: 'Z0 P Layer' })
-              break;
+    for (let i = 0; i < this.map.getLayer('Z0 Move').width; i++) {
+      for (let j = 0; j < this.map.getLayer('Z0 Move').height; j++) {
+        if (this.map.getLayer('Z0 Move').data[j][i].index == 2001 + 0x3D) {
+          this.gridEngine.setTransition({ x: i, y: j }, 'Z1 P Layer', 'Z0 P Layer')
+        } else if (this.map.getLayer('Z0 Move').data[j][i].index == 2001 + 0x3C) {
 
-            case Direction.DOWN:
-              player.setLayer('Z1 P Layer')
-          
-              break;
-          }
-        break;
+        }
       }
-      
-    });
+    }
+
+    if (this.map.getLayer('Z1 Move')) {
+      for (let i = 0; i < this.map.getLayer('Z1 Move').width; i++) {
+        for (let j = 0; j < this.map.getLayer('Z1 Move').height; j++) {
+          if (this.map.getLayer('Z1 Move').data[j][i].index == 2001 + 0x3D) {
+            this.gridEngine.setTransition({ x: i, y: j }, 'Z0 P Layer', 'Z1 P Layer')
+          } else if (this.map.getLayer('Z1 Move').data[j][i].index == 2001 + 0x3C) {
+
+          }
+        }
+      }
+    }
+    
+    this.gridEngine
+      .positionChangeFinished()
+      .subscribe(({ charId, exitTile, enterTile, enterLayer }) => {
+        if (charId != 'player') return
+        console.log(enterLayer)
+        let player = this.gridEngine.gridCharacters.get('player')
+        const dir = player.getFacingDirection()
+        let currentMoveLayer = enterLayer.startsWith('Z0') ? 'Z0 Move' : 'Z1 Move'
+
+        switch (this.map.getLayer(currentMoveLayer).data[enterTile.y][enterTile.x].index) {
+          case 2001 + 0x3D:
+            switch (dir) {
+              case Direction.UP:
+                //console.log(player.getTilePos())
+                //player.setTilePosition({ position: new Vector2(enterTile.x, enterTile.y), layer: 'Z0 P Layer' })
+                break;
+
+              case Direction.DOWN:
+                player.setLayer('Z1 P Layer')
+
+                break;
+            }
+            break;
+        }
+
+      });
   }
 
 
   counter = 0
-  update (time: number, delta: number) {
+  update(time: number, delta: number) {
     timer.raf(time, delta);
     //console.log(this.playerContainer.depth)
     //console.log(this.map.getLayer('Z1 S Layer').tilemapLayer.depth)
@@ -205,7 +224,7 @@ export default class TestScene extends Phaser.Scene {
         this.gridEngine.setSpeed('player', 16)
       } else {
         this.gridEngine.setSpeed('player', 8)
-      }  
+      }
       this.gridEngine.move('player', this.dir)
     }
 
